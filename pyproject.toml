@@ -8,8 +8,12 @@ authors = [
 requires-python = ">=3.12"
 license = "MIT"
 dependencies = [
+    "anthropic>=1.12.0",
+    "httpx>=0.28.1",
     "numpy>=2.5.3",
     "open-spiel==2.0.2",
+    "python-dotenv>=1.2.4",
+    "pyyaml>=6.0.3",
 ]
 
 [build-system]

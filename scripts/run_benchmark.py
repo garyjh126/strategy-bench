@@ -1,9 +1,12 @@
 """Run a subject on a game in direct mode and write a results directory under runs/.
 
-Phase 1 supports mock subjects only (scripted policies answering through the text
-interface), so no API budget is spent.
+Subjects are either mock agents (--agent, scripted policies answering through the text
+interface, free) or real models defined in models.yaml (--model). API keys are read from
+.env. Paid models require --max-cost; always run with --dry-run first.
 
 Examples:
+    uv run python scripts/run_benchmark.py --model deepseek-flash --samples 200 --dry-run
+    uv run python scripts/run_benchmark.py --model deepseek-flash --samples 200 --max-cost 1.00
     uv run python scripts/run_benchmark.py --agent uniform --samples 200
     uv run python scripts/run_benchmark.py --agent cfr --client distribution
     uv run python scripts/run_benchmark.py --agent cfr --samples 100 --garbage-rate 0.1 --format-noise
@@ -17,8 +20,12 @@ import sys
 from datetime import UTC, datetime
 from pathlib import Path
 
+from dotenv import load_dotenv
+
 from strategybench.adapters.cache import CallCache
 from strategybench.adapters.mock import MockDistributionClient, MockTextClient, policy_lookup
+from strategybench.adapters.providers import QuotaExhausted
+from strategybench.adapters.registry import build_client, load_models
 from strategybench.analysis.metrics import solve_equilibrium
 from strategybench.baselines.scripted import (
     first_action_policy,
@@ -26,7 +33,7 @@ from strategybench.baselines.scripted import (
     mix_policies,
     uniform_policy,
 )
-from strategybench.estimation.direct import BudgetExceeded, dry_run_calls
+from strategybench.estimation.direct import BudgetExceeded, dry_run_calls, mean_prompt_tokens
 from strategybench.games import get_game_spec
 from strategybench.prompts import DEFAULT_TEMPLATES
 from strategybench.runner import RunConfig, run_direct
@@ -37,7 +44,10 @@ AGENTS = ["uniform", "first-action", "last-action", "cfr", "cfr-noisy"]
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--game", default="kuhn")
-    ap.add_argument("--agent", choices=AGENTS, default="uniform")
+    who = ap.add_mutually_exclusive_group()
+    who.add_argument("--agent", choices=AGENTS, help="mock subject")
+    who.add_argument("--model", help="real subject: a name from models.yaml")
+    ap.add_argument("--models-file", default="models.yaml")
     ap.add_argument("--client", choices=["text", "distribution"], default="text")
     ap.add_argument("--samples", type=int, default=50, help="samples per infostate (text clients)")
     ap.add_argument("--retries", type=int, default=2)
@@ -48,6 +58,8 @@ def main() -> int:
     ap.add_argument("--illegal-rate", type=float, default=0.0)
     ap.add_argument("--format-noise", action="store_true")
     ap.add_argument("--max-calls", type=int, default=None, help="hard cap on live calls")
+    ap.add_argument("--max-cost", type=float, default=None, help="hard cap on estimated USD spend")
+    ap.add_argument("--concurrency", type=int, default=None, help="parallel calls (default from models.yaml)")
     ap.add_argument("--cache", default="runs/cache.sqlite")
     ap.add_argument("--no-cache", action="store_true")
     ap.add_argument("--out", default="runs")
@@ -56,36 +68,69 @@ def main() -> int:
 
     spec = get_game_spec(args.game)
     template = DEFAULT_TEMPLATES[args.game]
+    model_spec = None
+    if args.model:
+        models = load_models(args.models_file)
+        if args.model not in models:
+            ap.error(f"unknown model {args.model!r}; models.yaml has {sorted(models)}")
+        model_spec = models[args.model]
+    elif args.agent is None:
+        args.agent = "uniform"
 
     if args.dry_run:
         n_info, lo, hi = dry_run_calls(spec, args.samples, args.retries)
         print(f"{spec.name}: {n_info} infostates x {args.samples} samples")
         print(f"calls: {lo} (no retries) to {hi} (every sample retried {args.retries}x)")
-        print("estimated cost: $0.00 (mock subject)")
+        if model_spec is None:
+            print("estimated cost: $0.00 (mock subject)")
+        else:
+            tokens_in = mean_prompt_tokens(spec, template)
+            per_call = model_spec.cost(round(tokens_in), model_spec.est_output_tokens)
+            print(
+                f"model {model_spec.name} ({model_spec.provider}/{model_spec.model}), "
+                f"params {model_spec.params}"
+            )
+            print(f"~{tokens_in:.0f} input + ~{model_spec.est_output_tokens} output tokens per call")
+            print(
+                f"estimated cost: ${per_call * lo:.4f} to ${per_call * hi:.4f}  [{model_spec.price_source}]"
+            )
         return 0
 
-    game = spec.load()
-    eq = solve_equilibrium(spec.load_string)
-    policies = {
-        "uniform": lambda: uniform_policy(game),
-        "first-action": lambda: first_action_policy(game),
-        "last-action": lambda: last_action_policy(game),
-        "cfr": lambda: eq.policy,
-        "cfr-noisy": lambda: mix_policies(game, eq.policy, uniform_policy(game), 0.8),
-    }
-    lookup = policy_lookup(spec, template, policies[args.agent]())
-    if args.client == "text":
-        client = MockTextClient(
-            args.agent,
-            lookup,
-            seed=args.seed,
-            garbage_rate=args.garbage_rate,
-            vocabulary=spec.vocabulary(),
-            illegal_rate=args.illegal_rate,
-            format_noise=args.format_noise,
-        )
+    if model_spec is not None:
+        if (model_spec.price_input or model_spec.price_output) and args.max_cost is None:
+            ap.error(
+                f"{model_spec.name} is a paid model: pass --max-cost (run --dry-run first for an estimate)"
+            )
+        load_dotenv()
+        client = build_client(model_spec)
+        cost_fn = model_spec.cost
+        concurrency = args.concurrency or model_spec.concurrency
+        eq = solve_equilibrium(spec.load_string)
+        client_kind = "text"
     else:
-        client = MockDistributionClient(args.agent, lookup)
+        game = spec.load()
+        eq = solve_equilibrium(spec.load_string)
+        policies = {
+            "uniform": lambda: uniform_policy(game),
+            "first-action": lambda: first_action_policy(game),
+            "last-action": lambda: last_action_policy(game),
+            "cfr": lambda: eq.policy,
+            "cfr-noisy": lambda: mix_policies(game, eq.policy, uniform_policy(game), 0.8),
+        }
+        lookup = policy_lookup(spec, template, policies[args.agent]())
+        if args.client == "text":
+            client = MockTextClient(
+                args.agent,
+                lookup,
+                seed=args.seed,
+                garbage_rate=args.garbage_rate,
+                vocabulary=spec.vocabulary(),
+                illegal_rate=args.illegal_rate,
+                format_noise=args.format_noise,
+            )
+        else:
+            client = MockDistributionClient(args.agent, lookup)
+        cost_fn, concurrency, client_kind = None, args.concurrency or 1, args.client
 
     config = RunConfig(
         n_samples=args.samples,
@@ -94,14 +139,19 @@ def main() -> int:
         seed=args.seed,
         min_samples=args.min_samples,
         max_calls=args.max_calls,
+        max_cost=args.max_cost,
+        concurrency=concurrency,
     )
     stamp = datetime.now(UTC).strftime("%Y%m%dT%H%M%SZ")
-    out_dir = Path(args.out) / f"{stamp}_{spec.name}_{client.model_id}_{args.client}"
+    out_dir = Path(args.out) / f"{stamp}_{spec.name}_{client.model_id}_{client_kind}"
     cache = None if args.no_cache else CallCache(args.cache)
     try:
-        result = run_direct(spec, template, client, config, out_dir, cache, eq)
-    except BudgetExceeded as e:
+        result = run_direct(spec, template, client, config, out_dir, cache, eq, cost_fn)
+    except (BudgetExceeded, QuotaExhausted) as e:
         print(f"ABORTED: {e}", file=sys.stderr)
+        print(
+            f"Completed calls are cached in {args.cache}; rerun the same command to resume.", file=sys.stderr
+        )
         return 2
     finally:
         if cache:
@@ -136,6 +186,11 @@ def main() -> int:
         f"     coverage {result['coverage']} | filled {result['filled']['count']}/{result['filled']['of']} | "
         f"live calls {rel['live_calls']}, cache hits {rel['cache_hits']}"
     )
+    if result.get("cost_usd_estimated") is not None:
+        print(
+            f"  tokens in/out {rel['input_tokens']}/{rel['output_tokens']} | "
+            f"estimated cost ${result['cost_usd_estimated']:.4f}"
+        )
     print(f"  equilibrium seat values: {[round(v, 5) for v in result['equilibrium']['values']]}")
     print(f"  results: {out_dir}")
     return 0

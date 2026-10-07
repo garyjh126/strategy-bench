@@ -1,0 +1,39 @@
+# Subjects that scripts/run_benchmark.py can run with --model NAME.
+#
+# params are sent to the provider as-is and are part of the cache key and the leaderboard row.
+# Prices are USD per million tokens and are only used for the dry-run estimate and the
+# --max-cost cap. Check them against the provider's pricing page before a paid run.
+
+models:
+  claude-haiku-4.5:
+    provider: anthropic
+    model: claude-haiku-4-5
+    params: {max_tokens: 256, temperature: 1.0}
+    price_per_mtok: {input: 1.00, output: 5.00}
+    price_source: "Anthropic API pricing (bundled reference cached 2026-09-25)"
+    est_output_tokens: 5
+    concurrency: 4
+
+  gemini-3.5-flash-lite:
+    provider: gemini
+    model: gemini-3.5-flash-lite
+    # No thinking by default on this model (checked 2026-10-08: 1 output token, no thought tokens).
+    params: {temperature: 1.0, maxOutputTokens: 256}
+    price_per_mtok: {input: 0.0, output: 0.0}
+    price_source: "Gemini API free tier; paid-tier prices apply if billing is enabled on the key"
+    est_output_tokens: 2
+    rpm: 10  # conservative; your actual free-tier limits are shown in Google AI Studio
+    concurrency: 1
+
+  deepseek-flash:
+    provider: openai_compatible
+    provider_name: deepseek
+    base_url: https://api.deepseek.com
+    key_env: DEEPSEEK_API_KEY
+    model: deepseek-flash
+    # Thinking disabled: with thinking on, even reasoning_effort=low used >2,048 tokens (checked 2026-10-08).
+    params: {temperature: 1.0, max_tokens: 256, thinking: {type: disabled}}
+    price_per_mtok: {input: 0.30, output: 1.20}
+    price_source: "DeepSeek pricing page, peak rates (off-peak is half), checked 2026-10-08"
+    est_output_tokens: 2
+    concurrency: 4

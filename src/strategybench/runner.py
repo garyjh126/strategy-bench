@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import importlib.metadata
 import json
+from collections.abc import Callable
 from dataclasses import asdict, dataclass, field
 from datetime import UTC, datetime
 from pathlib import Path
@@ -41,6 +42,8 @@ class RunConfig:
     min_samples: int = 1
     coverage_k: int = 5
     max_calls: int | None = None
+    max_cost: float | None = None
+    concurrency: int = 1
     eq_iterations: int = 2000
     extra: dict[str, Any] = field(default_factory=dict)
 
@@ -57,6 +60,7 @@ def run_direct(
     out_dir: str | Path | None = None,
     cache: CallCache | None = None,
     equilibrium: Equilibrium | None = None,
+    cost_fn: Callable[[int, int], float] | None = None,
 ) -> dict[str, Any]:
     out = Path(out_dir) if out_dir else None
     if out:
@@ -64,12 +68,20 @@ def run_direct(
     game = spec.load()
     eq = equilibrium or solve_equilibrium(spec.load_string, config.eq_iterations)
     log = CallLog(out / "calls.jsonl" if out else None)
-    budget = CallBudget(config.max_calls)
+    budget = CallBudget(config.max_calls, config.max_cost, cost_fn)
 
     try:
         if isinstance(client, TextClient):
             col = collect_text(
-                spec, template, client, config.n_samples, config.max_retries, cache, log, budget
+                spec,
+                template,
+                client,
+                config.n_samples,
+                config.max_retries,
+                cache,
+                log,
+                budget,
+                config.concurrency,
             )
             strat = strategy_from_counts(game, col.infostates, col.counts, config.min_samples)
         else:
@@ -103,6 +115,7 @@ def run_direct(
         "bias": bias,
         "equilibrium": {"values": eq.values, "exploitability": eq.exploitability},
         "reliability": {**asdict(col.reliability), **col.reliability.rates()},
+        "cost_usd_estimated": budget.spent if cost_fn else None,
         "coverage": {f"k={coverage_k}": coverage(game, strat, coverage_k)},
         "filled": {"count": len(strat.filled), "of": len(col.infostates), "keys": strat.filled},
         "run_date": datetime.now(UTC).date().isoformat(),
