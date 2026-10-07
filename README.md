@@ -7,7 +7,8 @@ each information state, and a classical best response (via [OpenSpiel](https://g
 is computed against it. The headline output is an exploitability score per model per game, with bootstrap
 confidence intervals.
 
-> **Status:** Phase 0 (scaffolding). No LLM results yet.
+> **Status:** Phase 1 in progress. The Kuhn poker pipeline runs end to end with mock subjects;
+> no real LLM results yet.
 
 ## Setup
 
@@ -26,6 +27,21 @@ uv run python scripts/solve_kuhn.py --iterations 10000 --eval-every 1000
 ```
 
 Prints CFR exploitability over iterations and the equilibrium game value (theory: −1/18 for player 1).
+
+## Run the pipeline with a mock subject
+
+Mock subjects are scripted policies that answer through the same text interface as an LLM,
+so the full pipeline can be checked against known values at no cost.
+
+```bash
+uv run python scripts/run_benchmark.py --agent uniform --samples 200
+uv run python scripts/run_benchmark.py --agent cfr --client distribution
+uv run python scripts/run_benchmark.py --agent cfr-noisy --samples 200 --garbage-rate 0.1 --format-noise
+uv run python scripts/run_benchmark.py --agent uniform --samples 100 --dry-run   # call count only
+```
+
+Each run writes `manifest.json`, `calls.jsonl`, `strategy.json` and `metrics.json` to a new
+directory under `runs/`. See [docs/methodology.md](docs/methodology.md) for the metric definitions.
 
 ## Layout
 
