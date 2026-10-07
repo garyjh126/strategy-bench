@@ -8,6 +8,7 @@ Examples:
     uv run python scripts/run_benchmark.py --model deepseek-flash --samples 200 --dry-run
     uv run python scripts/run_benchmark.py --model deepseek-flash --samples 200 --max-cost 1.00
     uv run python scripts/run_benchmark.py --agent uniform --samples 200
+    uv run python scripts/run_benchmark.py --game leduc --agent cfr-noisy --mode both --hands 20000
     uv run python scripts/run_benchmark.py --agent cfr --client distribution
     uv run python scripts/run_benchmark.py --agent cfr --samples 100 --garbage-rate 0.1 --format-noise
     uv run python scripts/run_benchmark.py --agent uniform --samples 100 --dry-run
@@ -34,9 +35,10 @@ from strategybench.baselines.scripted import (
     uniform_policy,
 )
 from strategybench.estimation.direct import BudgetExceeded, dry_run_calls, mean_prompt_tokens
+from strategybench.estimation.play import expected_subject_decisions
 from strategybench.games import get_game_spec
-from strategybench.prompts import DEFAULT_TEMPLATES
-from strategybench.runner import RunConfig, run_direct
+from strategybench.prompts import get_template
+from strategybench.runner import RunConfig, opponent_policy, run_direct, run_play
 
 AGENTS = ["uniform", "first-action", "last-action", "cfr", "cfr-noisy"]
 
@@ -64,10 +66,15 @@ def main() -> int:
     ap.add_argument("--no-cache", action="store_true")
     ap.add_argument("--out", default="runs")
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--prompt", default=None, help="prompt version, e.g. kuhn-v1-para or kuhn-v1+shuffled")
+    ap.add_argument("--mode", choices=["direct", "play", "both"], default="direct")
+    ap.add_argument("--hands", type=int, default=10000, help="hands in play mode (seats alternate)")
+    ap.add_argument("--opponent", choices=["equilibrium", "uniform"], default="equilibrium")
+    ap.add_argument("--eq-cache", default="runs/equilibria", help="directory for solved equilibria")
     args = ap.parse_args()
 
     spec = get_game_spec(args.game)
-    template = DEFAULT_TEMPLATES[args.game]
+    template = get_template(args.game, args.prompt)
     model_spec = None
     if args.model:
         models = load_models(args.models_file)
@@ -77,9 +84,24 @@ def main() -> int:
     elif args.agent is None:
         args.agent = "uniform"
 
+    eq = solve_equilibrium(spec.load_string, 2000, args.eq_cache)
+
     if args.dry_run:
         n_info, lo, hi = dry_run_calls(spec, args.samples, args.retries)
-        print(f"{spec.name}: {n_info} infostates x {args.samples} samples")
+        if args.mode == "play":
+            lo = hi = 0
+        else:
+            print(f"{spec.name}: {n_info} infostates x {args.samples} samples")
+        if args.mode != "direct":
+            game = spec.load()
+            per_hand = expected_subject_decisions(
+                game, uniform_policy(game), opponent_policy(args.opponent, spec, eq)
+            )
+            play_calls = round(per_hand * args.hands)
+            print(
+                f"play: {args.hands} hands x ~{per_hand:.2f} subject decisions per hand (under uniform play)"
+            )
+            lo, hi = lo + play_calls, hi + play_calls * (args.retries + 1)
         print(f"calls: {lo} (no retries) to {hi} (every sample retried {args.retries}x)")
         if model_spec is None:
             print("estimated cost: $0.00 (mock subject)")
@@ -105,11 +127,9 @@ def main() -> int:
         client = build_client(model_spec)
         cost_fn = model_spec.cost
         concurrency = args.concurrency or model_spec.concurrency
-        eq = solve_equilibrium(spec.load_string)
         client_kind = "text"
     else:
         game = spec.load()
-        eq = solve_equilibrium(spec.load_string)
         policies = {
             "uniform": lambda: uniform_policy(game),
             "first-action": lambda: first_action_policy(game),
@@ -141,12 +161,22 @@ def main() -> int:
         max_calls=args.max_calls,
         max_cost=args.max_cost,
         concurrency=concurrency,
+        eq_cache_dir=args.eq_cache,
     )
     stamp = datetime.now(UTC).strftime("%Y%m%dT%H%M%SZ")
     out_dir = Path(args.out) / f"{stamp}_{spec.name}_{client.model_id}_{client_kind}"
     cache = None if args.no_cache else CallCache(args.cache)
+    result = play_result = None
     try:
-        result = run_direct(spec, template, client, config, out_dir, cache, eq, cost_fn)
+        if args.mode in ("direct", "both"):
+            result, col, strat = run_direct(
+                spec, template, client, config, out_dir, cache, eq, cost_fn, return_internals=True
+            )
+        if args.mode in ("play", "both"):
+            direct = (col, strat) if args.mode == "both" else None
+            play_result = run_play(
+                spec, template, client, config, args.hands, args.opponent, out_dir, cache, eq, cost_fn, direct
+            )
     except (BudgetExceeded, QuotaExhausted) as e:
         print(f"ABORTED: {e}", file=sys.stderr)
         print(
@@ -157,6 +187,15 @@ def main() -> int:
         if cache:
             cache.close()
 
+    if result is not None:
+        print_direct(spec, client, result)
+    if play_result is not None:
+        print_play(play_result)
+    print(f"  results: {out_dir}")
+    return 0
+
+
+def print_direct(spec, client, result) -> None:
     m, ci, rel = result["metrics"], result["ci95"], result["reliability"]
 
     def fmt(name: str, value: float) -> str:
@@ -192,8 +231,27 @@ def main() -> int:
             f"estimated cost ${result['cost_usd_estimated']:.4f}"
         )
     print(f"  equilibrium seat values: {[round(v, 5) for v in result['equilibrium']['values']]}")
-    print(f"  results: {out_dir}")
-    return 0
+
+
+def print_play(result) -> None:
+    p, rel = result["play"], result["reliability"]
+    print(f"  play vs {p['opponent']}: {p['n_hands']} hands, seed {p['seed']}")
+    for seat in range(2):
+        lo, hi = p["seat_ci95"][seat]
+        print(
+            f"     subject seat {seat + 1}: mean {p['seat_mean'][seat]:+.4f}  [{lo:+.4f}, {hi:+.4f}]  "
+            f"({p['seat_hands'][seat]} hands)"
+        )
+    print(
+        f"     subject decisions {p['subject_decisions']} | fallbacks {p['fallbacks']} | "
+        f"parse-fail {rel['parse_failure_rate']:.3f} | live calls {rel['live_calls']}"
+    )
+    for row in result.get("cross_check", []):
+        verdict = "agree" if row["agree"] else "DISAGREE"
+        print(
+            f"     cross-check seat {row['seat'] + 1}: exact {row['exact']:+.4f} vs simulated "
+            f"{row['simulated']:+.4f} (z = {row['z']:+.2f}) -> {verdict}"
+        )
 
 
 if __name__ == "__main__":

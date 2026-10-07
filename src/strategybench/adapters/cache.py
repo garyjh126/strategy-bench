@@ -13,7 +13,12 @@ from typing import Any
 
 
 def cache_key(
-    provider: str, model_id: str, params: dict[str, Any], prompt_hash: str, sample_index: int, attempt: int
+    provider: str,
+    model_id: str,
+    params: dict[str, Any],
+    prompt_hash: str,
+    sample_index: int | str,
+    attempt: int,
 ) -> str:
     payload = json.dumps([provider, model_id, params, prompt_hash, sample_index, attempt], sort_keys=True)
     return hashlib.sha256(payload.encode()).hexdigest()

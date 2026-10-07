@@ -2,8 +2,9 @@
 
 from strategybench.games.base import GameSpec
 from strategybench.games.kuhn import KuhnSpec
+from strategybench.games.leduc import LeducSpec
 
-_REGISTRY: dict[str, type[GameSpec]] = {KuhnSpec.name: KuhnSpec}
+_REGISTRY: dict[str, type[GameSpec]] = {spec.name: spec for spec in (KuhnSpec, LeducSpec)}
 
 
 def get_game_spec(name: str) -> GameSpec:

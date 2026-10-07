@@ -7,7 +7,9 @@ enumerated legal actions. Both seats use the same template; only the situation t
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+import hashlib
+import random
+from dataclasses import dataclass, replace
 
 import pyspiel
 
@@ -26,11 +28,22 @@ Reply with exactly one of: {label_csv}. Do not write anything else."""
 class PromptTemplate:
     version: str
     system: str
+    #: Robustness ablation: list the legal actions in a shuffled (but fixed per infostate) order.
+    shuffle_labels: bool = False
+
+    def shuffled(self) -> PromptTemplate:
+        return replace(self, version=f"{self.version}+shuffled", shuffle_labels=True)
 
     def render(self, spec: GameSpec, state: pyspiel.State) -> Prompt:
+        situation = spec.render_infostate(state)
         labels = tuple(spec.action_labels(state).values())
+        if self.shuffle_labels:
+            seed = int.from_bytes(hashlib.sha256(situation.encode()).digest()[:8], "little")
+            order = list(labels)
+            random.Random(seed).shuffle(order)
+            labels = tuple(order)
         user = _USER_TEMPLATE.format(
-            situation=spec.render_infostate(state),
+            situation=situation,
             action_list="\n".join(f"- {lab}" for lab in labels),
             label_csv=", ".join(labels),
         )

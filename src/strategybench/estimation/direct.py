@@ -19,7 +19,7 @@ from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
-from strategybench.adapters.base import DistributionClient, TextClient
+from strategybench.adapters.base import DistributionClient, Prompt, TextClient
 from strategybench.adapters.cache import CallCache, cache_key
 from strategybench.adapters.parser import ParseStatus, parse_label
 from strategybench.estimation.infostates import InfoState, enumerate_infostates
@@ -137,47 +137,50 @@ def mean_prompt_tokens(spec: GameSpec, template: PromptTemplate, chars_per_token
     return sum(chars) / len(chars) / chars_per_token
 
 
-def collect_text(
-    spec: GameSpec,
-    template: PromptTemplate,
-    client: TextClient,
-    n_samples: int,
-    max_retries: int = 2,
-    cache: CallCache | None = None,
-    log: CallLog | None = None,
-    budget: CallBudget | None = None,
-    concurrency: int = 1,
-) -> Collection:
-    log = log or CallLog(None)
-    budget = budget or CallBudget()
-    infostates = enumerate_infostates(spec.load())
-    out = Collection(infostates=infostates, kind="sampled")
-    rel = out.reliability
-    vocabulary = spec.vocabulary()
-    cache_lock = threading.Lock()
+class TextQuerier:
+    """Queries a text client for one sample: cache lookup, live call, strict parse, retries.
 
-    # Everything that touches OpenSpiel states is computed up front, on this thread.
-    jobs = []
-    for info in infostates:
-        prompt = template.render(spec, info.state)
-        labels = spec.action_labels(info.state)
-        jobs.extend((info, prompt, labels, i) for i in range(n_samples))
+    Thread-safe; shared by ``direct`` collection and ``play`` mode.
+    """
 
-    def run_sample(info: InfoState, prompt, labels: dict[int, str], sample_index: int):
-        """All attempts for one sample. Returns (attempt records, action or None)."""
+    def __init__(
+        self,
+        client: TextClient,
+        vocabulary: frozenset[str],
+        max_retries: int = 2,
+        cache: CallCache | None = None,
+        budget: CallBudget | None = None,
+    ) -> None:
+        self.client = client
+        self.vocabulary = vocabulary
+        self.max_retries = max_retries
+        self.cache = cache
+        self.budget = budget or CallBudget()
+        self._cache_lock = threading.Lock()
+
+    def sample(
+        self,
+        prompt: Prompt,
+        labels: dict[int, str],
+        infostate: str,
+        player: int,
+        sample_index: int | str,
+    ) -> tuple[list[dict[str, Any]], int | None]:
+        """All attempts for one sample. Returns (attempt records, legal action or None)."""
+        client = self.client
         records = []
-        for attempt in range(max_retries + 1):
+        for attempt in range(self.max_retries + 1):
             key = cache_key(
                 client.provider, client.model_id, client.params, prompt.hash, sample_index, attempt
             )
-            with cache_lock:
-                record = cache.get(key) if cache else None
+            with self._cache_lock:
+                record = self.cache.get(key) if self.cache else None
             from_cache = record is not None
             if record is None:
-                budget.charge()
+                self.budget.charge()
                 start = time.perf_counter()
                 completion = client.complete(prompt, sample_index, attempt)
-                budget.record(completion.input_tokens, completion.output_tokens)
+                self.budget.record(completion.input_tokens, completion.output_tokens)
                 record = {
                     "text": completion.text,
                     "input_tokens": completion.input_tokens,
@@ -186,11 +189,11 @@ def collect_text(
                     "timestamp": _now(),
                     "extra": completion.extra,
                 }
-                if cache:
-                    with cache_lock:
-                        cache.put(key, record)
+                if self.cache:
+                    with self._cache_lock:
+                        self.cache.put(key, record)
 
-            parsed = parse_label(record["text"], list(labels.values()), vocabulary)
+            parsed = parse_label(record["text"], list(labels.values()), self.vocabulary)
             action = next((a for a, lab in labels.items() if lab == parsed.label), None)
             records.append(
                 {
@@ -199,8 +202,8 @@ def collect_text(
                     "params": client.params,
                     "prompt_version": prompt.version,
                     "prompt_hash": prompt.hash,
-                    "infostate": info.key,
-                    "player": info.player,
+                    "infostate": infostate,
+                    "player": player,
                     "user_prompt": prompt.user,
                     "sample_index": sample_index,
                     "attempt": attempt,
@@ -220,31 +223,61 @@ def collect_text(
                 return records, action
         return records, None
 
+
+def tally(rel: Reliability, records: list[dict[str, Any]], action: int | None) -> None:
+    """Add one sample's attempt records to the M4 counters."""
+    rel.samples += 1
+    for r in records:
+        rel.attempts += 1
+        if r["from_cache"]:
+            rel.cache_hits += 1
+        else:
+            rel.live_calls += 1
+            rel.input_tokens += r["input_tokens"] or 0
+            rel.output_tokens += r["output_tokens"] or 0
+        if r["status"] == ParseStatus.PARSE_FAILURE.value:
+            rel.parse_failures += 1
+        elif r["status"] == ParseStatus.ILLEGAL.value:
+            rel.illegal += 1
+    if len(records) > 1:
+        rel.samples_retried += 1
+    if action is None:
+        rel.samples_failed += 1
+
+
+def collect_text(
+    spec: GameSpec,
+    template: PromptTemplate,
+    client: TextClient,
+    n_samples: int,
+    max_retries: int = 2,
+    cache: CallCache | None = None,
+    log: CallLog | None = None,
+    budget: CallBudget | None = None,
+    concurrency: int = 1,
+) -> Collection:
+    log = log or CallLog(None)
+    infostates = enumerate_infostates(spec.load())
+    out = Collection(infostates=infostates, kind="sampled")
+    querier = TextQuerier(client, spec.vocabulary(), max_retries, cache, budget)
+
+    # Everything that touches OpenSpiel states is computed up front, on this thread.
+    jobs = []
+    for info in infostates:
+        prompt = template.render(spec, info.state)
+        labels = spec.action_labels(info.state)
+        jobs.extend((prompt, labels, info.key, info.player, i) for i in range(n_samples))
+
     counts: dict[str, dict[int, int]] = {info.key: defaultdict(int) for info in infostates}
     with ThreadPoolExecutor(max_workers=max(1, concurrency)) as pool:
-        futures = [pool.submit(run_sample, *job) for job in jobs]
+        futures = [pool.submit(querier.sample, *job) for job in jobs]
         try:
             for future in as_completed(futures):
                 records, action = future.result()
-                rel.samples += 1
                 for r in records:
                     log.write(r)
-                    rel.attempts += 1
-                    if r["from_cache"]:
-                        rel.cache_hits += 1
-                    else:
-                        rel.live_calls += 1
-                        rel.input_tokens += r["input_tokens"] or 0
-                        rel.output_tokens += r["output_tokens"] or 0
-                    if r["status"] == ParseStatus.PARSE_FAILURE.value:
-                        rel.parse_failures += 1
-                    elif r["status"] == ParseStatus.ILLEGAL.value:
-                        rel.illegal += 1
-                if len(records) > 1:
-                    rel.samples_retried += 1
-                if action is None:
-                    rel.samples_failed += 1
-                else:
+                tally(out.reliability, records, action)
+                if action is not None:
                     counts[records[0]["infostate"]][action] += 1
         except BaseException:
             pool.shutdown(wait=True, cancel_futures=True)

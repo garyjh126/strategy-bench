@@ -46,7 +46,7 @@ class TextClient(Protocol):
     #: Sampling/request parameters actually sent (part of the cache key and the leaderboard row).
     params: dict[str, Any]
 
-    def complete(self, prompt: Prompt, sample_index: int, attempt: int) -> Completion: ...
+    def complete(self, prompt: Prompt, sample_index: int | str, attempt: int) -> Completion: ...
 
 
 @runtime_checkable

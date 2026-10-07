@@ -1,10 +1,13 @@
-"""Run one subject on one game in ``direct`` mode and write the results directory.
+"""Run one subject on one game and write the results directory.
 
 Outputs (under ``out_dir``):
-  manifest.json  configuration, prompt version and system prompt, library versions
-  calls.jsonl    one line per attempt (raw output, parse status, tokens, latency, cache flag)
-  strategy.json  per-infostate estimated strategy, support and the equilibrium strategy
-  metrics.json   M1-M4, bootstrap CIs, coverage and filled fraction
+  manifest.json      configuration, prompt version and system prompt, library versions
+  calls.jsonl        direct mode: one line per attempt (raw output, parse status, tokens, cache flag)
+  strategy.json      direct mode: per-infostate estimated strategy, support and equilibrium strategy
+  metrics.json       direct mode: M1-M4, bootstrap CIs, coverage and filled fraction
+  play.json          play mode: per-seat results and, after a direct run, the exact-vs-simulated check
+  play_calls.jsonl   play mode: one line per attempt
+  hands.jsonl        play mode: one line per hand (cards, every action, subject payoff)
 """
 
 from __future__ import annotations
@@ -22,10 +25,25 @@ import numpy as np
 from strategybench.adapters.base import DistributionClient, TextClient
 from strategybench.adapters.cache import CallCache
 from strategybench.analysis.bootstrap import bootstrap_metrics
-from strategybench.analysis.metrics import Equilibrium, compute_metrics, solve_equilibrium
-from strategybench.estimation.direct import CallBudget, CallLog, collect_distribution, collect_text
+from strategybench.analysis.metrics import (
+    Equilibrium,
+    compute_metrics,
+    exact_seat_values,
+    solve_equilibrium,
+)
+from strategybench.baselines.scripted import uniform_policy
+from strategybench.estimation.direct import (
+    CallBudget,
+    CallLog,
+    Collection,
+    collect_distribution,
+    collect_text,
+)
+from strategybench.estimation.play import PlayResult, play_match
 from strategybench.estimation.strategy import (
+    EstimatedStrategy,
     coverage,
+    resample_counts,
     strategy_from_counts,
     strategy_from_probabilities,
 )
@@ -45,6 +63,7 @@ class RunConfig:
     max_cost: float | None = None
     concurrency: int = 1
     eq_iterations: int = 2000
+    eq_cache_dir: str | None = None
     extra: dict[str, Any] = field(default_factory=dict)
 
 
@@ -61,12 +80,13 @@ def run_direct(
     cache: CallCache | None = None,
     equilibrium: Equilibrium | None = None,
     cost_fn: Callable[[int, int], float] | None = None,
-) -> dict[str, Any]:
+    return_internals: bool = False,
+) -> dict[str, Any] | tuple[dict[str, Any], Collection, EstimatedStrategy]:
     out = Path(out_dir) if out_dir else None
     if out:
         out.mkdir(parents=True, exist_ok=True)
     game = spec.load()
-    eq = equilibrium or solve_equilibrium(spec.load_string, config.eq_iterations)
+    eq = equilibrium or solve_equilibrium(spec.load_string, config.eq_iterations, config.eq_cache_dir)
     log = CallLog(out / "calls.jsonl" if out else None)
     budget = CallBudget(config.max_calls, config.max_cost, cost_fn)
 
@@ -152,4 +172,122 @@ def run_direct(
         (out / "manifest.json").write_text(json.dumps(manifest, indent=2))
         (out / "strategy.json").write_text(json.dumps(strategy_rows, indent=2))
         (out / "metrics.json").write_text(json.dumps(result, indent=2))
+    if return_internals:
+        return result, col, strat
     return result
+
+
+def opponent_policy(name: str, spec: GameSpec, eq: Equilibrium):
+    if name == "equilibrium":
+        return eq.policy
+    if name == "uniform":
+        return uniform_policy(spec.load())
+    raise ValueError(f"unknown opponent {name!r} (choose equilibrium or uniform)")
+
+
+def run_play(
+    spec: GameSpec,
+    template: PromptTemplate,
+    client: TextClient | DistributionClient,
+    config: RunConfig,
+    n_hands: int,
+    opponent: str = "equilibrium",
+    out_dir: str | Path | None = None,
+    cache: CallCache | None = None,
+    equilibrium: Equilibrium | None = None,
+    cost_fn: Callable[[int, int], float] | None = None,
+    direct: tuple[Collection, EstimatedStrategy] | None = None,
+) -> dict[str, Any]:
+    """Play ``n_hands`` against ``opponent``; with ``direct`` internals, also cross-check the
+    simulated per-seat value against the exact value of the direct-mode estimate."""
+    out = Path(out_dir) if out_dir else None
+    if out:
+        out.mkdir(parents=True, exist_ok=True)
+    eq = equilibrium or solve_equilibrium(spec.load_string, config.eq_iterations, config.eq_cache_dir)
+    opp = opponent_policy(opponent, spec, eq)
+    log = CallLog(out / "play_calls.jsonl" if out else None)
+    hand_log = CallLog(out / "hands.jsonl" if out else None)
+    budget = CallBudget(config.max_calls, config.max_cost, cost_fn)
+    try:
+        play = play_match(
+            spec,
+            template,
+            client,
+            opp,
+            opponent,
+            n_hands,
+            config.seed,
+            config.max_retries,
+            cache,
+            log,
+            hand_log,
+            budget,
+            config.concurrency,
+        )
+    finally:
+        log.close()
+        hand_log.close()
+
+    result: dict[str, Any] = {
+        "game": spec.name,
+        "model_id": client.model_id,
+        "mode": "play",
+        "play": play.as_dict(),
+        "reliability": {**asdict(play.reliability), **play.reliability.rates()},
+        "cost_usd_estimated": budget.spent if cost_fn else None,
+    }
+    if direct is not None:
+        result["cross_check"] = cross_check(spec, direct[0], direct[1], opp, play, config)
+    if out:
+        (out / "play.json").write_text(json.dumps(result, indent=2))
+    return result
+
+
+def cross_check(
+    spec: GameSpec,
+    col: Collection,
+    strat: EstimatedStrategy,
+    opponent: Any,
+    play: PlayResult,
+    config: RunConfig,
+) -> list[dict[str, Any]]:
+    """Compare, per seat, the exact value of the direct-mode estimate against the opponent with
+    the simulated play-mode mean. The two agree when their difference is within 1.96 combined
+    standard errors (simulation error plus the estimate's bootstrap error)."""
+    game = spec.load()
+    exact = exact_seat_values(game, strat.policy, opponent)
+    se_exact = [0.0, 0.0]
+    if col.kind == "sampled" and config.n_boot > 0:
+        rng = np.random.default_rng(config.seed + 1)
+        reps = np.array(
+            [
+                exact_seat_values(
+                    game,
+                    strategy_from_counts(
+                        game, col.infostates, resample_counts(col.counts, rng), config.min_samples
+                    ).policy,
+                    opponent,
+                )
+                for _ in range(config.n_boot)
+            ]
+        )
+        se_exact = [float(x) for x in reps.std(axis=0, ddof=1)]
+
+    rows = []
+    for seat in range(2):
+        sim, se_sim = play.seat_mean[seat], play.seat_stderr[seat]
+        se = float(np.hypot(se_sim, se_exact[seat]))
+        diff = sim - exact[seat]
+        rows.append(
+            {
+                "seat": seat,
+                "exact": exact[seat],
+                "exact_se": se_exact[seat],
+                "simulated": sim,
+                "simulated_se": se_sim,
+                "difference": diff,
+                "z": diff / se if se > 0 else float("nan"),
+                "agree": bool(abs(diff) <= 1.96 * se),
+            }
+        )
+    return rows
