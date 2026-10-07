@@ -1,6 +1,6 @@
 # Methodology
 
-_Draft. Covers what is implemented so far (Phase 1: Kuhn poker, `direct` mode, mock subjects)._
+_Draft. Covers what is implemented so far: Kuhn and Leduc poker, `direct` and `play` modes._
 
 ## What is measured
 
@@ -17,8 +17,20 @@ They are not a measure of general poker or reasoning ability.
   and the public action history.
 * A **behavioural strategy** gives a probability distribution over legal actions at each
   infostate.
-* The equilibrium reference is computed with CFR+ (OpenSpiel). For Kuhn poker its
-  exploitability is below 1e-4 and the Player 1 value is −1/18, matching theory.
+* The equilibrium reference is the average policy of OpenSpiel's C++ CFR+ after 2,000
+  iterations, saved to disk so every run of a game is scored against the same reference.
+
+| Game | Decision infostates | Player 1 value | Reference exploitability |
+|---|---|---|---|
+| Kuhn poker (`kuhn_poker`) | 12 | −0.05556 (theory −1/18) | 4.4e-5 |
+| Leduc poker (`leduc_poker(suit_isomorphism=True)`) | 288 | −0.0856 | 8.5e-5 |
+
+(Values printed by `scripts/run_benchmark.py` as "equilibrium seat values".)
+
+**Leduc uses OpenSpiel's suit-isomorphic variant.** The prompt only ever names ranks (suits do
+not matter in Leduc), so two infostates that differ only by suit would get identical prompts. The
+suit-isomorphic game deals ranks with the correct probabilities, so its infostates are exactly
+what the subject can distinguish: 288 instead of 936, with the same game value.
 
 ## Querying the subject
 
@@ -49,6 +61,34 @@ independently, with a fresh context each time.
 uniformly at random over its legal actions. The number of filled infostates is always
 reported.
 
+## Validating by play (`play` mode)
+
+The subject plays complete hands against a fixed opponent (the equilibrium, or uniform random).
+Seats alternate every hand. Chance and the opponent are sampled from a per-hand random generator
+seeded by the run seed, so a match is reproducible. Each subject decision is a fresh query with
+its own sample key, independent of the direct-mode samples. If every attempt at a decision fails,
+the subject's action is drawn uniformly from the legal actions and the decision is counted as a
+fallback; the number of fallbacks is reported.
+
+**Cross-check.** After a direct run, the exact expected payoff of the estimated strategy σ̂
+against the opponent, per seat, is compared with the play-mode mean. They are reported as
+agreeing when the difference is within 1.96 combined standard errors (the play-mode standard
+error, plus the bootstrap standard error of the exact value). This checks that σ̂ predicts how the
+subject actually plays.
+
+Example (mock subject playing 80% equilibrium and 20% uniform, with 5% unparseable replies,
+200 samples per infostate, 20,000 hands against the equilibrium, Leduc):
+
+| Seat | Exact (from σ̂) | Simulated | z |
+|---|---|---|---|
+| Player 1 | −0.2126 | −0.2179 | −0.14 |
+| Player 2 | −0.0246 | −0.0267 | −0.06 |
+
+(Produced by `scripts/run_benchmark.py --game leduc --agent cfr-noisy --samples 200 --mode both
+--hands 20000 --garbage-rate 0.05 --format-noise`.) With 10,000 hands per seat the 95% interval is
+about ±0.075 chips per hand, so play mode is far more expensive per unit of precision than direct
+mode, and is used as a check rather than as the headline measurement.
+
 ## Metrics
 
 All values are expected payoffs per hand, reported in native units and normalised by the
@@ -65,6 +105,15 @@ game's unit (Kuhn: 1 ante, so the two coincide).
 in the equilibrium's support earns exactly the equilibrium value. In Kuhn poker a subject that
 plays the right actions with the wrong frequencies therefore has M3 ≈ 0 while still being
 exploitable (M1 > 0). M1 is the headline metric for this reason.
+
+## Prompt sensitivity
+
+Two optional variants measure how much results depend on wording (`--prompt`):
+
+* `<game>-v1-para`: the same rules, reworded and reordered.
+* `<version>+shuffled`: the legal actions listed in a shuffled order, fixed per infostate.
+
+The spread of a model's metrics across these variants is reported alongside its main result.
 
 ## Uncertainty
 
@@ -100,6 +149,11 @@ The pipeline is checked against known values (see `tests/`):
 * Mock subjects with injected malformed and illegal output: measured failure rates match the
   injected rates.
 * Rerunning from the cache reproduces every result with zero calls.
+* Leduc: deterministic subjects through the full pipeline match OpenSpiel's direct computation
+  exactly; uniform and equilibrium subjects read as distributions match OpenSpiel to 1e-9 and
+  < 1e-3 respectively.
+* Play mode: always-pass as Player 1 in Kuhn scores −2/9 against the equilibrium within the
+  simulation's 95% interval; matches are reproducible from the seed.
 
 ## Reproducibility
 
@@ -110,8 +164,8 @@ model, parameters, prompt hash, sample index, attempt), so reruns are free and i
 
 ## Limitations (so far)
 
-* Tiny games. Kuhn poker has 12 infostates and its equilibrium is well known and may appear in
-  model training data.
+* Small games. Kuhn poker has 12 infostates and Leduc 288, and both equilibria are well known and
+  may appear in model training data.
 * Results depend on the prompt wording and on the sampling settings a provider allows. Some
   current models do not allow the temperature to be changed.
 * The strict parser may count verbose but sensible replies as failures. This is deliberate and
