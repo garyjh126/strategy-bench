@@ -14,13 +14,16 @@ All values are in native payoff units per hand; ``*_norm`` divides by the game's
 
 from __future__ import annotations
 
+import hashlib
+import importlib.metadata
+import re
 from dataclasses import asdict, dataclass
+from pathlib import Path
 
+import numpy as np
 import pyspiel
 from open_spiel.python import policy as policy_lib
 from open_spiel.python.algorithms import best_response, expected_game_score, exploitability
-
-from strategybench.baselines.cfr import solve_cfr
 
 
 @dataclass
@@ -31,9 +34,40 @@ class Equilibrium:
     exploitability: float
 
 
-def solve_equilibrium(load_string: str, iterations: int = 2000) -> Equilibrium:
-    result = solve_cfr(load_string, iterations=iterations, eval_every=iterations, plus=True)
-    return Equilibrium(result.average_policy, result.game_value, result.final_exploitability)
+def solve_equilibrium(
+    load_string: str, iterations: int = 2000, cache_dir: str | Path | None = None
+) -> Equilibrium:
+    """Equilibrium reference from OpenSpiel's C++ CFR+ (average policy after ``iterations``).
+
+    With ``cache_dir`` the solved policy is saved as ``.npz`` (keyed on game, iterations and
+    OpenSpiel version) and reused, so every run of a game is scored against the same reference.
+    """
+    game = pyspiel.load_game(load_string)
+    policy = policy_lib.TabularPolicy(game)
+    path = None
+    if cache_dir is not None:
+        version = importlib.metadata.version("open_spiel")
+        tag = hashlib.sha256(f"{load_string}|cfr+|{iterations}|{version}".encode()).hexdigest()[:12]
+        path = Path(cache_dir) / f"{re.sub(r'[^A-Za-z0-9_]+', '_', load_string)}_{tag}.npz"
+
+    if path is not None and path.exists():
+        saved = np.load(path, allow_pickle=False)
+        if list(saved["keys"]) != list(policy.state_lookup):
+            raise ValueError(f"cached equilibrium {path} does not match the game's infostates")
+        policy.action_probability_array[:] = saved["probs"]
+    else:
+        solver = pyspiel.CFRPlusSolver(game)
+        for _ in range(iterations):
+            solver.evaluate_and_update_policy()
+        solved = policy_lib.pyspiel_policy_to_python_policy(game, solver.tabular_average_policy())
+        for key in policy.state_lookup:
+            policy.policy_for_key(key)[:] = solved.policy_for_key(key)
+        if path is not None:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            np.savez(path, keys=np.array(list(policy.state_lookup)), probs=policy.action_probability_array)
+
+    values = expected_game_score.policy_value(game.new_initial_state(), [policy, policy])
+    return Equilibrium(policy, [float(v) for v in values], float(exploitability.exploitability(game, policy)))
 
 
 @dataclass
@@ -66,6 +100,18 @@ def seat_mixture(
     return mixed
 
 
+def exact_seat_values(
+    game: pyspiel.Game, subject: policy_lib.Policy, opponent: policy_lib.Policy
+) -> list[float]:
+    """Exact expected payoff of ``subject`` in each seat against ``opponent`` in the other."""
+    root = game.new_initial_state()
+    values = []
+    for seat in range(game.num_players()):
+        mixed = seat_mixture(game, seat, subject, opponent)
+        values.append(float(expected_game_score.policy_value(root, [mixed, mixed])[seat]))
+    return values
+
+
 def compute_metrics(
     game: pyspiel.Game, policy: policy_lib.TabularPolicy, eq: Equilibrium, unit_size: float = 1.0
 ) -> Metrics:
@@ -76,10 +122,7 @@ def compute_metrics(
     br_value = [best_response.BestResponsePolicy(game, p, policy).value(root) for p in range(2)]
     br_gain = [br_value[1 - i] - eq.values[1 - i] for i in range(2)]
 
-    h2h_value = []
-    for seat in range(2):
-        mixed = seat_mixture(game, seat, policy, eq.policy)
-        h2h_value.append(float(expected_game_score.policy_value(root, [mixed, mixed])[seat]))
+    h2h_value = exact_seat_values(game, policy, eq.policy)
     h2h_loss = [eq.values[i] - h2h_value[i] for i in range(2)]
 
     return Metrics(
