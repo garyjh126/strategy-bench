@@ -36,7 +36,7 @@
   {% if run.rec.is_reference %}
   <div class="notice" role="note">This is a <strong>scripted reference subject</strong>, not an LLM. It answers through the same text interface (prompts, strict parser, retries) so the pipeline can be checked against known values.</div>
   {% endif %}
-  <p><a class="button" href="replay.html">Replay hands</a></p>
+  <p><a class="button" href="replay.html">Replay {{ run.episode }}s</a></p>
 </header>
 
 <section aria-labelledby="headline">
@@ -45,7 +45,7 @@
     <div class="tile hero">
       <div class="label">Exploitability (M1)</div>
       <div class="value">{{ run.est("exploitability") }}</div>
-      <div class="sub">{{ run.unit }}s per hand{% if run.ci("exploitability") %} · 95% interval {{ run.ci_html("exploitability") }}{% endif %}</div>
+      <div class="sub">{{ run.unit }}s per {{ run.episode }}{% if run.ci("exploitability") %} · 95% interval {{ run.ci_html("exploitability") }}{% endif %}</div>
       {% if run.corrected %}<div class="sub">bias-corrected; plug-in {{ run.plug_in("exploitability") }}</div>{% elif run.rec.subject_kind == "distribution" %}<div class="sub">exact (probabilities read directly)</div>{% endif %}
     </div>
     {% for seat in [0, 1] %}
@@ -85,18 +85,18 @@
   {% set bp = p.ptr %}
   <div class="seat-panel">
     <h3>Subject as Player {{ p.seat + 1 }}</h3>
-    <p class="equation">Gain {{ b.num(bp ~ "/gain", "f3") }} = without adapting {{ b.num(bp ~ "/passive", "f3") }} + adapting {{ b.num(bp ~ "/active", "f3") }} <span class="muted">{{ run.unit }}s per hand</span></p>
+    <p class="equation">Gain {{ b.num(bp ~ "/gain", "f3") }} = without adapting {{ b.num(bp ~ "/passive", "f3") }} + adapting {{ b.num(bp ~ "/active", "f3") }} <span class="muted">{{ run.unit }}s per {{ run.episode }}</span></p>
     {% if p.chart %}
     {{ p.chart }}
     {% for ex in p.examples %}
     <article class="example">
       <h4>{{ ex.row.short }} <span class="muted">(Player {{ p.block.responder_seat + 1 }} to act)</span></h4>
       <p>{{ ex.sentence }}</p>
-      <a href="replay.html#hand={{ ex.hand }}">Replay an example hand</a>
+      <a href="replay.html#hand={{ ex.hand }}">Replay an example {{ run.episode }}</a>
     </article>
     {% endfor %}
     {% else %}
-    <p class="note">Adapting gains less than 0.001 {{ run.unit }} per hand in every situation: the equilibrium mix is already close to a best response against this subject.</p>
+    <p class="note">Adapting gains less than 0.001 {{ run.unit }} per {{ run.episode }} in every situation: the equilibrium mix is already close to a best response against this subject.</p>
     {% endif %}
     <details>
       <summary>Every situation for Player {{ p.block.responder_seat + 1 }} (best responder)</summary>
@@ -153,10 +153,10 @@
 {% set pl = run.play %}
 <section aria-labelledby="play">
   <h2 id="play">Play-mode check</h2>
-  <p class="lede">The subject also played {{ pl.num("/play/n_hands", "int") }} complete hands against the {{ pl.get("/play/opponent") }} opponent, with seats alternating and a fresh query at every decision. If the estimated strategy describes how the subject actually plays, its exact expected payoff should match the simulated average within sampling error.</p>
+  <p class="lede">The subject also played {{ pl.num("/play/n_hands", "int") }} complete {{ run.episode }}s against the {{ pl.get("/play/opponent") }} opponent, with seats alternating and a fresh query at every decision. If the estimated strategy describes how the subject actually plays, its exact expected payoff should match the simulated average within sampling error.</p>
   <div class="table-wrap" tabindex="0" role="region" aria-label="Play-mode cross-check">
   <table class="data">
-    <thead><tr><th scope="col">Subject seat</th><th scope="col" class="r">Hands</th><th scope="col" class="r">Exact, from the estimate</th><th scope="col" class="r">Simulated mean</th><th scope="col" class="r">95% interval</th><th scope="col" class="r">z</th><th scope="col">Agreement</th></tr></thead>
+    <thead><tr><th scope="col">Subject seat</th><th scope="col" class="r">{{ run.episode | capitalize }}s</th><th scope="col" class="r">Exact, from the estimate</th><th scope="col" class="r">Simulated mean</th><th scope="col" class="r">95% interval</th><th scope="col" class="r">z</th><th scope="col">Agreement</th></tr></thead>
     <tbody>
     {% for seat in [0, 1] %}
       <tr>

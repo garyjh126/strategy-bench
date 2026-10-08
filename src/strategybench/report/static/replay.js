@@ -9,13 +9,16 @@
 
   var stepsEl = document.getElementById("steps");
   var summaryEl = document.getElementById("hand-summary");
+  // What one play of the game is called ("hand", "round"), from the game spec.
+  var EP = D.episode || "hand";
+  var EP_CAP = EP.charAt(0).toUpperCase() + EP.slice(1);
   var GROUPS = {
     key: "Where the best responder gains most",
-    played: "Played hands",
-    simulated: "Simulated hands"
+    played: "Played " + EP + "s",
+    simulated: "Simulated " + EP + "s"
   };
   var NOTES = {
-    key: "Constructed example: the deal and betting where switching to the best response gains most, then the best response and the subject's most likely actions.",
+    key: "Constructed example: the chance outcomes and actions leading to the situation where switching to the best response gains most, then the best response and the subject's most likely actions.",
     played: "Played live against the " + D.opponent + " opponent; each of the subject's decisions was a fresh query.",
     simulated: "Simulated from the estimated strategy against the equilibrium (not played live)."
   };
@@ -149,7 +152,7 @@
     });
     var amount = hand.payoff_text.replace(/^[+\u2212]/, "") + " " + D.payoff_unit + "s";
     var outcome = hand.subject_payoff > 0 ? "wins " + amount : hand.subject_payoff < 0 ? "loses " + amount : "breaks even";
-    stepsEl.appendChild(el("li", "step result", "Hand over: the subject " + outcome + "."));
+    stepsEl.appendChild(el("li", "step result", EP_CAP + " over: the subject " + outcome + "."));
   }
 
   function fromHash() {

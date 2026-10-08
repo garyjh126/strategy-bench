@@ -8,23 +8,23 @@
   <h1>Replay: {{ run.rec.display_name }}{% if run.rec.is_reference %} <span class="chip">reference</span>{% endif %}</h1>
   <p class="sub">{{ run.rec.description }} · {{ game_title }}</p>
   <p class="lede">
-    Step through a hand. At each of the subject's decisions you see the situation exactly as the subject was told it, how often it chose each action (bar) against the equilibrium (tick), and the action taken in this hand. At the opponent's decisions you see the equilibrium mix it played from, the best response against this subject, and what that best response gains.
+    Step through a {{ run.episode }}. At each of the subject's decisions you see the situation exactly as the subject was told it, how often it chose each action (bar) against the equilibrium (tick), and the action taken in this {{ run.episode }}. At the opponent's decisions you see the equilibrium mix it played from, the best response against this subject, and what that best response gains.
   </p>
   <p class="note">
     {% if rp.get("/source") == "played" %}
-    Hands marked “played” are the first of {{ rp.num("/hands_total", "int") }} hands the subject played against the {{ rp.get("/opponent") }} opponent, with its raw replies.
+    {{ run.episode | capitalize }}s marked “played” are the first of {{ rp.num("/hands_total", "int") }} {{ run.episode }}s the subject played against the {{ rp.get("/opponent") }} opponent, with its raw replies.
     {% else %}
-    No play-mode match was recorded for this run, so the numbered hands are <strong>simulated</strong> from the estimated strategy against the equilibrium. Each query to the subject is independent and context-free, so simulated hands follow the same distribution as live play, but they were not played live.
+    No play-mode match was recorded for this run, so the numbered {{ run.episode }}s are <strong>simulated</strong> from the estimated strategy against the equilibrium. Each query to the subject is independent and context-free, so simulated {{ run.episode }}s follow the same distribution as live play, but they were not played live.
     {% endif %}
-    “Biggest gain” hands are constructed: the deal and betting where switching to the best response gains most, then the best response and the subject's most likely actions.
+    “Biggest gain” {{ run.episode }}s are constructed: the chance outcomes and actions leading to the situation where switching to the best response gains most, then the best response and the subject's most likely actions.
   </p>
 </header>
 
 <div class="replay-controls">
-  <label for="hand-select">Hand</label>
+  <label for="hand-select">{{ run.episode | capitalize }}</label>
   <select id="hand-select"></select>
-  <button type="button" id="hand-prev" aria-label="Previous hand">Previous</button>
-  <button type="button" id="hand-next" aria-label="Next hand">Next</button>
+  <button type="button" id="hand-prev" aria-label="Previous {{ run.episode }}">Previous</button>
+  <button type="button" id="hand-next" aria-label="Next {{ run.episode }}">Next</button>
 </div>
 {{ legend_replay }}
 <div id="hand-summary" class="hand-summary" aria-live="polite"></div>

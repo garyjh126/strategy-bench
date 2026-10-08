@@ -7,9 +7,10 @@ its inputs and is recomputed when an input changes.
 
 ``breakdown.json``: the per-infostate decomposition of M2 (``analysis.breakdown``) for both
 seats, plus the subject's own infostates ranked by reach-weighted distance from equilibrium.
-All values are in normalised units (``payoff_unit`` per hand).
+All values are in normalised units (``payoff_unit`` per hand, or per ``GameSpec.episode``).
 
-``replay.json``: hands to replay, with everything the replay view shows at each decision.
+``replay.json``: hands (or rounds) to replay, with everything the replay view shows at each
+decision, and the game's ``episode`` word for the view's text.
 Three kinds of hand:
 
 * ``key``: for each seat, the infostates where the best responder gains most. The hand is
@@ -41,7 +42,7 @@ from strategybench.games.base import GameSpec
 from strategybench.report.explain import responder_sentence, subject_sentence
 from strategybench.report.numbers import Source, render
 
-DERIVED_VERSION = 2
+DERIVED_VERSION = 3
 REPLAY_HANDS = 100
 #: Key-situation hands per seat, taken from the infostates with the largest contributions.
 KEY_SITUATIONS = 3
@@ -292,7 +293,7 @@ class _ReplayBuilder:
                 "share": render(r["share"], "pct1"),
             }
             e["responder_note"] = responder_sentence(
-                Source(None, e["responder"], plain=True), "", subject_seat, self.unit_name
+                Source(None, e["responder"], plain=True), "", subject_seat, self.unit_name, self.spec.episode
             ).unescape()
         self.entries[key] = e
 
@@ -418,7 +419,9 @@ def write_replay(
             )
             if abs(h["subject_payoff"] - rec["subject_payoff"] / b.unit) > 1e-9:
                 raise ValueError(f"{run_dir.name}: hand {hand_no} payoff does not match hands.jsonl")
-            h.update(id=f"hand-{hand_no + 1}", group=source, title=f"Hand {hand_no + 1}")
+            h.update(
+                id=f"hand-{hand_no + 1}", group=source, title=f"{spec.episode.capitalize()} {hand_no + 1}"
+            )
             hands.append(h)
     else:
         source, opponent, total = "simulated", "equilibrium", n_hands
@@ -437,7 +440,7 @@ def write_replay(
                 state.apply_action(a)
                 actions.append(a)
             h = b.hand(actions, seat)
-            h.update(id=f"sim-{i + 1}", group=source, title=f"Simulated hand {i + 1}")
+            h.update(id=f"sim-{i + 1}", group=source, title=f"Simulated {spec.episode} {i + 1}")
             hands.append(h)
 
     _write_json(
@@ -448,6 +451,7 @@ def write_replay(
             "params": params,
             "game": spec.name,
             "payoff_unit": breakdown["payoff_unit"],
+            "episode": spec.episode,
             "subject_kind": metrics["subject_kind"],
             "source": source,
             "opponent": opponent,

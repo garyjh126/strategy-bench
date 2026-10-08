@@ -191,6 +191,8 @@ def test_responder_sentences():
     )
     rare = row | {"contribution": 0.0001}
     assert "less than 0.001" in str(responder_sentence(Source(None, rare, plain=True), "", 1, "ante"))
+    rounds = responder_sentence(text, "", 0, "point", "round").unescape()
+    assert "arises in 14.5% of rounds with the subject as Player 1, adding 0.019 point per round" in rounds
 
 
 def test_site_builds_and_every_number_traces(runs_dir, tmp_path):
@@ -215,6 +217,41 @@ def test_site_builds_and_every_number_traces(runs_dir, tmp_path):
 
     # Rebuilding over our own output is allowed.
     assert build_site(runs_dir, out, methodology=METHODOLOGY).report.ok
+
+
+def test_game_supplies_its_own_wording(runs_dir, tmp_path):
+    # Liar's Dice is played in rounds and renames the scripted references; Kuhn keeps the defaults.
+    dice = get_game_spec("liars_dice")
+    template = DEFAULT_TEMPLATES["liars_dice"]
+    lowest_bid = policy_lookup(dice, template, first_action_policy(dice.load()))
+    root = tmp_path / "runs"
+    run_direct(
+        dice, template, MockDistributionClient("first-action", lowest_bid), RunConfig(), root / "dice_low",
+        equilibrium=solve_equilibrium(dice.load_string, 2000),
+    )  # fmt: skip
+    shutil.copytree(runs_dir / "b_pass", root / "b_pass")
+    out = tmp_path / "site"
+    assert build_site(root, out, methodology=METHODOLOGY).report.ok
+
+    records = {r.run_id: r for r in discover(root)[0]}
+    assert records["dice_low"].display_name == "Always the lowest legal bid"
+    assert records["b_pass"].display_name == "Always check / fold"
+
+    replay = json.loads((root / "dice_low" / "replay.json").read_text())
+    assert replay["episode"] == "round"
+    assert {h["title"].rsplit(" ", 1)[0] for h in replay["hands"] if h["group"] == "simulated"} == {
+        "Simulated round"
+    }
+    dice_page = (out / "runs/dice_low/index.html").read_text()
+    assert "points per round" in dice_page and "Replay rounds" in dice_page
+    assert "per hand" not in dice_page and "of hands" not in dice_page
+    dice_replay = (out / "runs/dice_low/replay.html").read_text()
+    assert "Step through a round." in dice_replay and "Step through a hand" not in dice_replay
+    assert "the deal and betting" not in dice_replay
+    kuhn_page = (out / "runs/b_pass/index.html").read_text()
+    assert "antes per hand" in kuhn_page and "Replay hands" in kuhn_page
+    index = (out / "index.html").read_text()
+    assert "wins per hand or round" in index and "points per round" in index and "antes per hand" in index
 
 
 def test_verification_catches_tampering(runs_dir, tmp_path):

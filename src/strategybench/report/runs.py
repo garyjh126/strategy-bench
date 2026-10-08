@@ -20,7 +20,10 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
-#: Display names for the scripted reference subjects (``mock-<agent>`` model ids).
+from strategybench.games import get_game_spec
+
+#: Default display names for the scripted reference subjects (``mock-<agent>`` model ids), in
+#: poker terms; a game can rename them with ``GameSpec.reference_names``.
 REFERENCE_NAMES = {
     "cfr": "Equilibrium (CFR+)",
     "cfr-noisy": "80% equilibrium, 20% uniform",
@@ -90,7 +93,8 @@ class RunRecord:
     def display_name(self) -> str:
         if self.is_reference:
             agent = self.model_id.removeprefix("mock-")
-            return REFERENCE_NAMES.get(agent, agent)
+            names = {**REFERENCE_NAMES, **get_game_spec(self.game).reference_names}
+            return names.get(agent, agent)
         return self.model_id
 
     @property

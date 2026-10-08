@@ -8,6 +8,8 @@ to label the legal actions. Estimation and analysis code never look inside it.
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
+from collections.abc import Mapping
+from types import MappingProxyType
 
 import pyspiel
 
@@ -26,6 +28,11 @@ class GameSpec(ABC):
     #: Optional display name and one-sentence rules summary for reports (default: ``name``).
     title: str = ""
     summary: str = ""
+    #: Optional: what one complete play of the game is called in reports ("hand", "round").
+    episode: str = "hand"
+    #: Optional: names for scripted reference subjects in this game's terms, by agent
+    #: (e.g. ``{"first-action": ...}``). Agents not listed keep the report's default names.
+    reference_names: Mapping[str, str] = MappingProxyType({})
 
     def load(self) -> pyspiel.Game:
         return pyspiel.load_game(self.load_string)

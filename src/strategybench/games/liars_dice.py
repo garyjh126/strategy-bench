@@ -63,6 +63,12 @@ class LiarsDiceSpec(GameSpec):
         "One three-sided die each, with 3s wild. Players take turns raising a bid on what the two "
         "dice show, or call LIAR on the last bid; the winner of the challenge takes 1 point."
     )
+    episode = "round"
+    # OpenSpiel lists bids from lowest to highest, then LIAR.
+    reference_names = {
+        "first-action": "Always the lowest legal bid",
+        "last-action": "Always call LIAR (opening 2x3)",
+    }
 
     def vocabulary(self) -> frozenset[str]:
         return frozenset(_label(a) for a in range(LIAR + 1))

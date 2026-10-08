@@ -88,6 +88,7 @@ class RunView:
         self.replay = self._src("replay.json")
         self.play = self._src("play.json") if "play.json" in self.data else None
         self.unit = rec.metrics["payoff_unit"]
+        self.episode = spec.episode
         #: Confidence intervals and bias values are stored in native units.
         self.native_scale = 1.0 / float(rec.metrics["metrics"]["unit_size"])
         self.temperature = rec.params.get("temperature")
@@ -151,7 +152,7 @@ class RunView:
                     value_html=self.breakdown.num(f"{ptr}/responder/{i}/contribution", "f3"),
                     tip=(
                         f"{responder[i]['short']}: best response {responder[i]['best_response']}, "
-                        f"adds {render(responder[i]['contribution'], 'f3')} {self.unit} per hand"
+                        f"adds {render(responder[i]['contribution'], 'f3')} {self.unit} per {self.episode}"
                     ),
                 )
                 for i in top[:TOP_RESPONDER]
@@ -160,7 +161,9 @@ class RunView:
                 {
                     "ptr": f"{ptr}/responder/{i}",
                     "row": responder[i],
-                    "sentence": responder_sentence(self.breakdown, f"{ptr}/responder/{i}", s, self.unit),
+                    "sentence": responder_sentence(
+                        self.breakdown, f"{ptr}/responder/{i}", s, self.unit, self.episode
+                    ),
                     "hand": f"key-p{s + 1}-{rank}",
                 }
                 for rank, i in enumerate(top[:KEY_SITUATIONS], start=1)
@@ -199,9 +202,9 @@ class RunView:
                         bars,
                         Markup(
                             "Contribution of each of Player {}'s situations to the best responder's gain, "
-                            "in {}s per hand. Hover or focus a bar for details; "
+                            "in {}s per {}. Hover or focus a bar for details; "
                             "the table lists every situation."
-                        ).format(block["responder_seat"] + 1, self.unit),
+                        ).format(block["responder_seat"] + 1, self.unit, self.episode),
                     )
                     if bars
                     else None,
@@ -225,6 +228,10 @@ class GameView:
     @property
     def title(self) -> str:
         return self.spec.title or self.spec.name
+
+    @property
+    def episode(self) -> str:
+        return self.spec.episode
 
     @property
     def facts(self) -> Source:
@@ -282,7 +289,7 @@ def _game_views(views: list[RunView]) -> tuple[list[GameView], list[str]]:
                     hi=ci[1] if ci else None,
                     emphasis=not v.rec.is_reference,
                     tip=f"{name} ({v.rec.description}): "
-                    f"{render(v.m1, 'f3')}{interval}{plug_in} {v.unit} per hand",
+                    f"{render(v.m1, 'f3')}{interval}{plug_in} {v.unit} per {v.episode}",
                     href=f"{v.base}/index.html",
                 )
             )
@@ -290,10 +297,10 @@ def _game_views(views: list[RunView]) -> tuple[list[GameView], list[str]]:
         chart = dot_plot(
             dot_rows,
             Markup(
-                "Exploitability (M1) in {}s per hand: bias-corrected estimate with 95% bootstrap interval "
+                "Exploitability (M1) in {}s per {}: bias-corrected estimate with 95% bootstrap interval "
                 "(sampled subjects) or exact value. Lower is better; 0 is unexploitable. Hover or focus a "
                 "row for its values; the table below lists them all."
-            ).format(unit),
+            ).format(unit, main[0].episode),
             legend=any_models and any(v.rec.is_reference for v in main),
         )
         games.append(GameView(get_game_spec(g), main, variants, spread, chart, any_models))
@@ -378,7 +385,9 @@ def build_site(
         "skipped": [{"id": run_id, "reason": reason} for run_id, reason in skipped],
     }
     env = _environment()
-    common = {"build": build_info, "games": games}
+    # What one play of each game shown is called, for page-wide text ("hand or round").
+    episodes = " or ".join(dict.fromkeys(g.episode for g in games))
+    common = {"build": build_info, "games": games, "episodes": episodes}
 
     for v in views:
         page_dir = out / v.base

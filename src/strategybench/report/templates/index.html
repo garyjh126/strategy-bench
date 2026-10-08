@@ -4,14 +4,14 @@
 {% block main %}
 <section class="intro">
   <h1>How exploitable is each AI player?</h1>
-  <p class="lede">StrategyBench asks a subject to make every decision in a small poker game many times, estimates its strategy from the answers, and computes the exact best response to that strategy with game-tree search. <strong>Exploitability</strong> is how much that best response wins per hand beyond the equilibrium value, averaged over both seats. 0 means unexploitable.</p>
-  <p class="note">Results describe a model together with its prompt and sampling settings, on small games. They are not a measure of general poker or reasoning skill. See the <a href="methodology.html">methodology</a>.</p>
+  <p class="lede">StrategyBench asks a subject to make every decision in a small card or dice game many times, estimates its strategy from the answers, and computes the exact best response to that strategy with game-tree search. <strong>Exploitability</strong> is how much that best response wins per {{ episodes }} beyond the equilibrium value, averaged over both seats. 0 means unexploitable.</p>
+  <p class="note">Results describe a model together with its prompt and sampling settings, on small games. They are not a measure of general game-playing or reasoning skill. See the <a href="methodology.html">methodology</a>.</p>
 </section>
 
 {% if not games | selectattr("any_models") | list %}
 <div class="notice" role="note">
   <strong>No LLM results are published yet.</strong>
-  Every row below is a <em>scripted reference subject</em> run through the same pipeline as a model (same prompts, strict parser, sampling, estimation and metrics). The references show the scale (an equilibrium player scores about 0; always checking or folding is very exploitable) and check the pipeline against known values.
+  Every row below is a <em>scripted reference subject</em> run through the same pipeline as a model (same prompts, strict parser, sampling, estimation and metrics). The references show the scale (an equilibrium player scores about 0; simple fixed rules are very exploitable) and check the pipeline against known values.
 </div>
 {% endif %}
 
@@ -37,7 +37,7 @@
     <thead>
       <tr>
         <th scope="col">Subject</th>
-        <th scope="col" class="r" title="Average over both seats of what a best-responding opponent wins beyond the equilibrium value, per hand. Sampled subjects: bias-corrected estimate with a basic bootstrap 95% interval. Exact subjects: the exact value.">Exploitability (M1)<span class="sub">95% interval</span></th>
+        <th scope="col" class="r" title="Average over both seats of what a best-responding opponent wins beyond the equilibrium value, per {{ game.episode }}. Sampled subjects: bias-corrected estimate with a basic bootstrap 95% interval. Exact subjects: the exact value.">Exploitability (M1)<span class="sub">95% interval</span></th>
         <th scope="col" class="r" title="Exploitability of the estimated strategy itself, before bias correction. It is biased upwards because sampling noise can be exploited.">Plug-in</th>
         <th scope="col" class="r" title="Best-response gain with the subject sitting as Player 1 and as Player 2 (bias-corrected for sampled subjects).">Best-response gain (M2)<span class="sub">as P1 · as P2</span></th>
         <th scope="col" class="r" title="Expected loss against an equilibrium opponent that does not adapt, as Player 1 and as Player 2 (bias-corrected for sampled subjects).">Loss vs equilibrium (M3)<span class="sub">as P1 · as P2</span></th>
@@ -72,7 +72,7 @@
   <details class="howto">
     <summary>How to read this table</summary>
     <ul>
-      <li><strong>Exploitability (M1)</strong> is the headline: what a best-responding opponent gains per hand against the subject's strategy, beyond the equilibrium value, averaged over the two seats. Values are in {{ game.rows[0].unit }}s per hand.</li>
+      <li><strong>Exploitability (M1)</strong> is the headline: what a best-responding opponent gains per {{ game.episode }} against the subject's strategy, beyond the equilibrium value, averaged over the two seats. Values are in {{ game.rows[0].unit }}s per {{ game.episode }}.</li>
       <li>A best responder exploits sampling noise too, so the exploitability of the estimated strategy (<strong>plug-in</strong>) is biased upwards, most of all near equilibrium. For sampled subjects the table shows the <strong>bias-corrected</strong> estimate with a 95% basic bootstrap interval, which is centred on it. These intervals are approximate: in simulation they cover the true value less often than 95% in Leduc, and much less often for subjects very close to equilibrium (see the <a href="methodology.html#uncertainty">methodology</a>). Larger N is the reliable remedy. Exact subjects (probabilities read directly) have no sampling error.</li>
       <li><strong>Best-response gain (M2)</strong> splits M1 by the seat the subject sits in (M1 is their mean).</li>
       <li><strong>Loss vs equilibrium (M3)</strong> is what an opponent playing the equilibrium, without adapting, wins from the subject. It is always at most M2, and can be near 0 even when M1 is large.</li>

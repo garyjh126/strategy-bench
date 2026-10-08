@@ -99,7 +99,8 @@ def main() -> int:
             )
             play_calls = round(per_hand * args.hands)
             print(
-                f"play: {args.hands} hands x ~{per_hand:.2f} subject decisions per hand (under uniform play)"
+                f"play: {args.hands} {spec.episode}s x ~{per_hand:.2f} subject decisions per {spec.episode} "
+                "(under uniform play)"
             )
             lo, hi = lo + play_calls, hi + play_calls * (args.retries + 1)
         print(f"calls: {lo} (no retries) to {hi} (every sample retried {args.retries}x)")
@@ -190,7 +191,7 @@ def main() -> int:
     if result is not None:
         print_direct(spec, client, result)
     if play_result is not None:
-        print_play(play_result)
+        print_play(spec, play_result)
     print(f"  results: {out_dir}")
     return 0
 
@@ -210,7 +211,7 @@ def print_direct(spec, client, result) -> None:
     print(f"{spec.name} | {client.model_id} ({result['subject_kind']}) | prompt {result['prompt_version']}")
     if corrected:
         print("  values: bias-corrected estimate [basic 95% bootstrap interval] (plug-in estimate)")
-    print(f"  M1 exploitability ({unit}/hand):   {fmt('exploitability', m['exploitability_norm'])}")
+    print(f"  M1 exploitability ({unit}/{spec.episode}):   {fmt('exploitability', m['exploitability_norm'])}")
     for seat in range(2):
         print(f"  M2 BR gain, subject seat {seat + 1}:    {fmt(f'br_gain_{seat}', m['br_gain_norm'][seat])}")
     for seat in range(2):
@@ -233,14 +234,14 @@ def print_direct(spec, client, result) -> None:
     print(f"  equilibrium seat values: {[round(v, 5) for v in result['equilibrium']['values']]}")
 
 
-def print_play(result) -> None:
-    p, rel = result["play"], result["reliability"]
-    print(f"  play vs {p['opponent']}: {p['n_hands']} hands, seed {p['seed']}")
+def print_play(spec, result) -> None:
+    p, rel, ep = result["play"], result["reliability"], spec.episode
+    print(f"  play vs {p['opponent']}: {p['n_hands']} {ep}s, seed {p['seed']}")
     for seat in range(2):
         lo, hi = p["seat_ci95"][seat]
         print(
             f"     subject seat {seat + 1}: mean {p['seat_mean'][seat]:+.4f}  [{lo:+.4f}, {hi:+.4f}]  "
-            f"({p['seat_hands'][seat]} hands)"
+            f"({p['seat_hands'][seat]} {ep}s)"
         )
     print(
         f"     subject decisions {p['subject_decisions']} | fallbacks {p['fallbacks']} | "

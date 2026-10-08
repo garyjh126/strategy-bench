@@ -46,8 +46,11 @@ def subject_sentence(src: Source, ptr: str, kind: str) -> Markup:
     )
 
 
-def responder_sentence(src: Source, ptr: str, subject_seat: int, unit: str) -> Markup:
-    """What a best responder does at one of its infostates, and what it gains there."""
+def responder_sentence(src: Source, ptr: str, subject_seat: int, unit: str, episode: str = "hand") -> Markup:
+    """What a best responder does at one of its infostates, and what it gains there.
+
+    ``episode`` names one play of the game (``GameSpec.episode``, e.g. "hand" or "round").
+    """
     reach, edge = src.get(f"{ptr}/reach"), src.get(f"{ptr}/edge")
     best = src.get(f"{ptr}/best_response")
     seat_text = f"Player {subject_seat + 1}"
@@ -66,13 +69,12 @@ def responder_sentence(src: Source, ptr: str, subject_seat: int, unit: str) -> M
     ).format(best, v_best, unit, v_mix)
     if render(src.get(f"{ptr}/contribution"), "f3") == render(0.0, "f3"):
         return head + Markup(
-            " The situation arises in {} of hands with the subject as {}, "
-            "so it adds less than 0.001 {} per hand."
-        ).format(r, seat_text, unit)
+            " The situation arises in {} of {}s with the subject as {}, so it adds less than 0.001 {} per {}."
+        ).format(r, episode, seat_text, unit, episode)
     c = src.num(f"{ptr}/contribution", "f3")
-    tail = Markup(
-        " The situation arises in {} of hands with the subject as {}, adding {} {} per hand"
-    ).format(r, seat_text, c, unit)
+    tail = Markup(" The situation arises in {} of {}s with the subject as {}, adding {} {} per {}").format(
+        r, episode, seat_text, c, unit, episode
+    )
     if src.get(f"{ptr}/share") is not None:
         tail += Markup(" ({} of the best responder's gain)").format(src.num(f"{ptr}/share", "pct1"))
     return head + tail + Markup(".")
