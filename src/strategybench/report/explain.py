@@ -74,5 +74,5 @@ def responder_sentence(src: Source, ptr: str, subject_seat: int, unit: str) -> M
         " The situation arises in {} of hands with the subject as {}, adding {} {} per hand"
     ).format(r, seat_text, c, unit)
     if src.get(f"{ptr}/share") is not None:
-        tail += Markup(" ({} of the best responder's gain)").format(src.num(f"{ptr}/share", "pct0"))
+        tail += Markup(" ({} of the best responder's gain)").format(src.num(f"{ptr}/share", "pct1"))
     return head + tail + Markup(".")

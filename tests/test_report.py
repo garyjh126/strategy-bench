@@ -177,7 +177,7 @@ def test_responder_sentences():
     assert responder_sentence(text, "", 0, "ante").unescape() == (
         "A best responder plays CALL here, earning −0.808 ante per visit against −0.936 for the "
         "equilibrium mix. The situation arises in 14.5% of hands with the subject as Player 1, adding 0.019 "
-        "ante per hand (47% of the best responder's gain)."
+        "ante per hand (46.7% of the best responder's gain)."
     )
     html = str(responder_sentence(Source("runs/x/data/breakdown.json", row), "", 0, "ante"))
     assert html.count('class="num"') == 5

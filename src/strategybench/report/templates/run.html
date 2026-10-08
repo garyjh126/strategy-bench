@@ -44,22 +44,22 @@
   <div class="tiles">
     <div class="tile hero">
       <div class="label">Exploitability (M1)</div>
-      <div class="value">{{ m.num("/metrics/exploitability_norm", "f3") }}</div>
-      <div class="sub">{{ run.unit }}s per hand{% if run.has_ci %} · 95% interval [{{ m.num("/ci95/exploitability/0", "f3", run.native_scale) }}, {{ m.num("/ci95/exploitability/1", "f3", run.native_scale) }}]{% endif %}</div>
-      {% if run.rec.metrics.bias and "exploitability_bias_corrected" in run.rec.metrics.bias %}<div class="sub">bias-corrected {{ m.num("/bias/exploitability_bias_corrected", "f3", run.native_scale) }}</div>{% endif %}
+      <div class="value">{{ run.est("exploitability") }}</div>
+      <div class="sub">{{ run.unit }}s per hand{% if run.ci("exploitability") %} · 95% interval {{ run.ci_html("exploitability") }}{% endif %}</div>
+      {% if run.corrected %}<div class="sub">bias-corrected; plug-in {{ run.plug_in("exploitability") }}</div>{% elif run.rec.subject_kind == "distribution" %}<div class="sub">exact (probabilities read directly)</div>{% endif %}
     </div>
     {% for seat in [0, 1] %}
     <div class="tile">
       <div class="label">Best-response gain as Player {{ seat + 1 }} (M2)</div>
-      <div class="value">{{ m.num("/metrics/br_gain_norm/" ~ seat, "f3") }}</div>
-      {% if run.ci("br_gain_" ~ seat) %}<div class="sub">[{{ m.num("/ci95/br_gain_" ~ seat ~ "/0", "f3", run.native_scale) }}, {{ m.num("/ci95/br_gain_" ~ seat ~ "/1", "f3", run.native_scale) }}]</div>{% endif %}
+      <div class="value">{{ run.est("br_gain_" ~ seat) }}</div>
+      {% if run.ci("br_gain_" ~ seat) %}<div class="sub">{{ run.ci_html("br_gain_" ~ seat) }} · plug-in {{ run.plug_in("br_gain_" ~ seat) }}</div>{% endif %}
     </div>
     {% endfor %}
     {% for seat in [0, 1] %}
     <div class="tile">
       <div class="label">Loss vs equilibrium as Player {{ seat + 1 }} (M3)</div>
-      <div class="value">{{ m.num("/metrics/h2h_loss_norm/" ~ seat, "f3") }}</div>
-      {% if run.ci("h2h_loss_" ~ seat) %}<div class="sub">[{{ m.num("/ci95/h2h_loss_" ~ seat ~ "/0", "f3", run.native_scale) }}, {{ m.num("/ci95/h2h_loss_" ~ seat ~ "/1", "f3", run.native_scale) }}]</div>{% endif %}
+      <div class="value">{{ run.est("h2h_loss_" ~ seat) }}</div>
+      {% if run.ci("h2h_loss_" ~ seat) %}<div class="sub">{{ run.ci_html("h2h_loss_" ~ seat) }} · plug-in {{ run.plug_in("h2h_loss_" ~ seat) }}</div>{% endif %}
     </div>
     {% endfor %}
     <div class="tile">
@@ -80,6 +80,7 @@
 <section aria-labelledby="gains">
   <h2 id="gains">Where a best responder gains</h2>
   <p class="lede">The best-response gain in each seat splits exactly into what an equilibrium opponent wins without adapting (M3) plus what adapting adds at each of the opponent's decisions. A decision's contribution is how often it arises (with the opponent at equilibrium) times how much more the best response earns there than the equilibrium mix, with the best response played afterwards.</p>
+  {% if run.corrected %}<p class="note">This section analyses the estimated strategy itself, so its totals are the plug-in values, before bias correction.</p>{% endif %}
   {% for p in panels %}
   {% set bp = p.ptr %}
   <div class="seat-panel">
@@ -120,7 +121,7 @@
             <td class="r">{{ b.num(rp ~ "/eq_mix_value", "sf3") }}</td>
             <td class="r">{{ b.num(rp ~ "/reach", "pct1") }}</td>
             <td class="r">{{ b.num(rp ~ "/contribution", "f3") }}</td>
-            <td class="r">{{ b.num(rp ~ "/share", "pct0") }}</td>
+            <td class="r">{{ b.num(rp ~ "/share", "pct1") }}</td>
           </tr>
         {% endfor %}
         </tbody>

@@ -39,10 +39,18 @@ from strategybench.report.charts import (
 )
 from strategybench.report.derive import KEY_SITUATIONS, MIN_CONTRIBUTION, REPLAY_HANDS, derive, file_sha256
 from strategybench.report.explain import responder_sentence
-from strategybench.report.numbers import Source, escape_token, render
+from strategybench.report.numbers import Source, escape_token, render, resolve
 from strategybench.report.runs import RunRecord, discover, select
 from strategybench.report.verify import VerifyReport, verify_site
 
+#: JSON pointers to the plug-in (normalised) value of each metric key in metrics.json.
+PLUG_IN = {
+    "exploitability": "/metrics/exploitability_norm",
+    "br_gain_0": "/metrics/br_gain_norm/0",
+    "br_gain_1": "/metrics/br_gain_norm/1",
+    "h2h_loss_0": "/metrics/h2h_loss_norm/0",
+    "h2h_loss_1": "/metrics/h2h_loss_norm/1",
+}
 #: Result files published with each run (when present). Call logs stay in the run directory.
 PUBLISHED = ["manifest.json", "metrics.json", "strategy.json", "breakdown.json", "replay.json", "play.json"]
 GAME_ORDER = ["kuhn", "leduc"]
@@ -91,17 +99,44 @@ class RunView:
     def _src(self, name: str) -> Source:
         return Source(f"{self.base}/data/{name}", self.data[name])
 
+    # Headline values: the bias-corrected estimate with its basic bootstrap interval when the run
+    # has them (sampled subjects), otherwise the plug-in value (exact or unbootstrapped runs).
+
+    @property
+    def corrected(self) -> bool:
+        return bool(self.rec.metrics.get("bias_corrected"))
+
+    @property
+    def ci_method(self) -> str:
+        return self.rec.metrics.get("ci_method") or "percentile"
+
+    def value(self, key: str) -> float:
+        if self.corrected:
+            return self.rec.metrics["bias_corrected"][key] * self.native_scale
+        return resolve(self.rec.metrics, PLUG_IN[key])
+
+    def est(self, key: str) -> Markup:
+        if self.corrected:
+            return self.metrics.num(f"/bias_corrected/{key}", "f3", self.native_scale)
+        return self.metrics.num(PLUG_IN[key], "f3")
+
+    def plug_in(self, key: str) -> Markup:
+        return self.metrics.num(PLUG_IN[key], "f3")
+
+    def ci(self, key: str) -> tuple[float, float] | None:
+        lo_hi = (self.rec.metrics.get("ci95") or {}).get(key)
+        return None if lo_hi is None else (lo_hi[0] * self.native_scale, lo_hi[1] * self.native_scale)
+
+    def ci_html(self, key: str) -> Markup:
+        if self.ci(key) is None:
+            return Markup("")
+        lo = self.metrics.num(f"/ci95/{key}/0", "f3", self.native_scale)
+        hi = self.metrics.num(f"/ci95/{key}/1", "f3", self.native_scale)
+        return Markup("[{}, {}]").format(lo, hi)
+
     @property
     def m1(self) -> float:
-        return self.rec.metrics["metrics"]["exploitability_norm"]
-
-    @property
-    def has_ci(self) -> bool:
-        return "exploitability" in (self.rec.metrics.get("ci95") or {})
-
-    def ci(self, name: str) -> tuple[float, float] | None:
-        lo_hi = (self.rec.metrics.get("ci95") or {}).get(name)
-        return None if lo_hi is None else (lo_hi[0] * self.native_scale, lo_hi[1] * self.native_scale)
+        return self.value("exploitability")
 
     def seat_panels(self) -> list[dict[str, Any]]:
         panels = []
@@ -230,18 +265,24 @@ def _game_views(views: list[RunView]) -> tuple[list[GameView], list[str]]:
 
         any_models = any(not v.rec.is_reference for v in main)
         dot_rows = []
+        names = [v.rec.display_name for v in main]
         for v in main:
             ci = v.ci("exploitability")
             interval = f" [{render(ci[0], 'f3')}, {render(ci[1], 'f3')}]" if ci else ""
+            raw = render(v.rec.metrics["metrics"]["exploitability_norm"], "f3")
+            plug_in = f", plug-in {raw}" if ci else ""
+            name = v.rec.display_name
+            if names.count(name) > 1:  # e.g. the equilibrium read exactly and sampled
+                name += " (exact)" if v.rec.subject_kind == "distribution" else f" (N = {v.rec.n_samples})"
             dot_rows.append(
                 DotRow(
-                    name=v.rec.display_name,
+                    name=name,
                     value=v.m1,
                     lo=ci[0] if ci else None,
                     hi=ci[1] if ci else None,
                     emphasis=not v.rec.is_reference,
-                    tip=f"{v.rec.display_name} ({v.rec.description}): "
-                    f"{render(v.m1, 'f3')}{interval} {v.unit} per hand",
+                    tip=f"{name} ({v.rec.description}): "
+                    f"{render(v.m1, 'f3')}{interval}{plug_in} {v.unit} per hand",
                     href=f"{v.base}/index.html",
                 )
             )
@@ -249,8 +290,9 @@ def _game_views(views: list[RunView]) -> tuple[list[GameView], list[str]]:
         chart = dot_plot(
             dot_rows,
             Markup(
-                "Exploitability (M1) in {}s per hand; lower is better and 0 is unexploitable. "
-                "Hover or focus a row for its values; the table below lists them all."
+                "Exploitability (M1) in {}s per hand: bias-corrected estimate with 95% bootstrap interval "
+                "(sampled subjects) or exact value. Lower is better; 0 is unexploitable. Hover or focus a "
+                "row for its values; the table below lists them all."
             ).format(unit),
             legend=any_models and any(v.rec.is_reference for v in main),
         )

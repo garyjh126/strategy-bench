@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% from "macros.html" import subject_cell, m1_cell, bias_cell, pair_cell, n_cell, temp_cell, cost_cell, coverage_cell with context %}
+{% from "macros.html" import subject_cell, m1_cell, plug_in_cell, pair_cell, n_cell, temp_cell, cost_cell, coverage_cell with context %}
 {% block title %}StrategyBench: exploitability leaderboard{% endblock %}
 {% block main %}
 <section class="intro">
@@ -37,10 +37,10 @@
     <thead>
       <tr>
         <th scope="col">Subject</th>
-        <th scope="col" class="r" title="Average over both seats of what a best-responding opponent wins beyond the equilibrium value, per hand. 95% bootstrap interval below.">Exploitability (M1)</th>
-        <th scope="col" class="r" title="Small samples bias exploitability upwards; this subtracts the bootstrap estimate of that bias.">Bias-corrected</th>
-        <th scope="col" class="r" title="Best-response gain with the subject sitting as Player 1 and as Player 2.">Best-response gain (M2)<span class="sub">as P1 · as P2</span></th>
-        <th scope="col" class="r" title="Expected loss against an equilibrium opponent that does not adapt, as Player 1 and as Player 2.">Loss vs equilibrium (M3)<span class="sub">as P1 · as P2</span></th>
+        <th scope="col" class="r" title="Average over both seats of what a best-responding opponent wins beyond the equilibrium value, per hand. Sampled subjects: bias-corrected estimate with a basic bootstrap 95% interval. Exact subjects: the exact value.">Exploitability (M1)<span class="sub">95% interval</span></th>
+        <th scope="col" class="r" title="Exploitability of the estimated strategy itself, before bias correction. It is biased upwards because sampling noise can be exploited.">Plug-in</th>
+        <th scope="col" class="r" title="Best-response gain with the subject sitting as Player 1 and as Player 2 (bias-corrected for sampled subjects).">Best-response gain (M2)<span class="sub">as P1 · as P2</span></th>
+        <th scope="col" class="r" title="Expected loss against an equilibrium opponent that does not adapt, as Player 1 and as Player 2 (bias-corrected for sampled subjects).">Loss vs equilibrium (M3)<span class="sub">as P1 · as P2</span></th>
         <th scope="col" class="r" title="Share of replies (attempts) that were not exactly one label.">Parse failures</th>
         <th scope="col" class="r" title="Reach-weighted share of decision situations with at least k valid samples.">Coverage</th>
         {% if game.spread %}<th scope="col" class="r" title="Range of exploitability across prompt variants (number of prompts).">Across prompts</th>{% endif %}
@@ -53,13 +53,13 @@
       <tr{% if run.rec.is_reference %} class="ref"{% endif %}>
         <th scope="row">{{ subject_cell(run, "") }}</th>
         <td class="r">{{ m1_cell(run) }}</td>
-        <td class="r">{{ bias_cell(run) }}</td>
-        <td class="r">{{ pair_cell(run, "br_gain_norm") }}</td>
-        <td class="r">{{ pair_cell(run, "h2h_loss_norm") }}</td>
+        <td class="r">{{ plug_in_cell(run) }}</td>
+        <td class="r">{{ pair_cell(run, "br_gain") }}</td>
+        <td class="r">{{ pair_cell(run, "h2h_loss") }}</td>
         <td class="r">{{ run.metrics.num("/reliability/parse_failure_rate", "pct1") }}</td>
         <td class="r">{{ coverage_cell(run) }}</td>
         {% if game.spread %}
-        <td class="r">{% if run.id in game.spread %}{% set lo, hi, k = game.spread[run.id] %}{{ lo.metrics.num("/metrics/exploitability_norm", "f3") }}–{{ hi.metrics.num("/metrics/exploitability_norm", "f3") }} <span class="muted">({{ k }})</span>{% else %}<span class="muted">—</span>{% endif %}</td>
+        <td class="r">{% if run.id in game.spread %}{% set lo, hi, k = game.spread[run.id] %}{{ lo.est("exploitability") }}–{{ hi.est("exploitability") }} <span class="muted">({{ k }})</span>{% else %}<span class="muted">—</span>{% endif %}</td>
         {% endif %}
         <td>N {{ n_cell(run) }} · T {{ temp_cell(run) }}<span class="sub">{{ run.metrics.num("/prompt_version", "text") }}</span></td>
         <td>{{ cost_cell(run) }}<span class="sub">{{ run.metrics.num("/run_date", "text") }}</span></td>
@@ -72,8 +72,8 @@
   <details class="howto">
     <summary>How to read this table</summary>
     <ul>
-      <li><strong>Exploitability (M1)</strong> is the headline: what a best-responding opponent gains per hand against the subject's estimated strategy, beyond the equilibrium value, averaged over the two seats. Values are in {{ game.rows[0].unit }}s per hand. The interval is a 95% bootstrap interval over the subject's samples.</li>
-      <li><strong>Bias-corrected</strong>: a maximum over opponent strategies turns sampling noise into apparent exploitability, so the plain estimate is biased upwards at small N. The corrected value subtracts the bootstrap estimate of that bias; larger N is the reliable remedy.</li>
+      <li><strong>Exploitability (M1)</strong> is the headline: what a best-responding opponent gains per hand against the subject's strategy, beyond the equilibrium value, averaged over the two seats. Values are in {{ game.rows[0].unit }}s per hand.</li>
+      <li>A best responder exploits sampling noise too, so the exploitability of the estimated strategy (<strong>plug-in</strong>) is biased upwards, most of all near equilibrium. For sampled subjects the table shows the <strong>bias-corrected</strong> estimate with a 95% basic bootstrap interval, which is centred on it. In simulation these intervals have close to their nominal coverage, but cover less often for subjects very close to equilibrium (see the <a href="methodology.html#uncertainty">methodology</a>). Larger N is the reliable remedy. Exact subjects (probabilities read directly) have no sampling error.</li>
       <li><strong>Best-response gain (M2)</strong> splits M1 by the seat the subject sits in (M1 is their mean).</li>
       <li><strong>Loss vs equilibrium (M3)</strong> is what an opponent playing the equilibrium, without adapting, wins from the subject. It is always at most M2, and can be near 0 even when M1 is large.</li>
       <li><strong>Parse failures</strong> and <strong>coverage</strong> are reliability measures (M4). Failed replies are retried and counted, never replaced with a guessed action.</li>
@@ -92,7 +92,7 @@
         <th scope="row">{{ subject_cell(run, "") }}</th>
         <td>{{ run.metrics.num("/prompt_version", "text") }}</td>
         <td class="r">{{ m1_cell(run) }}</td>
-        <td class="r">{% if base %}{{ base.metrics.num("/metrics/exploitability_norm", "f3") }}{% else %}<span class="muted">not run</span>{% endif %}</td>
+        <td class="r">{% if base %}{{ base.est("exploitability") }}{% else %}<span class="muted">not run</span>{% endif %}</td>
         <td class="r">{{ n_cell(run) }}</td>
         <td>{{ run.metrics.num("/run_date", "text") }}</td>
       </tr>

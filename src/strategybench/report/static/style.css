@@ -179,6 +179,8 @@ tbody th { font-weight: 500; }
 .r { text-align: right; }
 .board th, .board td { white-space: nowrap; padding: 8px 10px; }
 .board thead th { white-space: normal; min-width: 4.5rem; }
+.board tbody th { white-space: normal; min-width: 13rem; max-width: 19rem; }
+.board tbody th .sub { white-space: normal; }
 .board .subject { font-weight: 600; text-decoration: none; }
 .board .subject:hover { text-decoration: underline; }
 .board .big { font-weight: 650; font-size: 0.95rem; }

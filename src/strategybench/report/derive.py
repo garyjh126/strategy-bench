@@ -41,7 +41,7 @@ from strategybench.games.base import GameSpec
 from strategybench.report.explain import responder_sentence, subject_sentence
 from strategybench.report.numbers import Source, render
 
-DERIVED_VERSION = 1
+DERIVED_VERSION = 2
 REPLAY_HANDS = 100
 #: Key-situation hands per seat, taken from the infostates with the largest contributions.
 KEY_SITUATIONS = 3
@@ -289,7 +289,7 @@ class _ReplayBuilder:
                 "eq_mix_value": render(r["eq_mix_value"], "sf3"),
                 "reach": render(r["reach"], "pct1"),
                 "contribution": render(r["contribution"], "f3"),
-                "share": render(r["share"], "pct0"),
+                "share": render(r["share"], "pct1"),
             }
             e["responder_note"] = responder_sentence(
                 Source(None, e["responder"], plain=True), "", subject_seat, self.unit_name

@@ -5,18 +5,18 @@
 {% endmacro %}
 
 {% macro m1_cell(run) %}
-<span class="big">{{ run.metrics.num("/metrics/exploitability_norm", "f3") }}</span>
-{% if run.has_ci %}<span class="sub">[{{ run.metrics.num("/ci95/exploitability/0", "f3", run.native_scale) }}, {{ run.metrics.num("/ci95/exploitability/1", "f3", run.native_scale) }}]</span>
+<span class="big">{{ run.est("exploitability") }}</span>
+{% if run.ci("exploitability") %}<span class="sub">{{ run.ci_html("exploitability") }}{% if run.ci_method != "basic" %} percentile{% endif %}</span>
 {% elif run.rec.subject_kind == "distribution" %}<span class="sub">exact</span>
 {% else %}<span class="sub">no interval</span>{% endif %}
 {% endmacro %}
 
-{% macro bias_cell(run) %}
-{% if run.rec.metrics.bias and "exploitability_bias_corrected" in run.rec.metrics.bias %}{{ run.metrics.num("/bias/exploitability_bias_corrected", "f3", run.native_scale) }}{% else %}<span class="muted">—</span>{% endif %}
+{% macro plug_in_cell(run) %}
+{% if run.corrected %}{{ run.plug_in("exploitability") }}{% else %}<span class="muted">—</span>{% endif %}
 {% endmacro %}
 
 {% macro pair_cell(run, key) %}
-{{ run.metrics.num("/metrics/" ~ key ~ "/0", "f3") }} <span class="muted">·</span> {{ run.metrics.num("/metrics/" ~ key ~ "/1", "f3") }}
+{{ run.est(key ~ "_0") }} <span class="muted">·</span> {{ run.est(key ~ "_1") }}
 {% endmacro %}
 
 {% macro n_cell(run) %}
