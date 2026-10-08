@@ -70,6 +70,11 @@ class LeducSpec(GameSpec):
     load_string = "leduc_poker(suit_isomorphism=True)"
     payoff_unit = "ante"
     unit_size = 1.0
+    title = "Leduc poker"
+    summary = (
+        "Six cards (two each of Jack, Queen, King), one private card each, a public card, and two "
+        "betting rounds with at most one bet and one raise per round."
+    )
 
     def vocabulary(self) -> frozenset[str]:
         return frozenset({"CHECK", "BET", "FOLD", "CALL", "RAISE"})
@@ -80,6 +85,20 @@ class LeducSpec(GameSpec):
         facing = r.contributions[1 - p] > r.contributions[p]
         names = {_FOLD: "FOLD", _CALL: "CALL", _RAISE: "RAISE"} if facing else {_CALL: "CHECK", _RAISE: "BET"}
         return {a: names[a] for a in state.legal_actions()}
+
+    def short_label(self, state: pyspiel.State) -> str:
+        r = _replay(state)
+        cards = _RANK_NAMES[r.private[state.current_player()]]
+        if r.public is not None:
+            cards += f", public {_RANK_NAMES[r.public]}"
+        rounds = [f"R{n}: {', '.join(r.betting[n]) or 'first to act'}" for n in range(1, r.round + 1)]
+        return " \u00b7 ".join([cards, *rounds])
+
+    def describe_chance(self, state: pyspiel.State, action: int) -> str:
+        dealt = len(_replay(state).private)
+        if dealt < 2:
+            return f"{_seat_name(dealt)} is dealt a {_RANK_NAMES[action]}"
+        return f"The public card is a {_RANK_NAMES[action]}"
 
     def render_infostate(self, state: pyspiel.State) -> str:
         r = _replay(state)

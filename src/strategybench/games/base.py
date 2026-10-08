@@ -23,6 +23,9 @@ class GameSpec(ABC):
     payoff_unit: str
     #: Native payoff units per normalisation unit.
     unit_size: float = 1.0
+    #: Optional display name and one-sentence rules summary for reports (default: ``name``).
+    title: str = ""
+    summary: str = ""
 
     def load(self) -> pyspiel.Game:
         return pyspiel.load_game(self.load_string)
@@ -38,6 +41,20 @@ class GameSpec(ABC):
     @abstractmethod
     def render_infostate(self, state: pyspiel.State) -> str:
         """Describe the current player's situation: seat, private information, public history."""
+
+    def short_label(self, state: pyspiel.State) -> str:
+        """One-line description of the current player's infostate, for charts and lists.
+
+        Optional: the default joins the lines of ``render_infostate``. Never shown to the subject.
+        """
+        return " \u00b7 ".join(self.render_infostate(state).splitlines())
+
+    def describe_chance(self, state: pyspiel.State, action: int) -> str:
+        """Describe a chance outcome (e.g. a card being dealt) for replays.
+
+        Optional: the default is OpenSpiel's own string. Never shown to the subject.
+        """
+        return state.action_to_string(state.current_player(), action)
 
     def parse_action(self, state: pyspiel.State, text: str) -> ParseResult:
         labels = self.action_labels(state)

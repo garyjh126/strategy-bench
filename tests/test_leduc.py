@@ -101,3 +101,17 @@ def test_equilibrium_via_distribution_client_is_unexploitable(eq):
     client = MockDistributionClient("cfr", policy_lookup(SPEC, TEMPLATE, eq.policy))
     result = run_direct(SPEC, TEMPLATE, client, RunConfig(), equilibrium=eq)
     assert result["metrics"]["exploitability"] < 1e-3
+
+
+def test_replay_text():
+    s = _state()
+    assert SPEC.describe_chance(s, QUEEN) == "Player 1 is dealt a Queen"
+    s = _state(QUEEN, KING, CALL, CALL)
+    assert SPEC.describe_chance(s, KING) == "The public card is a King"
+    s = _state(QUEEN, KING, CALL, RAISE)
+    assert SPEC.short_label(s) == "Queen · R1: Player 1 checked, Player 2 bet 2"
+    s = _state(QUEEN, KING, CALL, CALL, KING, RAISE)
+    assert (
+        SPEC.short_label(s)
+        == "King, public King · R1: Player 1 checked, Player 2 checked · R2: Player 1 bet 4"
+    )

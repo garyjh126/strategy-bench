@@ -63,3 +63,14 @@ def test_prompts_differ_only_in_situation_and_are_unique_per_infostate():
     assert len({p.hash for p in prompts}) == 12
     assert len({p.system for p in prompts}) == 1
     assert all(p.user.rstrip().endswith("Do not write anything else.") for p in prompts)
+
+
+def test_replay_text():
+    spec, state = _state()
+    assert spec.describe_chance(state, KING) == "Player 1 is dealt the King"
+    spec, state = _state(KING)
+    assert spec.describe_chance(state, JACK) == "Player 2 is dealt the Jack"
+    spec, state = _state(KING, JACK, PASS, BET)
+    assert spec.short_label(state) == "King · Player 1 checked, Player 2 bet"
+    spec, state = _state(KING, JACK)
+    assert spec.short_label(state) == "King · first to act"
