@@ -7,8 +7,10 @@ each information state, and a classical best response (via [OpenSpiel](https://g
 is computed against it. The headline output is an exploitability score per model per game, with bootstrap
 confidence intervals.
 
-> **Status:** Phase 2. Kuhn and Leduc poker run end to end (`direct` and `play` modes) with mock
-> subjects, and clients for Claude, Gemini and DeepSeek are in place. No published LLM results yet.
+> **Status:** Phase 3. Kuhn and Leduc poker run end to end (`direct` and `play` modes), clients for
+> Claude, Gemini and DeepSeek are in place, and a static site (leaderboard, run pages, match
+> replays, methodology) is built from the results. No LLM results are published yet; the site
+> currently shows scripted reference subjects.
 
 ## Setup
 
@@ -58,6 +60,30 @@ uv run python scripts/run_benchmark.py --model deepseek-flash --samples 200 --ma
 Each run writes `manifest.json`, `calls.jsonl`, `strategy.json` and `metrics.json` to a new
 directory under `runs/`. See [docs/methodology.md](docs/methodology.md) for the metric definitions.
 
+## Build the site
+
+The site is generated from the results directory. Every run directory with `metrics.json` is a
+candidate; smoke tests (fewer than 30 samples per infostate) and superseded duplicates are left
+out, with the reason printed.
+
+```bash
+uv run python scripts/run_references.py   # scripted reference subjects for Kuhn and Leduc (free)
+uv run python scripts/build_site.py       # writes site/; open site/index.html in a browser
+```
+
+The build writes `breakdown.json` (where a best responder gains) and `replay.json` (hands for the
+replay view) into each run directory, renders the pages, and then checks that every number on
+every page matches the result file it names. It fails if any number does not.
+
+`site/` is plain HTML, CSS and a little JavaScript with no external requests, so it can be
+opened directly from disk or served from GitHub Pages.
+
+To check how well the bootstrap intervals cover the true exploitability (free, by simulation):
+
+```bash
+uv run python scripts/ci_coverage.py --game kuhn
+```
+
 ## Layout
 
 ```
@@ -68,7 +94,7 @@ src/strategybench/
   estimation/  infostate enumeration and strategy estimation
   analysis/    exploitability, best response, CIs
   baselines/   scripted agents and CFR equilibrium
-  report/      leaderboard and static site
+  report/      site build: run selection, derived files, templates, number tracing
 scripts/       entry-point scripts
 tests/         pytest suite
 docs/          methodology and design notes

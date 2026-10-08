@@ -1,6 +1,7 @@
 # Methodology
 
-_Draft. Covers what is implemented so far: Kuhn and Leduc poker, `direct` and `play` modes._
+_Draft. Covers what is implemented so far: Kuhn and Leduc poker, `direct` and `play` modes, and
+the reporting site._
 
 ## What is measured
 
@@ -106,6 +107,36 @@ in the equilibrium's support earns exactly the equilibrium value. In Kuhn poker 
 plays the right actions with the wrong frequencies therefore has M3 ≈ 0 while still being
 exploitable (M1 > 0). M1 is the headline metric for this reason.
 
+## Where a best responder gains
+
+Each run page splits the best-response gain M2 into the situations where it is earned. Fix the
+subject's estimated strategy σ̂ in seat *i* and let the other seat *j* switch from its
+equilibrium strategy σ\* to a best response BR against σ̂. Then, exactly,
+
+    M2_i  =  M3_i  +  Σ over j's infostates I of  contribution(I)
+
+    contribution(I)  =  reach*(I) · [ q(I, BR(I)) − Σ_a σ*(I, a) · q(I, a) ]
+
+* `reach*(I)` is the probability that *I* is reached when seat *j* plays the equilibrium
+  against σ̂ (chance × σ̂ × σ\*).
+* `q(I, a)` is the expected payoff to seat *j* of taking action *a* at *I*, given that *I* was
+  reached, when *j* best-responds from then on. It is computed from OpenSpiel's
+  `BestResponsePolicy`, whose counterfactual values are divided by the infostate's
+  counterfactual reach.
+* The bracket is the **per-visit edge** of the best response over the equilibrium mix. It is
+  never negative, because the best response maximises `q(I, ·)`.
+
+So M3 is what the equilibrium wins without adapting, and each contribution is how often a
+situation arises times how much more adapting earns there. The identity is a telescoping
+(performance-difference) argument over seat *j*'s decisions; the tests check it to 1e-9 on
+Kuhn and Leduc for several strategies, and against hand-computed Kuhn values (for an
+always-check/fold Player 1, Player 2's situations "Jack after a check" and "Queen after a
+check" contribute 4/9 and 1/3).
+
+The page shows the situations with the largest contributions, with a templated sentence for
+each, and the subject's own action frequencies at every infostate against the equilibrium,
+ordered by reach (opponent at equilibrium) times total variation distance from the equilibrium.
+
 ## Prompt sensitivity
 
 Two optional variants measure how much results depend on wording (`--prompt`):
@@ -117,23 +148,69 @@ The spread of a model's metrics across these variants is reported alongside its 
 
 ## Uncertainty
 
-Bootstrap confidence intervals (95%, percentile, 200 replicates by default) resample the valid
-samples at each infostate with replacement and recompute every metric.
+Each bootstrap replicate (200 by default) resamples the valid samples at every infostate with
+replacement, keeping that infostate's sample size, and recomputes every metric.
 
-**Small-sample bias.** Exploitability is a maximum over opponent strategies, so sampling noise in
-σ̂ can only be exploited, never cancel out: the plug-in estimate is biased upwards. Example
-(mock subject sampling the equilibrium, true exploitability ≈ 0):
+**Plug-in bias.** Exploitability and the best-response gains are maxima over opponent
+strategies. For any fixed opponent strategy the subject's estimated payoff is unbiased, but the
+best responder picks its strategy using the same noisy estimate, so sampling noise is exploited
+and never cancels out: the exploitability of the estimated strategy (the *plug-in* estimate) is
+biased upwards. The bias is largest near equilibrium, where the best responder is indifferent
+almost everywhere, and the bootstrap replicates are biased upwards again, so a percentile
+interval (the 2.5% and 97.5% quantiles of the replicates) sits above the truth.
 
-| N per infostate | Estimate | 95% CI | Bias-corrected |
-|---|---|---|---|
-| 50 | 0.030 | [0.018, 0.080] | 0.016 |
-| 200 | 0.018 | [0.008, 0.039] | 0.015 |
-| 1000 | 0.004 | [0.002, 0.016] | 0.000 |
+**What runs report.** For every metric (M1, and M2 and M3 per seat):
 
-(Produced by `scripts/run_benchmark.py --agent cfr --samples N`.) Results therefore report the
-bootstrap bias estimate and the bias-corrected value `max(0, 2·point − bootstrap mean)` next to
-the plain estimate. The correction is partial; the reliable remedy is larger N. Distribution
-subjects are not affected.
+* the bias-corrected estimate `max(0, 2·x − mean of replicates)`, where `x` is the plug-in value;
+* the basic bootstrap interval `[2·x − q97.5, 2·x − q2.5]`, clipped at 0, which is centred on
+  the bias-corrected estimate.
+
+The site shows these, with the plug-in value beside them. `metrics.json` also keeps the
+percentile intervals (`ci95_percentile`) and the bootstrap bias. Exact subjects (distribution
+clients) have no sampling error and are shown exactly.
+
+**Coverage, measured by simulation.** For scripted strategies with a known exploitability,
+`scripts/ci_coverage.py` draws independent datasets of N = 200 samples per infostate, builds
+both intervals for each, and counts how often they contain the true value:
+
+| Game | Strategy | True M1 | Mean plug-in (sd) | Mean bias-corrected | Percentile coverage | Basic coverage |
+|---|---|---|---|---|---|---|
+| Kuhn | uniform | 0.458 | 0.462 (0.023) | 0.461 | 94% | 94% |
+| Kuhn | equilibrium | 0.000 | 0.014 (0.006) | 0.008 | 0% | 88% |
+| Kuhn | 80% equilibrium, 20% uniform | 0.066 | 0.070 (0.011) | 0.067 | 94% | 94% |
+| Leduc | uniform | 2.374 | 2.381 (0.034) | 2.368 | 85% | 88% |
+| Leduc | equilibrium | 0.000 | 0.104 (0.021) | 0.062 | 0% | 30% |
+| Leduc | 80% equilibrium, 20% uniform | 0.638 | 0.649 (0.039) | 0.630 | 92% | 83% |
+
+(Kuhn: 200 datasets with 200 replicates each, `scripts/ci_coverage.py --game kuhn`. Leduc: 60
+datasets with 100 replicates each, `scripts/ci_coverage.py --game leduc --datasets 60
+--bootstrap 100`; with 60 datasets each coverage figure is uncertain by about ±4 points.)
+
+What this shows:
+
+* The bias-corrected estimate is closer to the truth than the plug-in estimate in every case,
+  but near equilibrium only part of the bias is removed (Leduc: 0.062 against a true 0.000).
+* Percentile intervals never covered an equilibrium subject's true value in either game. Basic
+  intervals did so 88% of the time in Kuhn but only 30% in Leduc.
+* Away from equilibrium both intervals are close to nominal in Kuhn and somewhat below it in
+  Leduc; for Leduc's 80/20 mix the basic interval did worse than the percentile one.
+
+So the reported intervals are **approximate**: reasonable for clearly exploitable subjects,
+optimistic for subjects close to equilibrium, especially in the larger game. A maximum is not
+differentiable at an equilibrium, which is a known limit of the bootstrap. More samples per
+infostate is the reliable remedy. A cross-fitted estimate (best response chosen on half the
+samples, evaluated on the other half), which is biased downwards and so brackets the truth with
+the plug-in value, is a candidate for a later version.
+
+**Example** (equilibrium subject in Kuhn, true exploitability about 0):
+
+| N per infostate | Plug-in | Bias-corrected | Basic 95% interval | Percentile 95% interval |
+|---|---|---|---|---|
+| 50 | 0.030 | 0.014 | [0.000, 0.038] | [0.022, 0.073] |
+| 200 | 0.006 | 0.000 | [0.000, 0.006] | [0.005, 0.028] |
+| 1000 | 0.006 | 0.003 | [0.000, 0.008] | [0.003, 0.016] |
+
+(Produced by `scripts/run_benchmark.py --agent cfr --samples N --out runs/studies`.)
 
 ## Validation
 
@@ -154,6 +231,10 @@ The pipeline is checked against known values (see `tests/`):
   < 1e-3 respectively.
 * Play mode: always-pass as Player 1 in Kuhn scores −2/9 against the equilibrium within the
   simulation's 95% interval; matches are reproducible from the seed.
+* Breakdown: M2 = M3 + sum of contributions to 1e-9 on Kuhn and Leduc, and hand-computed
+  per-infostate contributions for always-pass in both Kuhn seats.
+* Site: every number on every page is re-read from its result file at build time; tests check
+  that an edited number or an edited published file is caught.
 
 ## Reproducibility
 
@@ -161,6 +242,60 @@ Every attempt is logged to `calls.jsonl` with the model, parameters, prompt vers
 user prompt, raw output, parse result, token counts, latency and timestamp. The system prompt is
 constant within a run and is stored once in `manifest.json`. Replies are cached on (provider,
 model, parameters, prompt hash, sample index, attempt), so reruns are free and identical.
+
+## Reporting
+
+`scripts/build_site.py` builds the static site from the results directory in one command.
+
+**Which runs are shown.** Every run directory with `manifest.json` and `metrics.json` is a
+candidate. Sampled runs with fewer than 30 valid samples requested per infostate are smoke tests
+and are left out. Runs that measure the same thing (game, provider, model, parameters, prompt
+version and estimation kind) are deduplicated, keeping the most recently created. Runs can also
+be excluded by name. The build lists every run it leaves out, with the reason, in its output
+and in `build.json`.
+
+**Reference subjects.** Rows marked *reference* are scripted policies, not LLMs, answering
+through the same text interface (`scripts/run_references.py`): the equilibrium and uniform
+random (each read exactly, and sampled at N = 200 like a model), always check/fold, always the
+most aggressive action, and an 80/20 mix of equilibrium and uniform with 5% malformed replies.
+They anchor the scale and keep the pipeline honest against known values. The exact rows give
+the true values; the sampled rows show what a run of the same size reports for the same
+strategy, sampling noise included. One such draw is visibly unlucky: Kuhn's sampled uniform
+subject lands well above the exact 11/24 because the infostate where Player 2 holds the King and
+faces a bet happened to draw 61% folds. It is shown as drawn.
+
+**Prompt variants** (`-para`, `+shuffled`) are listed in their own table; the main table shows
+each subject's range of exploitability across the prompts it was run with.
+
+**Replays.** The replay view steps through a hand, showing at each of the subject's decisions
+the situation exactly as the subject was told it, its estimated action frequencies against the
+equilibrium and, for played hands, its raw replies; and at each opponent decision the
+equilibrium mix, the best response and its per-visit edge. Hands come from three sources, always
+labelled:
+
+* *Biggest gain* (constructed): for each seat, the three infostates with the largest
+  contributions. The hand is the history in that infostate where switching to the best response
+  gains most (reach-weighted), followed by the best response and the subject's most likely
+  actions.
+* *Played*: the first 100 hands of a play-mode match, with every attempt the subject made.
+* *Simulated*, only when no play-mode match exists: 100 hands drawn from σ̂ against the
+  equilibrium. Every query is independent and context-free, so these follow the same
+  distribution as live play, but they were not played live.
+
+**Explanations are templated.** Every sentence on the site is filled in from computed numbers by
+fixed templates in `report/explain.py`; none is written by a language model.
+
+**Every number traces to a file.** Each number on a results page is rendered from a result file
+published next to the page (`runs/<id>/data/*.json`), and its HTML element names that file and
+the JSON pointer of the value. At the end of every build, the site is re-read and each number is
+checked against its source; the build fails on any mismatch. `build.json` records the SHA-256
+of every published file, and the check also confirms each published file is unchanged. Raw call
+logs stay in the run directory. Numbers in this document are produced by the commands cited
+next to them.
+
+**Derived files.** The breakdown and the replay hands are written into the run directory as
+`breakdown.json` and `replay.json`, computed only from the run's own result files. Each records
+the SHA-256 of its inputs and is recomputed when they change.
 
 ## Limitations (so far)
 
@@ -170,3 +305,9 @@ model, parameters, prompt hash, sample index, attempt), so reruns are free and i
   current models do not allow the temperature to be changed.
 * The strict parser may count verbose but sensible replies as failures. This is deliberate and
   is reported through M4.
+* All metrics are measured against a CFR+ reference that is close to, but not exactly, an
+  equilibrium (its own exploitability is shown on the leaderboard). Values smaller than that
+  reference exploitability are not meaningful.
+* The breakdown attributes the gain to the best responder's decisions, not to the subject's
+  mistakes. A leak at one of the subject's decisions usually shows up as gains at the opponent
+  decisions that follow it, which the replay view puts side by side.
