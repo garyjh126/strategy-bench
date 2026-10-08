@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Replay: {{ run.rec.display_name }} on {{ game_title }} · StrategyBench{% endblock %}
+{% block main %}
+{% set rp = run.replay %}
+<nav class="crumbs" aria-label="Breadcrumb"><a href="{{ root }}index.html">Leaderboard</a> <span aria-hidden="true">/</span> <a href="{{ root }}index.html#{{ run.rec.game }}">{{ game_title }}</a> <span aria-hidden="true">/</span> <a href="index.html">{{ run.rec.display_name }}</a></nav>
+
+<header class="run-head">
+  <h1>Replay: {{ run.rec.display_name }}{% if run.rec.is_reference %} <span class="chip">reference</span>{% endif %}</h1>
+  <p class="sub">{{ run.rec.description }} · {{ game_title }}</p>
+  <p class="lede">
+    Step through a hand. At each of the subject's decisions you see the situation exactly as the subject was told it, how often it chose each action (bar) against the equilibrium (tick), and the action taken in this hand. At the opponent's decisions you see the equilibrium mix it played from, the best response against this subject, and what that best response gains.
+  </p>
+  <p class="note">
+    {% if rp.get("/source") == "played" %}
+    Hands marked “played” are the first of {{ rp.num("/hands_total", "int") }} hands the subject played against the {{ rp.get("/opponent") }} opponent, with its raw replies.
+    {% else %}
+    No play-mode match was recorded for this run, so the numbered hands are <strong>simulated</strong> from the estimated strategy against the equilibrium. Each query to the subject is independent and context-free, so simulated hands follow the same distribution as live play, but they were not played live.
+    {% endif %}
+    “Biggest gain” hands are constructed: the deal and betting where switching to the best response gains most, then the best response and the subject's most likely actions.
+  </p>
+</header>
+
+<div class="replay-controls">
+  <label for="hand-select">Hand</label>
+  <select id="hand-select"></select>
+  <button type="button" id="hand-prev" aria-label="Previous hand">Previous</button>
+  <button type="button" id="hand-next" aria-label="Next hand">Next</button>
+</div>
+{{ legend_replay }}
+<div id="hand-summary" class="hand-summary" aria-live="polite"></div>
+<ol id="steps" class="steps"></ol>
+<noscript><p class="notice">The replay view needs JavaScript. The same data is in <a href="data/replay.json">replay.json</a>.</p></noscript>
+<p class="note">Data: <a href="data/replay.json">replay.json</a>, derived from this run's strategy.json and breakdown.json{% if rp.get("/source") == "played" %} and its play-mode logs{% endif %}.</p>
+{% endblock %}
+{% block scripts %}
+<script src="replay-data.js"></script>
+<script src="{{ root }}assets/replay.js"></script>
+{% endblock %}

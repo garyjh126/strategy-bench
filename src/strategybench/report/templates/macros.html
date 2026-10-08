@@ -1,0 +1,36 @@
+{% macro subject_cell(run, prefix) %}
+<a class="subject" href="{{ root }}{{ run.base }}/index.html">{{ run.rec.display_name }}</a>
+{% if run.rec.is_reference %}<span class="chip">reference</span>{% endif %}
+<span class="sub">{{ run.rec.description }}</span>
+{% endmacro %}
+
+{% macro m1_cell(run) %}
+<span class="big">{{ run.metrics.num("/metrics/exploitability_norm", "f3") }}</span>
+{% if run.has_ci %}<span class="sub">[{{ run.metrics.num("/ci95/exploitability/0", "f3", run.native_scale) }}, {{ run.metrics.num("/ci95/exploitability/1", "f3", run.native_scale) }}]</span>
+{% elif run.rec.subject_kind == "distribution" %}<span class="sub">exact</span>
+{% else %}<span class="sub">no interval</span>{% endif %}
+{% endmacro %}
+
+{% macro bias_cell(run) %}
+{% if run.rec.metrics.bias and "exploitability_bias_corrected" in run.rec.metrics.bias %}{{ run.metrics.num("/bias/exploitability_bias_corrected", "f3", run.native_scale) }}{% else %}<span class="muted">—</span>{% endif %}
+{% endmacro %}
+
+{% macro pair_cell(run, key) %}
+{{ run.metrics.num("/metrics/" ~ key ~ "/0", "f3") }} <span class="muted">·</span> {{ run.metrics.num("/metrics/" ~ key ~ "/1", "f3") }}
+{% endmacro %}
+
+{% macro n_cell(run) %}
+{% if run.rec.subject_kind == "distribution" %}exact{% else %}{{ run.metrics.num("/n_samples", "int") }}{% endif %}
+{% endmacro %}
+
+{% macro temp_cell(run) %}
+{% if run.temperature is not none %}{{ run.metrics.num("/params/temperature", "f1") }}{% elif run.rec.is_reference %}<span class="muted">—</span>{% else %}default{% endif %}
+{% endmacro %}
+
+{% macro cost_cell(run) %}
+{% if run.rec.is_reference %}<span class="muted">none</span>{% elif run.rec.metrics.cost_usd_estimated is not none %}{{ run.metrics.num("/cost_usd_estimated", "usd") }}{% else %}<span class="muted">—</span>{% endif %}
+{% endmacro %}
+
+{% macro coverage_cell(run) %}
+{% for k in run.rec.metrics.coverage %}{{ run.metrics.num("/coverage/" ~ k, "pct1") }}<span class="sub">{{ k }}</span>{% endfor %}
+{% endmacro %}

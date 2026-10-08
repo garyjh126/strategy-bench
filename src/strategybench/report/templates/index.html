@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% from "macros.html" import subject_cell, m1_cell, bias_cell, pair_cell, n_cell, temp_cell, cost_cell, coverage_cell with context %}
+{% block title %}StrategyBench: exploitability leaderboard{% endblock %}
+{% block main %}
+<section class="intro">
+  <h1>How exploitable is each AI player?</h1>
+  <p class="lede">StrategyBench asks a subject to make every decision in a small poker game many times, estimates its strategy from the answers, and computes the exact best response to that strategy with game-tree search. <strong>Exploitability</strong> is how much that best response wins per hand beyond the equilibrium value, averaged over both seats. 0 means unexploitable.</p>
+  <p class="note">Results describe a model together with its prompt and sampling settings, on small games. They are not a measure of general poker or reasoning skill. See the <a href="methodology.html">methodology</a>.</p>
+</section>
+
+{% if not games | selectattr("any_models") | list %}
+<div class="notice" role="note">
+  <strong>No LLM results are published yet.</strong>
+  Every row below is a <em>scripted reference subject</em> run through the same pipeline as a model (same prompts, strict parser, sampling, estimation and metrics). The references show the scale (an equilibrium player scores about 0; always checking or folding is very exploitable) and check the pipeline against known values.
+</div>
+{% endif %}
+
+<nav class="game-nav" aria-label="Games">
+  {% for game in games %}<a href="#{{ game.spec.name }}">{{ game.title }}</a>{% endfor %}
+</nav>
+
+{% for game in games %}
+{% set facts = game.facts %}
+<section class="game" id="{{ game.spec.name }}" aria-labelledby="{{ game.spec.name }}-title">
+  <h2 id="{{ game.spec.name }}-title">{{ game.title }}</h2>
+  {% if game.spec.summary %}<p class="summary">{{ game.spec.summary }}</p>{% endif %}
+  <dl class="facts">
+    <div><dt>Decision situations</dt><dd>{{ facts.num("/filled/of", "int") }}</dd></div>
+    <div><dt>Player 1 equilibrium value</dt><dd>{{ facts.num("/equilibrium/values/0", "sf3") }} {{ game.rows[0].unit }}</dd></div>
+    <div><dt>Equilibrium reference exploitability</dt><dd>{{ facts.num("/equilibrium/exploitability", "sci") }}</dd></div>
+  </dl>
+
+  {{ game.chart }}
+
+  <div class="table-wrap" tabindex="0" role="region" aria-label="{{ game.title }} results table">
+  <table class="board">
+    <thead>
+      <tr>
+        <th scope="col">Subject</th>
+        <th scope="col" class="r" title="Average over both seats of what a best-responding opponent wins beyond the equilibrium value, per hand. 95% bootstrap interval below.">Exploitability (M1)</th>
+        <th scope="col" class="r" title="Small samples bias exploitability upwards; this subtracts the bootstrap estimate of that bias.">Bias-corrected</th>
+        <th scope="col" class="r" title="Best-response gain with the subject sitting as Player 1 and as Player 2.">Best-response gain (M2)<span class="sub">as P1 · as P2</span></th>
+        <th scope="col" class="r" title="Expected loss against an equilibrium opponent that does not adapt, as Player 1 and as Player 2.">Loss vs equilibrium (M3)<span class="sub">as P1 · as P2</span></th>
+        <th scope="col" class="r" title="Share of replies (attempts) that were not exactly one label.">Parse failures</th>
+        <th scope="col" class="r" title="Reach-weighted share of decision situations with at least k valid samples.">Coverage</th>
+        {% if game.spread %}<th scope="col" class="r" title="Range of exploitability across prompt variants (number of prompts).">Across prompts</th>{% endif %}
+        <th scope="col" title="N: valid samples requested per decision situation ('exact' when the subject returns probabilities); sampling temperature; prompt version.">Settings<span class="sub">N · temperature · prompt</span></th>
+        <th scope="col">Run<span class="sub">cost · date</span></th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for run in game.rows %}
+      <tr{% if run.rec.is_reference %} class="ref"{% endif %}>
+        <th scope="row">{{ subject_cell(run, "") }}</th>
+        <td class="r">{{ m1_cell(run) }}</td>
+        <td class="r">{{ bias_cell(run) }}</td>
+        <td class="r">{{ pair_cell(run, "br_gain_norm") }}</td>
+        <td class="r">{{ pair_cell(run, "h2h_loss_norm") }}</td>
+        <td class="r">{{ run.metrics.num("/reliability/parse_failure_rate", "pct1") }}</td>
+        <td class="r">{{ coverage_cell(run) }}</td>
+        {% if game.spread %}
+        <td class="r">{% if run.id in game.spread %}{% set lo, hi, k = game.spread[run.id] %}{{ lo.metrics.num("/metrics/exploitability_norm", "f3") }}–{{ hi.metrics.num("/metrics/exploitability_norm", "f3") }} <span class="muted">({{ k }})</span>{% else %}<span class="muted">—</span>{% endif %}</td>
+        {% endif %}
+        <td>N {{ n_cell(run) }} · T {{ temp_cell(run) }}<span class="sub">{{ run.metrics.num("/prompt_version", "text") }}</span></td>
+        <td>{{ cost_cell(run) }}<span class="sub">{{ run.metrics.num("/run_date", "text") }}</span></td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+
+  <details class="howto">
+    <summary>How to read this table</summary>
+    <ul>
+      <li><strong>Exploitability (M1)</strong> is the headline: what a best-responding opponent gains per hand against the subject's estimated strategy, beyond the equilibrium value, averaged over the two seats. Values are in {{ game.rows[0].unit }}s per hand. The interval is a 95% bootstrap interval over the subject's samples.</li>
+      <li><strong>Bias-corrected</strong>: a maximum over opponent strategies turns sampling noise into apparent exploitability, so the plain estimate is biased upwards at small N. The corrected value subtracts the bootstrap estimate of that bias; larger N is the reliable remedy.</li>
+      <li><strong>Best-response gain (M2)</strong> splits M1 by the seat the subject sits in (M1 is their mean).</li>
+      <li><strong>Loss vs equilibrium (M3)</strong> is what an opponent playing the equilibrium, without adapting, wins from the subject. It is always at most M2, and can be near 0 even when M1 is large.</li>
+      <li><strong>Parse failures</strong> and <strong>coverage</strong> are reliability measures (M4). Failed replies are retried and counted, never replaced with a guessed action.</li>
+    </ul>
+  </details>
+
+  {% if game.variants %}
+  <h3>Prompt variants</h3>
+  <p class="note">The same subjects with a reworded rules prompt (<code>-para</code>) or a shuffled order of the legal actions (<code>+shuffled</code>). Differences show how much the result depends on wording.</p>
+  <div class="table-wrap" tabindex="0" role="region" aria-label="{{ game.title }} prompt variants">
+  <table class="board">
+    <thead><tr><th scope="col">Subject</th><th scope="col">Prompt</th><th scope="col" class="r">Exploitability (M1)</th><th scope="col" class="r">Same subject, main prompt</th><th scope="col" class="r">N</th><th scope="col">Run date</th></tr></thead>
+    <tbody>
+    {% for run, base in game.variants %}
+      <tr{% if run.rec.is_reference %} class="ref"{% endif %}>
+        <th scope="row">{{ subject_cell(run, "") }}</th>
+        <td>{{ run.metrics.num("/prompt_version", "text") }}</td>
+        <td class="r">{{ m1_cell(run) }}</td>
+        <td class="r">{% if base %}{{ base.metrics.num("/metrics/exploitability_norm", "f3") }}{% else %}<span class="muted">not run</span>{% endif %}</td>
+        <td class="r">{{ n_cell(run) }}</td>
+        <td>{{ run.metrics.num("/run_date", "text") }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+  {% endif %}
+</section>
+{% endfor %}
+{% endblock %}
