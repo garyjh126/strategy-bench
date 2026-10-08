@@ -38,7 +38,7 @@ def references(hands: int) -> list[list[str]]:
 
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    ap.add_argument("--games", nargs="+", default=["kuhn", "leduc"])
+    ap.add_argument("--games", nargs="+", default=["kuhn", "leduc", "liars_dice"])
     ap.add_argument("--samples", type=int, default=200, help="samples per infostate for sampled subjects")
     ap.add_argument("--hands", type=int, default=20000, help="hands in the play-mode match")
     ap.add_argument("--out", default="runs")
