@@ -197,20 +197,20 @@ def main() -> int:
 
 def print_direct(spec, client, result) -> None:
     m, ci, rel = result["metrics"], result["ci95"], result["reliability"]
+    corrected, u = result.get("bias_corrected") or {}, spec.unit_size
 
-    def fmt(name: str, value: float) -> str:
-        lo_hi = ci.get(name)
-        return f"{value:.4f}" + (f"  [{lo_hi[0]:.4f}, {lo_hi[1]:.4f}]" if lo_hi else "")
+    def fmt(name: str, plug_in: float) -> str:
+        """Bias-corrected estimate [basic 95% interval] (plug-in), or the plug-in value alone."""
+        if name not in corrected:
+            return f"{plug_in:.4f}"
+        lo, hi = ci[name]
+        return f"{corrected[name] / u:.4f}  [{lo / u:.4f}, {hi / u:.4f}]  (plug-in {plug_in:.4f})"
 
     unit = result["payoff_unit"]
     print(f"{spec.name} | {client.model_id} ({result['subject_kind']}) | prompt {result['prompt_version']}")
+    if corrected:
+        print("  values: bias-corrected estimate [basic 95% bootstrap interval] (plug-in estimate)")
     print(f"  M1 exploitability ({unit}/hand):   {fmt('exploitability', m['exploitability_norm'])}")
-    if result["bias"]:
-        b = result["bias"]
-        print(
-            f"     bootstrap bias {b['exploitability_bootstrap_bias'] / spec.unit_size:+.4f} -> "
-            f"bias-corrected {b['exploitability_bias_corrected'] / spec.unit_size:.4f}"
-        )
     for seat in range(2):
         print(f"  M2 BR gain, subject seat {seat + 1}:    {fmt(f'br_gain_{seat}', m['br_gain_norm'][seat])}")
     for seat in range(2):

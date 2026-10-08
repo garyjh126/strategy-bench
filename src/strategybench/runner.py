@@ -111,11 +111,10 @@ def run_direct(
         log.close()
 
     metrics = compute_metrics(game, strat.policy, eq, spec.unit_size)
-    cis: dict[str, tuple[float, float]] = {}
-    bias: dict[str, float] = {}
+    boot = None
     if col.kind == "sampled" and config.n_boot > 0:
         rng = np.random.default_rng(config.seed)
-        cis, bias = bootstrap_metrics(
+        boot = bootstrap_metrics(
             game, col.infostates, col.counts, eq, config.n_boot, rng, spec.unit_size, config.min_samples
         )
 
@@ -131,8 +130,19 @@ def run_direct(
         "n_samples": config.n_samples if col.kind == "sampled" else None,
         "payoff_unit": spec.payoff_unit,
         "metrics": metrics.as_dict(),
-        "ci95": cis,
-        "bias": bias,
+        # Bootstrap results are in native units. ci95 holds the basic (reflected) intervals,
+        # centred on bias_corrected; see analysis/bootstrap.py.
+        "ci_method": "basic" if boot else None,
+        "ci95": boot.basic if boot else {},
+        "ci95_percentile": boot.percentile if boot else {},
+        "bias_corrected": boot.bias_corrected if boot else {},
+        "bias": {
+            "exploitability_bootstrap_bias": boot.bias["exploitability"],
+            "exploitability_bias_corrected": boot.bias_corrected["exploitability"],
+            "bootstrap_bias": boot.bias,
+        }
+        if boot
+        else {},
         "equilibrium": {"values": eq.values, "exploitability": eq.exploitability},
         "reliability": {**asdict(col.reliability), **col.reliability.rates()},
         "cost_usd_estimated": budget.spent if cost_fn else None,
