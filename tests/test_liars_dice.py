@@ -161,6 +161,26 @@ def test_equilibrium_value(eq):
     assert eq.exploitability < 1e-3
 
 
+@pytest.mark.parametrize(
+    "make, m1, m2, m3_seat1",
+    [
+        # Always the lowest legal bid: the best responder bids 2x2, the subject must raise to 2x3, and
+        # LIAR then wins unless both dice show 3, so the responder earns 7/9 in either seat.
+        (first_action_policy, 7 / 9, [8 / 9, 2 / 3], None),
+        # Always LIAR, opening 2x3: as Player 1 its bid is true only on two 3s (Player 2 must call);
+        # as Player 2 the responder opens with a bid its own die makes true and always wins.
+        (last_action_policy, 8 / 9, [8 / 9, 8 / 9], 8 / 9),
+    ],
+)
+def test_scripted_subjects_match_hand_computed_values(eq, make, m1, m2, m3_seat1):
+    m = compute_metrics(GAME, make(GAME), eq)
+    assert m.exploitability == pytest.approx(m1, abs=1e-9)
+    # Gains and losses are measured against the CFR+ seat values (1/9 up to its exploitability).
+    assert m.br_gain == pytest.approx(m2, abs=1e-4)
+    if m3_seat1 is not None:
+        assert m.h2h_loss[0] == pytest.approx(m3_seat1, abs=1e-4)
+
+
 @pytest.mark.parametrize("make", [first_action_policy, last_action_policy])
 def test_deterministic_agents_match_direct_computation(eq, make):
     policy = make(GAME)
