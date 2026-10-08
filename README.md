@@ -7,10 +7,10 @@ each information state, and a classical best response (via [OpenSpiel](https://g
 is computed against it. The headline output is an exploitability score per model per game, with bootstrap
 confidence intervals.
 
-> **Status:** Phase 3. Kuhn and Leduc poker run end to end (`direct` and `play` modes), clients for
-> Claude, Gemini and DeepSeek are in place, and a static site (leaderboard, run pages, match
-> replays, methodology) is built from the results. No LLM results are published yet; the site
-> currently shows scripted reference subjects.
+> **Status:** Phase 4. Kuhn poker, Leduc poker and Liar's Dice run end to end (`direct` and `play`
+> modes), clients for Claude, Gemini and DeepSeek are in place, and a static site (leaderboard,
+> run pages, match replays, methodology) is built from the results. No LLM results are published
+> yet; the site currently shows scripted reference subjects.
 
 ## Setup
 
@@ -41,11 +41,24 @@ uv run python scripts/run_benchmark.py --agent cfr --client distribution
 uv run python scripts/run_benchmark.py --agent cfr-noisy --samples 200 --garbage-rate 0.1 --format-noise
 uv run python scripts/run_benchmark.py --agent uniform --samples 100 --dry-run   # call count only
 uv run python scripts/run_benchmark.py --game leduc --agent cfr-noisy --samples 200 --mode both --hands 20000
+uv run python scripts/run_benchmark.py --game liars_dice --agent uniform --samples 200
 ```
+
+Games: `kuhn` (the default), `leduc` and `liars_dice` (one three-sided die each; see the
+methodology for the exact rules).
 
 `--mode play` plays full hands against `--opponent equilibrium|uniform`; `--mode both` also checks
 that the direct-mode estimate predicts the play results. `--prompt` selects a prompt variant
 (for example `leduc-v1-para` or `leduc-v1+shuffled`).
+
+## Measure a game before adding it
+
+Prints decision infostates, how many are forced (one legal action), the direct-mode call count at
+N samples per infostate and the CFR+ solve time, for any OpenSpiel load string:
+
+```bash
+uv run python scripts/game_size.py "liars_dice(numdice=1,dice_sides=3)" "liars_dice(numdice=1,dice_sides=4)"
+```
 
 ## Run a real model
 
@@ -67,7 +80,7 @@ candidate; smoke tests (fewer than 30 samples per infostate) and superseded dupl
 out, with the reason printed.
 
 ```bash
-uv run python scripts/run_references.py   # scripted reference subjects for Kuhn and Leduc (free)
+uv run python scripts/run_references.py   # scripted reference subjects for every game (free)
 uv run python scripts/build_site.py       # writes site/; open site/index.html in a browser
 ```
 

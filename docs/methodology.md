@@ -1,21 +1,22 @@
 # Methodology
 
-_Draft. Covers what is implemented so far: Kuhn and Leduc poker, `direct` and `play` modes, and
-the reporting site._
+_Draft. Covers what is implemented so far: Kuhn poker, Leduc poker and Liar's Dice, `direct` and
+`play` modes, and the reporting site._
 
 ## What is measured
 
 StrategyBench measures how much value a best-responding opponent could extract from an AI
-subject's behaviour in a small two-player zero-sum poker game, compared with equilibrium play.
+subject's behaviour in a small two-player zero-sum card or dice game, compared with equilibrium
+play.
 
 Results describe **the model plus this prompt plus these sampling settings on this game**.
-They are not a measure of general poker or reasoning ability.
+They are not a measure of general game-playing or reasoning ability.
 
 ## Setup
 
 * Games are OpenSpiel games. Seat 0 is "Player 1" in prompts.
-* An **information state** (infostate) is what the acting player knows: their private card(s)
-  and the public action history.
+* An **information state** (infostate) is what the acting player knows: their private card(s) or
+  die and the public action history.
 * A **behavioural strategy** gives a probability distribution over legal actions at each
   infostate.
 * The equilibrium reference is the average policy of OpenSpiel's C++ CFR+ after 2,000
@@ -25,19 +26,38 @@ They are not a measure of general poker or reasoning ability.
 |---|---|---|---|
 | Kuhn poker (`kuhn_poker`) | 12 | −0.05556 (theory −1/18) | 4.4e-5 |
 | Leduc poker (`leduc_poker(suit_isomorphism=True)`) | 288 | −0.0856 | 8.5e-5 |
+| Liar's Dice (`liars_dice(numdice=1,dice_sides=3)`) | 192 (96 forced) | +0.1111 | 1.2e-6 |
 
-(Values printed by `scripts/run_benchmark.py` as "equilibrium seat values".)
+(Values printed by `scripts/run_benchmark.py` as "equilibrium seat values"; the reference
+exploitability is `equilibrium.exploitability` in every run's `metrics.json`. Infostate counts are
+also printed by `scripts/game_size.py`.)
 
 **Leduc uses OpenSpiel's suit-isomorphic variant.** The prompt only ever names ranks (suits do
 not matter in Leduc), so two infostates that differ only by suit would get identical prompts. The
 suit-isomorphic game deals ranks with the correct probabilities, so its infostates are exactly
 what the subject can distinguish: 288 instead of 936, with the same game value.
 
+**Liar's Dice is OpenSpiel's version with one three-sided die per player.** Each player rolls a
+die showing 1, 2 or 3 and sees only their own. Player 1 must open with a bid; then the players
+alternate, each either bidding higher or calling LIAR. A bid QxF claims that at least Q of the
+two dice show face F. The highest face, 3, is wild: it counts towards a bid on 1 or 2, and a bid
+on 3 counts only 3s. Bids rank by quantity, then face (1x1 < 1x2 < 1x3 < 2x1 < 2x2 < 2x3). When
+LIAR is called the bidder wins if the bid is true and the caller wins otherwise, for 1 point.
+This is not the common six-sided game with 1s wild; the prompt states OpenSpiel's rules in full,
+checked against the installed OpenSpiel source and by tests that score challenges.
+
+Half of its 192 infostates are **forced**: after the highest bid, 2x3, only LIAR is legal. Direct
+mode queries them like any other decision, which doubles the number of calls. The estimated
+strategy there is LIAR whatever the replies, so M1 to M3 do not depend on them; M4 counts them.
+Three sides was chosen to keep real-model runs affordable: 192 infostates (38,400 calls at
+N = 200), against 1,024 with four sides (204,800 calls) and 24,576 with six
+(`scripts/game_size.py`).
+
 ## Querying the subject
 
 The system prompt states the rules (versioned, e.g. `kuhn-v1`). The user message describes
-the seat, the private card, the action history so far and an enumerated list of legal action
-labels, and asks for exactly one label. Both seats use the same template.
+the seat, the private card or die, the action history so far and an enumerated list of legal
+action labels, and asks for exactly one label. Both seats use the same template.
 
 **Parsing is strict.** After removing surrounding whitespace, quotes, backticks, asterisks and
 one trailing period, and ignoring case, the reply must equal exactly one legal label. A reply
@@ -92,8 +112,9 @@ mode, and is used as a check rather than as the headline measurement.
 
 ## Metrics
 
-All values are expected payoffs per hand, reported in native units and normalised by the
-game's unit (Kuhn: 1 ante, so the two coincide).
+All values are expected payoffs per hand (per round in Liar's Dice), reported in native units and
+normalised by the game's unit (1 ante in Kuhn and Leduc, 1 point in Liar's Dice, so the two
+coincide).
 
 | | Definition |
 |---|---|
@@ -229,6 +250,13 @@ The pipeline is checked against known values (see `tests/`):
 * Leduc: deterministic subjects through the full pipeline match OpenSpiel's direct computation
   exactly; uniform and equilibrium subjects read as distributions match OpenSpiel to 1e-9 and
   < 1e-3 respectively.
+* Liar's Dice: challenges are scored as the rules text says (wild 3s, bids on 3, bidder and caller
+  wins); every history in an infostate renders the same prompt, so the opponent's die is never
+  shown; deterministic subjects through the full pipeline match OpenSpiel's direct computation
+  exactly; uniform and equilibrium subjects read as distributions match OpenSpiel to 1e-9 and
+  < 1e-3. Always the lowest legal bid has exploitability 7/9 and always calling LIAR 8/9, both
+  hand-computed (the best responder against the lowest bid bids 2x2, forcing the subject to 2x3,
+  and calls LIAR).
 * Play mode: always-pass as Player 1 in Kuhn scores −2/9 against the equilibrium within the
   simulation's 95% interval; matches are reproducible from the seed.
 * Breakdown: M2 = M3 + sum of contributions to 1e-9 on Kuhn and Leduc, and hand-computed
@@ -256,13 +284,18 @@ and in `build.json`.
 
 **Reference subjects.** Rows marked *reference* are scripted policies, not LLMs, answering
 through the same text interface (`scripts/run_references.py`): the equilibrium and uniform
-random (each read exactly, and sampled at N = 200 like a model), always check/fold, always the
-most aggressive action, and an 80/20 mix of equilibrium and uniform with 5% malformed replies.
+random (each read exactly, and sampled at N = 200 like a model), always the first legal action
+(check or fold in poker; the lowest legal bid in Liar's Dice), always the last legal action (the
+most aggressive action in poker; in Liar's Dice, calling LIAR whenever it is legal, which means
+opening with 2x3), and an 80/20 mix of equilibrium and uniform with 5% malformed replies.
 They anchor the scale and keep the pipeline honest against known values. The exact rows give
 the true values; the sampled rows show what a run of the same size reports for the same
 strategy, sampling noise included. One such draw is visibly unlucky: Kuhn's sampled uniform
 subject lands well above the exact 11/24 because the infostate where Player 2 holds the King and
 faces a bet happened to draw 61% folds. It is shown as drawn.
+
+**Game wording.** Pages use each game's own words, supplied by its `GameSpec`: rounds instead of
+hands in Liar's Dice, and names for the scripted references in the game's terms.
 
 **Prompt variants** (`-para`, `+shuffled`) are listed in their own table; the main table shows
 each subject's range of exploitability across the prompts it was run with.
@@ -299,8 +332,11 @@ the SHA-256 of its inputs and is recomputed when they change.
 
 ## Limitations (so far)
 
-* Small games. Kuhn poker has 12 infostates and Leduc 288, and both equilibria are well known and
-  may appear in model training data.
+* Small games. Kuhn poker has 12 infostates, Leduc 288 and Liar's Dice 192 (half of them forced).
+  The poker equilibria are well known and may appear in model training data.
+* Liar's Dice is OpenSpiel's variant (three-sided dice, the highest face wild, a single round),
+  not the common game with 1s wild, so a model that falls back on the usual rules plays a
+  different game. The prompt states the rules in full.
 * Results depend on the prompt wording and on the sampling settings a provider allows. Some
   current models do not allow the temperature to be changed.
 * The strict parser may count verbose but sensible replies as failures. This is deliberate and
