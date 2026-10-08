@@ -5,7 +5,7 @@ from strategybench.games import get_game_spec
 from strategybench.prompts import TEMPLATES, get_template
 
 
-@pytest.mark.parametrize("game", ["kuhn", "leduc"])
+@pytest.mark.parametrize("game", ["kuhn", "leduc", "liars_dice"])
 def test_every_variant_renders_unique_prompts_with_the_same_label_sets(game):
     spec = get_game_spec(game)
     infos = enumerate_infostates(spec.load())
