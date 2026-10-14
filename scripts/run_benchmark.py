@@ -166,7 +166,7 @@ def main() -> int:
         eq_cache_dir=args.eq_cache,
     )
     stamp = datetime.now(UTC).strftime("%Y%m%dT%H%M%SZ")
-    out_dir = Path(args.out) / f"{stamp}_{spec.name}_{client.model_id}_{client_kind}"
+    out_dir = fresh_dir(Path(args.out) / f"{stamp}_{spec.name}_{client.model_id}_{client_kind}")
     cache = None if args.no_cache else CallCache(args.cache)
     result = play_result = None
     try:
@@ -195,6 +195,16 @@ def main() -> int:
         print_play(spec, play_result)
     print(f"  results: {out_dir}")
     return 0
+
+
+def fresh_dir(path: Path) -> Path:
+    """``path``, or ``path-2``, ``path-3``, ... if it exists. The name has one-second resolution, and
+    a resume started in the same second as the aborted run must not append to that run's logs."""
+    candidate, n = path, 1
+    while candidate.exists():
+        n += 1
+        candidate = path.with_name(f"{path.name}-{n}")
+    return candidate
 
 
 def print_direct(spec, client, result) -> None:
