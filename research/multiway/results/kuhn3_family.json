@@ -1,0 +1,1271 @@
+{
+ "meta": {
+  "game": "kuhn_poker(players=3)",
+  "openspiel_version": "2.0.2",
+  "generated_by": "research/multiway/run_kuhn3.py",
+  "units": "chips per hand (ante 1)",
+  "num_infosets": 48,
+  "infosets_per_player": [
+   16,
+   16,
+   16
+  ],
+  "num_nodes": 617
+ },
+ "members_per_subfamily": 400,
+ "subfamilies": {
+  "c11=0": {
+   "max_gain": 2.220446049250313e-16,
+   "max_ev_minus_formula": 2.1510571102112408e-16,
+   "ev_min": [
+    -0.03124548137618144,
+    -0.020833333333333426,
+    0.041720608863392517
+   ],
+   "ev_max": [
+    -0.020887275530059313,
+    -0.020833333333333204,
+    0.05207881470951464
+   ],
+   "prose_b33_max_gain": null
+  },
+  "0<c11<1/2": {
+   "max_gain": 2.7755575615628914e-16,
+   "max_ev_minus_formula": 2.1510571102112408e-16,
+   "ev_min": [
+    -0.031248906123406472,
+    -0.02083333333333348,
+    0.0416995395116912
+   ],
+   "ev_max": [
+    -0.020866206178357882,
+    -0.02083333333333315,
+    0.0520822394567399
+   ],
+   "prose_b33_max_gain": null
+  },
+  "c11=1/2": {
+   "max_gain": 2.220446049250313e-16,
+   "max_ev_minus_formula": 1.734723475976807e-16,
+   "ev_min": [
+    -0.031238496082357736,
+    -0.020833333333333426,
+    0.04167100859267542
+   ],
+   "ev_max": [
+    -0.020837675259342103,
+    -0.020833333333333204,
+    0.05207182941569116
+   ],
+   "prose_b33_max_gain": 0.010326261864855635
+  }
+ },
+ "off_path": {
+  "c11=0": {
+   "a44": {
+    "unreached": 400,
+    "breaks": 400,
+    "max_gain": 0.07595558513710993
+   },
+   "b12": {
+    "unreached": 400,
+    "breaks": 400,
+    "max_gain": 0.1654159384079183
+   },
+   "b22": {
+    "unreached": 400,
+    "breaks": 400,
+    "max_gain": 0.11935147840801619
+   },
+   "b24": {
+    "unreached": 400,
+    "breaks": 0,
+    "max_gain": 2.220446049250313e-16
+   },
+   "b32": {
+    "unreached": 400,
+    "breaks": 400,
+    "max_gain": 0.25542799721650616
+   },
+   "b42": {
+    "unreached": 400,
+    "breaks": 400,
+    "max_gain": 1.0187697051479558
+   },
+   "b44": {
+    "unreached": 400,
+    "breaks": 400,
+    "max_gain": 0.08310318369078429
+   },
+   "c13": {
+    "unreached": 400,
+    "breaks": 400,
+    "max_gain": 0.12294687355239442
+   },
+   "c14": {
+    "unreached": 400,
+    "breaks": 314,
+    "max_gain": 0.030765117988741375
+   },
+   "c23": {
+    "unreached": 400,
+    "breaks": 400,
+    "max_gain": 0.0824163034439136
+   },
+   "c24": {
+    "unreached": 400,
+    "breaks": 314,
+    "max_gain": 0.030765117988741375
+   },
+   "c33": {
+    "unreached": 400,
+    "breaks": 400,
+    "max_gain": 0.1663907447059565
+   },
+   "c34": {
+    "unreached": 400,
+    "breaks": 0,
+    "max_gain": 2.220446049250313e-16
+   },
+   "c43": {
+    "unreached": 400,
+    "breaks": 400,
+    "max_gain": 0.9216487109740265
+   },
+   "c44": {
+    "unreached": 400,
+    "breaks": 0,
+    "max_gain": 2.220446049250313e-16
+   }
+  },
+  "0<c11<1/2": {
+   "a44": {
+    "unreached": 400,
+    "breaks": 400,
+    "max_gain": 0.08332458232058554
+   },
+   "b12": {
+    "unreached": 400,
+    "breaks": 400,
+    "max_gain": 0.16975646613375112
+   },
+   "b22": {
+    "unreached": 400,
+    "breaks": 400,
+    "max_gain": 0.12121696601668652
+   },
+   "b32": {
+    "unreached": 400,
+    "breaks": 400,
+    "max_gain": 0.293854046414236
+   },
+   "b42": {
+    "unreached": 400,
+    "breaks": 400,
+    "max_gain": 1.0606637459080432
+   },
+   "b44": {
+    "unreached": 400,
+    "breaks": 400,
+    "max_gain": 0.15958239153144171
+   },
+   "c13": {
+    "unreached": 400,
+    "breaks": 400,
+    "max_gain": 0.12340403043909587
+   },
+   "c14": {
+    "unreached": 400,
+    "breaks": 289,
+    "max_gain": 0.0339661102549591
+   },
+   "c23": {
+    "unreached": 400,
+    "breaks": 400,
+    "max_gain": 0.08239924256622011
+   },
+   "c24": {
+    "unreached": 400,
+    "breaks": 289,
+    "max_gain": 0.0339661102549591
+   },
+   "c33": {
+    "unreached": 400,
+    "breaks": 400,
+    "max_gain": 0.16546312515444483
+   },
+   "c34": {
+    "unreached": 400,
+    "breaks": 0,
+    "max_gain": 2.7755575615628914e-16
+   },
+   "c43": {
+    "unreached": 400,
+    "breaks": 400,
+    "max_gain": 0.9242650953855776
+   },
+   "c44": {
+    "unreached": 400,
+    "breaks": 0,
+    "max_gain": 2.7755575615628914e-16
+   }
+  },
+  "c11=1/2": {
+   "a44": {
+    "unreached": 400,
+    "breaks": 400,
+    "max_gain": 0.08324130199219526
+   },
+   "b12": {
+    "unreached": 400,
+    "breaks": 400,
+    "max_gain": 0.16724007633257165
+   },
+   "b14": {
+    "unreached": 400,
+    "breaks": 0,
+    "max_gain": 2.220446049250313e-16
+   },
+   "b22": {
+    "unreached": 400,
+    "breaks": 400,
+    "max_gain": 0.12010000842160862
+   },
+   "b32": {
+    "unreached": 400,
+    "breaks": 400,
+    "max_gain": 0.24181610309048485
+   },
+   "b42": {
+    "unreached": 400,
+    "breaks": 400,
+    "max_gain": 1.0001086406915132
+   },
+   "b44": {
+    "unreached": 400,
+    "breaks": 400,
+    "max_gain": 0.16661996091935583
+   },
+   "c13": {
+    "unreached": 400,
+    "breaks": 400,
+    "max_gain": 0.1219338908751848
+   },
+   "c14": {
+    "unreached": 400,
+    "breaks": 303,
+    "max_gain": 0.027221170138380657
+   },
+   "c23": {
+    "unreached": 400,
+    "breaks": 400,
+    "max_gain": 0.08252152933966017
+   },
+   "c24": {
+    "unreached": 400,
+    "breaks": 303,
+    "max_gain": 0.027221170138380657
+   },
+   "c33": {
+    "unreached": 400,
+    "breaks": 400,
+    "max_gain": 0.16591360273467448
+   },
+   "c34": {
+    "unreached": 400,
+    "breaks": 0,
+    "max_gain": 2.220446049250313e-16
+   },
+   "c43": {
+    "unreached": 400,
+    "breaks": 400,
+    "max_gain": 0.9187299777103914
+   },
+   "c44": {
+    "unreached": 400,
+    "breaks": 0,
+    "max_gain": 2.220446049250313e-16
+   }
+  }
+ },
+ "extremes": {
+  "beta=0": {
+   "params": {
+    "a12": 0.0,
+    "a13": 0.0,
+    "a14": 0.0,
+    "a24": 0.0,
+    "a42": 1.0,
+    "a43": 1.0,
+    "a44": 1.0,
+    "b12": 0.0,
+    "b13": 0.0,
+    "b14": 0.0,
+    "b24": 0.0,
+    "b42": 1.0,
+    "b43": 1.0,
+    "b44": 1.0,
+    "c12": 0.0,
+    "c13": 0.0,
+    "c14": 0.0,
+    "c24": 0.0,
+    "c42": 1.0,
+    "c43": 1.0,
+    "c44": 1.0,
+    "a11": 0.0,
+    "a21": 0.0,
+    "a22": 0.0,
+    "a23": 0.0,
+    "a31": 0.0,
+    "a32": 0.0,
+    "a33": 0.5,
+    "a34": 0.0,
+    "a41": 0.0,
+    "b22": 0.0,
+    "b31": 0.0,
+    "b34": 0.0,
+    "c22": 0.0,
+    "c23": 0.0,
+    "c31": 0.0,
+    "c32": 0.0,
+    "c41": 1.0,
+    "c34": 0.0,
+    "b11": 0.0,
+    "b21": 0.0,
+    "b23": 0.0,
+    "c11": 0.0,
+    "c21": 0.5,
+    "b33": 0.5,
+    "b41": 0.0,
+    "b32": 0.0,
+    "c33": 0.5
+   },
+   "gains": [
+    0.0,
+    2.7755575615628914e-17,
+    0.0
+   ],
+   "ev": [
+    -0.02083333333333337,
+    -0.020833333333333343,
+    0.04166666666666663
+   ]
+  },
+  "beta=1/4": {
+   "params": {
+    "a12": 0.0,
+    "a13": 0.0,
+    "a14": 0.0,
+    "a24": 0.0,
+    "a42": 1.0,
+    "a43": 1.0,
+    "a44": 1.0,
+    "b12": 0.0,
+    "b13": 0.0,
+    "b14": 0.0,
+    "b24": 0.0,
+    "b42": 1.0,
+    "b43": 1.0,
+    "b44": 1.0,
+    "c12": 0.0,
+    "c13": 0.0,
+    "c14": 0.0,
+    "c24": 0.0,
+    "c42": 1.0,
+    "c43": 1.0,
+    "c44": 1.0,
+    "a11": 0.0,
+    "a21": 0.0,
+    "a22": 0.0,
+    "a23": 0.0,
+    "a31": 0.0,
+    "a32": 0.0,
+    "a33": 0.5,
+    "a34": 0.0,
+    "a41": 0.0,
+    "b22": 0.0,
+    "b31": 0.0,
+    "b34": 0.0,
+    "c22": 0.0,
+    "c23": 0.0,
+    "c31": 0.0,
+    "c32": 0.0,
+    "c41": 1.0,
+    "c34": 0.0,
+    "b11": 0.25,
+    "b21": 0.25,
+    "b23": 0.0,
+    "c11": 0.0,
+    "c21": 0.5,
+    "b33": 0.875,
+    "b41": 1.0,
+    "b32": 0.9375,
+    "c33": 0.0
+   },
+   "gains": [
+    0.0,
+    0.0,
+    5.551115123125783e-17
+   ],
+   "ev": [
+    -0.03125,
+    -0.020833333333333315,
+    0.052083333333333315
+   ]
+  }
+ },
+ "ev_range_formula": {
+  "P1": [
+   -0.03125,
+   -0.020833333333333332
+  ],
+  "P2": [
+   -0.020833333333333332,
+   -0.020833333333333332
+  ],
+  "P3": [
+   0.041666666666666664,
+   0.05208333333333333
+  ]
+ },
+ "ganzfried_offpath_variants": [
+  {
+   "base": {
+    "b32": 0.0,
+    "c33": 0.5
+   },
+   "variant": "a33=0 only",
+   "gains": [
+    0.0,
+    0.1666666666666667,
+    0.0
+   ],
+   "ev": [
+    -0.02083333333333337,
+    -0.020833333333333343,
+    0.04166666666666663
+   ],
+   "reach": {
+    "a33": 0.0,
+    "c32": 0.0,
+    "c33": 0.0
+   }
+  },
+  {
+   "base": {
+    "b32": 0.0,
+    "c33": 0.5
+   },
+   "variant": "a33=0, c33=1/2 (as described: King facing bet-fold)",
+   "gains": [
+    0.0,
+    0.1666666666666667,
+    0.0
+   ],
+   "ev": [
+    -0.02083333333333337,
+    -0.020833333333333343,
+    0.04166666666666663
+   ],
+   "reach": {
+    "a33": 0.0,
+    "c32": 0.0,
+    "c33": 0.0
+   }
+  },
+  {
+   "base": {
+    "b32": 0.0,
+    "c33": 0.5
+   },
+   "variant": "a33=0, c32=1/2 (as labelled: King facing check-bet)",
+   "gains": [
+    0.0,
+    2.7755575615628914e-17,
+    0.0
+   ],
+   "ev": [
+    -0.02083333333333337,
+    -0.020833333333333343,
+    0.04166666666666663
+   ],
+   "reach": {
+    "a33": 0.0,
+    "c32": 0.0,
+    "c33": 0.0
+   }
+  },
+  {
+   "base": {
+    "b32": 0.0,
+    "c33": 0.5
+   },
+   "variant": "c32=1/2 only",
+   "gains": [
+    0.0,
+    0.04166666666666671,
+    0.0
+   ],
+   "ev": [
+    -0.02083333333333337,
+    -0.020833333333333343,
+    0.04166666666666663
+   ],
+   "reach": {
+    "a33": 0.0,
+    "c32": 0.0,
+    "c33": 0.0
+   }
+  },
+  {
+   "base": {
+    "b32": 0.0,
+    "c33": 0.5
+   },
+   "variant": "a33=0, c32=1/4",
+   "gains": [
+    0.0,
+    0.08333333333333334,
+    0.0
+   ],
+   "ev": [
+    -0.02083333333333337,
+    -0.020833333333333343,
+    0.04166666666666663
+   ],
+   "reach": {
+    "a33": 0.0,
+    "c32": 0.0,
+    "c33": 0.0
+   }
+  },
+  {
+   "base": {
+    "b32": 0.0,
+    "c33": 0.5
+   },
+   "variant": "a33=0, c32=1",
+   "gains": [
+    0.0,
+    0.04166666666666666,
+    0.0
+   ],
+   "ev": [
+    -0.02083333333333337,
+    -0.020833333333333343,
+    0.04166666666666663
+   ],
+   "reach": {
+    "a33": 0.0,
+    "c32": 0.0,
+    "c33": 0.0
+   }
+  },
+  {
+   "base": {
+    "b32": 0.25,
+    "c33": 0.25
+   },
+   "variant": "a33=0 only",
+   "gains": [
+    0.0,
+    0.1666666666666667,
+    0.0
+   ],
+   "ev": [
+    -0.02083333333333337,
+    -0.020833333333333343,
+    0.04166666666666663
+   ],
+   "reach": {
+    "a33": 0.0,
+    "c32": 0.0,
+    "c33": 0.0
+   }
+  },
+  {
+   "base": {
+    "b32": 0.25,
+    "c33": 0.25
+   },
+   "variant": "a33=0, c33=1/2 (as described: King facing bet-fold)",
+   "gains": [
+    0.02083333333333337,
+    0.1666666666666667,
+    0.0
+   ],
+   "ev": [
+    -0.02083333333333337,
+    -0.020833333333333343,
+    0.04166666666666663
+   ],
+   "reach": {
+    "a33": 0.0,
+    "c32": 0.0,
+    "c33": 0.0
+   }
+  },
+  {
+   "base": {
+    "b32": 0.25,
+    "c33": 0.25
+   },
+   "variant": "a33=0, c32=1/2 (as labelled: King facing check-bet)",
+   "gains": [
+    0.0,
+    2.7755575615628914e-17,
+    0.0
+   ],
+   "ev": [
+    -0.02083333333333337,
+    -0.020833333333333343,
+    0.04166666666666663
+   ],
+   "reach": {
+    "a33": 0.0,
+    "c32": 0.0,
+    "c33": 0.0
+   }
+  },
+  {
+   "base": {
+    "b32": 0.25,
+    "c33": 0.25
+   },
+   "variant": "c32=1/2 only",
+   "gains": [
+    0.0,
+    0.04166666666666671,
+    0.0
+   ],
+   "ev": [
+    -0.02083333333333337,
+    -0.020833333333333343,
+    0.04166666666666663
+   ],
+   "reach": {
+    "a33": 0.0,
+    "c32": 0.0,
+    "c33": 0.0
+   }
+  },
+  {
+   "base": {
+    "b32": 0.25,
+    "c33": 0.25
+   },
+   "variant": "a33=0, c32=1/4",
+   "gains": [
+    0.0,
+    0.08333333333333334,
+    0.0
+   ],
+   "ev": [
+    -0.02083333333333337,
+    -0.020833333333333343,
+    0.04166666666666663
+   ],
+   "reach": {
+    "a33": 0.0,
+    "c32": 0.0,
+    "c33": 0.0
+   }
+  },
+  {
+   "base": {
+    "b32": 0.25,
+    "c33": 0.25
+   },
+   "variant": "a33=0, c32=1",
+   "gains": [
+    0.0,
+    0.04166666666666666,
+    0.0
+   ],
+   "ev": [
+    -0.02083333333333337,
+    -0.020833333333333343,
+    0.04166666666666663
+   ],
+   "reach": {
+    "a33": 0.0,
+    "c32": 0.0,
+    "c33": 0.0
+   }
+  },
+  {
+   "base": {
+    "b32": 0.5,
+    "c33": 0.0
+   },
+   "variant": "a33=0 only",
+   "gains": [
+    0.0,
+    0.1666666666666667,
+    0.0
+   ],
+   "ev": [
+    -0.02083333333333337,
+    -0.020833333333333343,
+    0.04166666666666663
+   ],
+   "reach": {
+    "a33": 0.0,
+    "c32": 0.0,
+    "c33": 0.0
+   }
+  },
+  {
+   "base": {
+    "b32": 0.5,
+    "c33": 0.0
+   },
+   "variant": "a33=0, c33=1/2 (as described: King facing bet-fold)",
+   "gains": [
+    0.04166666666666663,
+    0.1666666666666667,
+    0.0
+   ],
+   "ev": [
+    -0.02083333333333337,
+    -0.020833333333333343,
+    0.04166666666666663
+   ],
+   "reach": {
+    "a33": 0.0,
+    "c32": 0.0,
+    "c33": 0.0
+   }
+  },
+  {
+   "base": {
+    "b32": 0.5,
+    "c33": 0.0
+   },
+   "variant": "a33=0, c32=1/2 (as labelled: King facing check-bet)",
+   "gains": [
+    0.0,
+    2.7755575615628914e-17,
+    0.0
+   ],
+   "ev": [
+    -0.02083333333333337,
+    -0.020833333333333343,
+    0.04166666666666663
+   ],
+   "reach": {
+    "a33": 0.0,
+    "c32": 0.0,
+    "c33": 0.0
+   }
+  },
+  {
+   "base": {
+    "b32": 0.5,
+    "c33": 0.0
+   },
+   "variant": "c32=1/2 only",
+   "gains": [
+    0.0,
+    0.04166666666666671,
+    0.0
+   ],
+   "ev": [
+    -0.02083333333333337,
+    -0.020833333333333343,
+    0.04166666666666663
+   ],
+   "reach": {
+    "a33": 0.0,
+    "c32": 0.0,
+    "c33": 0.0
+   }
+  },
+  {
+   "base": {
+    "b32": 0.5,
+    "c33": 0.0
+   },
+   "variant": "a33=0, c32=1/4",
+   "gains": [
+    0.0,
+    0.08333333333333334,
+    0.0
+   ],
+   "ev": [
+    -0.02083333333333337,
+    -0.020833333333333343,
+    0.04166666666666663
+   ],
+   "reach": {
+    "a33": 0.0,
+    "c32": 0.0,
+    "c33": 0.0
+   }
+  },
+  {
+   "base": {
+    "b32": 0.5,
+    "c33": 0.0
+   },
+   "variant": "a33=0, c32=1",
+   "gains": [
+    0.0,
+    0.04166666666666666,
+    0.0
+   ],
+   "ev": [
+    -0.02083333333333337,
+    -0.020833333333333343,
+    0.04166666666666663
+   ],
+   "reach": {
+    "a33": 0.0,
+    "c32": 0.0,
+    "c33": 0.0
+   }
+  }
+ ],
+ "offpath_intervals": {
+  "c11=0, beta=0 (b32=0, c33=1/2)": {
+   "a13": {
+    "family_value": 0.0,
+    "allowed_min": 0.0,
+    "allowed_max": 0.0,
+    "contiguous": true
+   },
+   "a14": {
+    "family_value": 0.0,
+    "allowed_min": 0.0,
+    "allowed_max": 1.0,
+    "contiguous": true
+   },
+   "a23": {
+    "family_value": 0.0,
+    "allowed_min": 0.0,
+    "allowed_max": 0.0,
+    "contiguous": true
+   },
+   "a24": {
+    "family_value": 0.0,
+    "allowed_min": 0.0,
+    "allowed_max": 1.0,
+    "contiguous": true
+   },
+   "a33": {
+    "family_value": 0.5,
+    "allowed_min": 0.5,
+    "allowed_max": 0.5,
+    "contiguous": true
+   },
+   "a34": {
+    "family_value": 0.0,
+    "allowed_min": 0.0,
+    "allowed_max": 1.0,
+    "contiguous": true
+   },
+   "a43": {
+    "family_value": 1.0,
+    "allowed_min": 1.0,
+    "allowed_max": 1.0,
+    "contiguous": true
+   },
+   "a44": {
+    "family_value": 1.0,
+    "allowed_min": 0.0,
+    "allowed_max": 1.0,
+    "contiguous": true
+   },
+   "b12": {
+    "family_value": 0.0,
+    "allowed_min": 0.0,
+    "allowed_max": 0.0,
+    "contiguous": true
+   },
+   "b22": {
+    "family_value": 0.0,
+    "allowed_min": 0.0,
+    "allowed_max": 0.0,
+    "contiguous": true
+   },
+   "b24": {
+    "family_value": 0.0,
+    "allowed_min": 0.0,
+    "allowed_max": 1.0,
+    "contiguous": true
+   },
+   "b32": {
+    "family_value": 0.0,
+    "allowed_min": 0.0,
+    "allowed_max": 0.0,
+    "contiguous": true
+   },
+   "b42": {
+    "family_value": 1.0,
+    "allowed_min": 1.0,
+    "allowed_max": 1.0,
+    "contiguous": true
+   },
+   "b44": {
+    "family_value": 1.0,
+    "allowed_min": 0.8,
+    "allowed_max": 1.0,
+    "contiguous": true
+   },
+   "c12": {
+    "family_value": 0.0,
+    "allowed_min": 0.0,
+    "allowed_max": 0.0,
+    "contiguous": true
+   },
+   "c13": {
+    "family_value": 0.0,
+    "allowed_min": 0.0,
+    "allowed_max": 0.0,
+    "contiguous": true
+   },
+   "c14": {
+    "family_value": 0.0,
+    "allowed_min": 0.0,
+    "allowed_max": 1.0,
+    "contiguous": true
+   },
+   "c22": {
+    "family_value": 0.0,
+    "allowed_min": 0.0,
+    "allowed_max": 0.0,
+    "contiguous": true
+   },
+   "c23": {
+    "family_value": 0.0,
+    "allowed_min": 0.0,
+    "allowed_max": 0.0,
+    "contiguous": true
+   },
+   "c24": {
+    "family_value": 0.0,
+    "allowed_min": 0.0,
+    "allowed_max": 1.0,
+    "contiguous": true
+   },
+   "c32": {
+    "family_value": 0.0,
+    "allowed_min": 0.0,
+    "allowed_max": 0.0,
+    "contiguous": true
+   },
+   "c33": {
+    "family_value": 0.5,
+    "allowed_min": 0.5,
+    "allowed_max": 0.5,
+    "contiguous": true
+   },
+   "c34": {
+    "family_value": 0.0,
+    "allowed_min": 0.0,
+    "allowed_max": 1.0,
+    "contiguous": true
+   },
+   "c42": {
+    "family_value": 1.0,
+    "allowed_min": 1.0,
+    "allowed_max": 1.0,
+    "contiguous": true
+   },
+   "c43": {
+    "family_value": 1.0,
+    "allowed_min": 1.0,
+    "allowed_max": 1.0,
+    "contiguous": true
+   },
+   "c44": {
+    "family_value": 1.0,
+    "allowed_min": 0.0,
+    "allowed_max": 1.0,
+    "contiguous": true
+   }
+  },
+  "c11=0, beta=1/8 (b11=b21=1/8, b32=1/4, c33=3/8)": {
+   "a44": {
+    "family_value": 1.0,
+    "allowed_min": 0.8,
+    "allowed_max": 1.0,
+    "contiguous": true
+   },
+   "b12": {
+    "family_value": 0.0,
+    "allowed_min": 0.0,
+    "allowed_max": 0.115,
+    "contiguous": true
+   },
+   "b22": {
+    "family_value": 0.0,
+    "allowed_min": 0.0,
+    "allowed_max": 0.115,
+    "contiguous": true
+   },
+   "b24": {
+    "family_value": 0.0,
+    "allowed_min": 0.0,
+    "allowed_max": 1.0,
+    "contiguous": true
+   },
+   "b32": {
+    "family_value": 0.25,
+    "allowed_min": 0.125,
+    "allowed_max": 0.34,
+    "contiguous": true
+   },
+   "b42": {
+    "family_value": 1.0,
+    "allowed_min": 0.925,
+    "allowed_max": 1.0,
+    "contiguous": true
+   },
+   "b44": {
+    "family_value": 1.0,
+    "allowed_min": 0.8,
+    "allowed_max": 1.0,
+    "contiguous": true
+   },
+   "c13": {
+    "family_value": 0.0,
+    "allowed_min": 0.0,
+    "allowed_max": 0.105,
+    "contiguous": true
+   },
+   "c14": {
+    "family_value": 0.0,
+    "allowed_min": 0.0,
+    "allowed_max": 0.75,
+    "contiguous": true
+   },
+   "c23": {
+    "family_value": 0.0,
+    "allowed_min": 0.0,
+    "allowed_max": 0.105,
+    "contiguous": true
+   },
+   "c24": {
+    "family_value": 0.0,
+    "allowed_min": 0.0,
+    "allowed_max": 0.75,
+    "contiguous": true
+   },
+   "c33": {
+    "family_value": 0.375,
+    "allowed_min": 0.25,
+    "allowed_max": 0.465,
+    "contiguous": true
+   },
+   "c34": {
+    "family_value": 0.0,
+    "allowed_min": 0.0,
+    "allowed_max": 1.0,
+    "contiguous": true
+   },
+   "c43": {
+    "family_value": 1.0,
+    "allowed_min": 0.93,
+    "allowed_max": 1.0,
+    "contiguous": true
+   },
+   "c44": {
+    "family_value": 1.0,
+    "allowed_min": 0.0,
+    "allowed_max": 1.0,
+    "contiguous": true
+   }
+  },
+  "c11=0, beta=1/4 (b32=15/16, c33=0)": {
+   "a44": {
+    "family_value": 1.0,
+    "allowed_min": 0.8,
+    "allowed_max": 1.0,
+    "contiguous": true
+   },
+   "b12": {
+    "family_value": 0.0,
+    "allowed_min": 0.0,
+    "allowed_max": 0.0,
+    "contiguous": true
+   },
+   "b22": {
+    "family_value": 0.0,
+    "allowed_min": 0.0,
+    "allowed_max": 0.0,
+    "contiguous": true
+   },
+   "b24": {
+    "family_value": 0.0,
+    "allowed_min": 0.0,
+    "allowed_max": 1.0,
+    "contiguous": true
+   },
+   "b32": {
+    "family_value": 0.9375,
+    "allowed_min": 0.5,
+    "allowed_max": 0.935,
+    "contiguous": true
+   },
+   "b42": {
+    "family_value": 1.0,
+    "allowed_min": 0.8300000000000001,
+    "allowed_max": 1.0,
+    "contiguous": true
+   },
+   "b43": {
+    "family_value": 1.0,
+    "allowed_min": 0.0,
+    "allowed_max": 1.0,
+    "contiguous": true
+   },
+   "b44": {
+    "family_value": 1.0,
+    "allowed_min": 0.0,
+    "allowed_max": 1.0,
+    "contiguous": true
+   },
+   "c13": {
+    "family_value": 0.0,
+    "allowed_min": 0.0,
+    "allowed_max": 0.0,
+    "contiguous": true
+   },
+   "c14": {
+    "family_value": 0.0,
+    "allowed_min": 0.0,
+    "allowed_max": 0.0,
+    "contiguous": true
+   },
+   "c23": {
+    "family_value": 0.0,
+    "allowed_min": 0.0,
+    "allowed_max": 0.0,
+    "contiguous": true
+   },
+   "c24": {
+    "family_value": 0.0,
+    "allowed_min": 0.0,
+    "allowed_max": 0.0,
+    "contiguous": true
+   },
+   "c33": {
+    "family_value": 0.0,
+    "allowed_min": 0.0,
+    "allowed_max": 0.0,
+    "contiguous": true
+   },
+   "c34": {
+    "family_value": 0.0,
+    "allowed_min": 0.0,
+    "allowed_max": 1.0,
+    "contiguous": true
+   },
+   "c43": {
+    "family_value": 1.0,
+    "allowed_min": 0.8300000000000001,
+    "allowed_max": 1.0,
+    "contiguous": true
+   },
+   "c44": {
+    "family_value": 1.0,
+    "allowed_min": 0.0,
+    "allowed_max": 1.0,
+    "contiguous": true
+   }
+  },
+  "c11=1/2, beta=1/8 (b21=1/16, b23=0, b32=1/4, c33=3/8)": {
+   "a44": {
+    "family_value": 1.0,
+    "allowed_min": 0.8,
+    "allowed_max": 1.0,
+    "contiguous": true
+   },
+   "b12": {
+    "family_value": 0.0,
+    "allowed_min": 0.0,
+    "allowed_max": 0.055,
+    "contiguous": true
+   },
+   "b14": {
+    "family_value": 0.0,
+    "allowed_min": 0.0,
+    "allowed_max": 1.0,
+    "contiguous": true
+   },
+   "b22": {
+    "family_value": 0.0,
+    "allowed_min": 0.0,
+    "allowed_max": 0.055,
+    "contiguous": true
+   },
+   "b32": {
+    "family_value": 0.25,
+    "allowed_min": 0.125,
+    "allowed_max": 0.295,
+    "contiguous": true
+   },
+   "b42": {
+    "family_value": 1.0,
+    "allowed_min": 0.925,
+    "allowed_max": 1.0,
+    "contiguous": true
+   },
+   "b44": {
+    "family_value": 1.0,
+    "allowed_min": 0.88,
+    "allowed_max": 1.0,
+    "contiguous": true
+   },
+   "c13": {
+    "family_value": 0.0,
+    "allowed_min": 0.0,
+    "allowed_max": 0.05,
+    "contiguous": true
+   },
+   "c14": {
+    "family_value": 0.0,
+    "allowed_min": 0.0,
+    "allowed_max": 0.375,
+    "contiguous": true
+   },
+   "c23": {
+    "family_value": 0.0,
+    "allowed_min": 0.0,
+    "allowed_max": 0.05,
+    "contiguous": true
+   },
+   "c24": {
+    "family_value": 0.0,
+    "allowed_min": 0.0,
+    "allowed_max": 0.375,
+    "contiguous": true
+   },
+   "c33": {
+    "family_value": 0.375,
+    "allowed_min": 0.25,
+    "allowed_max": 0.42,
+    "contiguous": true
+   },
+   "c34": {
+    "family_value": 0.0,
+    "allowed_min": 0.0,
+    "allowed_max": 1.0,
+    "contiguous": true
+   },
+   "c43": {
+    "family_value": 1.0,
+    "allowed_min": 0.93,
+    "allowed_max": 1.0,
+    "contiguous": true
+   },
+   "c44": {
+    "family_value": 1.0,
+    "allowed_min": 0.0,
+    "allowed_max": 1.0,
+    "contiguous": true
+   }
+  }
+ }
+}

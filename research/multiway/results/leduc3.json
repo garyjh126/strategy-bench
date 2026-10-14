@@ -1,0 +1,157 @@
+{
+ "meta": {
+  "game": "leduc_poker(players=3)",
+  "generated_by": "research/multiway/run_leduc3.py",
+  "units": "chips per hand (ante 1, raises 2 then 4)",
+  "total_seconds": 403.1
+ },
+ "runs": [
+  {
+   "label": "OpenSpiel ES-MCCFR, seed 0",
+   "implementation": "OpenSpiel pyspiel.ExternalSamplingMCCFRSolver (simple averaging)",
+   "checkpoints": [
+    {
+     "iteration": 10000,
+     "train_seconds_so_far": 0.7,
+     "ev": [
+      -0.12495211336261766,
+      -0.05737823883103613,
+      0.18233035219365384
+     ],
+     "gains": [
+      0.8788569300316162,
+      0.9908329086462723,
+      1.0561355530486838
+     ],
+     "nash_conv": 2.925825391726572,
+     "eval_seconds": 19.7
+    },
+    {
+     "iteration": 100000,
+     "train_seconds_so_far": 7.7,
+     "ev": [
+      -0.08941984004700032,
+      -0.010305601688524929,
+      0.09972544173552526
+     ],
+     "gains": [
+      0.346590696085169,
+      0.28830347965617853,
+      0.32510695648047844
+     ],
+     "nash_conv": 0.960001132221826,
+     "eval_seconds": 18.3
+    },
+    {
+     "iteration": 1000000,
+     "train_seconds_so_far": 74.4,
+     "ev": [
+      -0.08166664311739008,
+      -0.014216636502559762,
+      0.09588327961994987
+     ],
+     "gains": [
+      0.14700128968643256,
+      0.07741623633890597,
+      0.08510924420580966
+     ],
+     "nash_conv": 0.30952677023114816,
+     "eval_seconds": 18.7
+    }
+   ]
+  },
+  {
+   "label": "OpenSpiel ES-MCCFR, seed 1",
+   "implementation": "OpenSpiel pyspiel.ExternalSamplingMCCFRSolver (simple averaging)",
+   "checkpoints": [
+    {
+     "iteration": 10000,
+     "train_seconds_so_far": 0.8,
+     "ev": [
+      -0.14446819851499093,
+      0.013733727019745637,
+      0.13073447149524528
+     ],
+     "gains": [
+      1.052773028616337,
+      1.048569158014925,
+      1.2176075944472575
+     ],
+     "nash_conv": 3.3189497810785196,
+     "eval_seconds": 18.4
+    },
+    {
+     "iteration": 100000,
+     "train_seconds_so_far": 7.9,
+     "ev": [
+      -0.08604805713058689,
+      -0.01930869433828407,
+      0.10535675146887097
+     ],
+     "gains": [
+      0.37438019070211337,
+      0.27823221247389207,
+      0.3422252525962948
+     ],
+     "nash_conv": 0.9948376557723002,
+     "eval_seconds": 18.3
+    },
+    {
+     "iteration": 1000000,
+     "train_seconds_so_far": 74.7,
+     "ev": [
+      -0.0779916603327957,
+      -0.01702358046284347,
+      0.09501524079563929
+     ],
+     "gains": [
+      0.17258079409312305,
+      0.07185025322639024,
+      0.08441192934492979
+     ],
+     "nash_conv": 0.32884297666444307,
+     "eval_seconds": 18.3
+    }
+   ]
+  },
+  {
+   "label": "OpenSpiel CFR+",
+   "implementation": "OpenSpiel pyspiel.CFRPlusSolver",
+   "checkpoints": [
+    {
+     "iteration": 10,
+     "train_seconds_so_far": 32.9,
+     "ev": [
+      -0.37758389154452693,
+      0.05541010013900227,
+      0.3221737914055245
+     ],
+     "gains": [
+      0.8198166053783182,
+      0.6493265377510455,
+      0.5539985438211921
+     ],
+     "nash_conv": 2.023141686950556,
+     "eval_seconds": 18.1
+    },
+    {
+     "iteration": 30,
+     "train_seconds_so_far": 99.1,
+     "ev": [
+      -0.11268054821217488,
+      -0.02462313388043505,
+      0.13730368209260996
+     ],
+     "gains": [
+      0.22764562664957821,
+      0.13873903196513657,
+      0.10761476411808155
+     ],
+     "nash_conv": 0.4739994227327963,
+     "eval_seconds": 18.5
+    }
+   ],
+   "num_infosets": 25800
+  }
+ ]
+}

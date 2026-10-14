@@ -1,0 +1,926 @@
+{
+ "meta": {
+  "game": "kuhn_poker(players=3)",
+  "generated_by": "research/multiway/seat_metric.py",
+  "units": "chips per hand (ante 1)",
+  "note": "best responses break ties by the first legal action (pass), so 'paid_by' splits describe one best response; others may split the gain differently"
+ },
+ "references": {
+  "family beta=0": {
+   "gains": [
+    0.0,
+    2.7755575615628914e-17,
+    0.0
+   ],
+   "ev": [
+    -0.02083333333333337,
+    -0.020833333333333343,
+    0.04166666666666663
+   ]
+  },
+  "family beta=1/4": {
+   "gains": [
+    0.0,
+    0.0,
+    5.551115123125783e-17
+   ],
+   "ev": [
+    -0.03125,
+    -0.020833333333333315,
+    0.052083333333333315
+   ]
+  },
+  "CFR+ (OpenSpiel, 5000 iterations)": {
+   "gains": [
+    7.502313268403782e-07,
+    8.320431320041344e-07,
+    1.4226724959209847e-07
+   ],
+   "ev": [
+    -0.02648416180039903,
+    -0.020833369041985184,
+    0.047317530842384214
+   ]
+  }
+ },
+ "rows": [
+  {
+   "subject": "uniform random",
+   "seat": "P1",
+   "reference": "family beta=0",
+   "subject_ev": -0.1718749999999999,
+   "reference_ev": -0.02083333333333337,
+   "loss_vs_reference": 0.15104166666666652,
+   "seat_regret": 0.15104166666666652,
+   "opponent_gains": {
+    "P2": 0.29166666666666674,
+    "P3": 0.1302083333333332
+   },
+   "max_opponent_gain": 0.29166666666666674,
+   "max_gain_opponent": "P2",
+   "paid_by_subject": 0.296875,
+   "paid_by_bystander": -0.00520833333333337,
+   "bystander": "P3",
+   "punishment_loss": {
+    "P2": 0.296875,
+    "P3": 0.25520833333333326
+   },
+   "max_punishment_loss": 0.296875
+  },
+  {
+   "subject": "uniform random",
+   "seat": "P1",
+   "reference": "family beta=1/4",
+   "subject_ev": -0.2968749999999999,
+   "reference_ev": -0.03125,
+   "loss_vs_reference": 0.2656249999999999,
+   "seat_regret": 0.2656249999999999,
+   "opponent_gains": {
+    "P2": 0.14062500000000003,
+    "P3": 0.21874999999999994
+   },
+   "max_opponent_gain": 0.21874999999999994,
+   "max_gain_opponent": "P3",
+   "paid_by_subject": 0.2109375000000001,
+   "paid_by_bystander": 0.007812499999999972,
+   "bystander": "P2",
+   "punishment_loss": {
+    "P2": 0.13020833333333326,
+    "P3": 0.22135416666666663
+   },
+   "max_punishment_loss": 0.22135416666666663
+  },
+  {
+   "subject": "uniform random",
+   "seat": "P1",
+   "reference": "CFR+ (OpenSpiel, 5000 iterations)",
+   "subject_ev": -0.178952954859243,
+   "reference_ev": -0.02648416180039903,
+   "loss_vs_reference": 0.15246879305884398,
+   "seat_regret": 0.15246954329017082,
+   "opponent_gains": {
+    "P2": 0.22991124603130084,
+    "P3": 0.19924119237373333
+   },
+   "max_opponent_gain": 0.22991124603130084,
+   "max_gain_opponent": "P2",
+   "paid_by_subject": 0.24800559460070187,
+   "paid_by_bystander": -0.018094348569401286,
+   "bystander": "P3",
+   "punishment_loss": {
+    "P2": 0.25848465322815817,
+    "P3": 0.2674020279645132
+   },
+   "max_punishment_loss": 0.2674020279645132
+  },
+  {
+   "subject": "uniform random",
+   "seat": "P2",
+   "reference": "family beta=0",
+   "subject_ev": -0.17187499999999994,
+   "reference_ev": -0.020833333333333343,
+   "loss_vs_reference": 0.1510416666666666,
+   "seat_regret": 0.15104166666666663,
+   "opponent_gains": {
+    "P1": 0.23958333333333337,
+    "P3": 0.19270833333333326
+   },
+   "max_opponent_gain": 0.23958333333333337,
+   "max_gain_opponent": "P1",
+   "paid_by_subject": 0.3385416666666667,
+   "paid_by_bystander": -0.09895833333333331,
+   "bystander": "P3",
+   "punishment_loss": {
+    "P1": 0.4010416666666666,
+    "P3": 0.29687499999999994
+   },
+   "max_punishment_loss": 0.4010416666666666
+  },
+  {
+   "subject": "uniform random",
+   "seat": "P2",
+   "reference": "family beta=1/4",
+   "subject_ev": -0.17187499999999994,
+   "reference_ev": -0.020833333333333315,
+   "loss_vs_reference": 0.15104166666666663,
+   "seat_regret": 0.15104166666666663,
+   "opponent_gains": {
+    "P1": 0.40625,
+    "P3": 0.19270833333333326
+   },
+   "max_opponent_gain": 0.40625,
+   "max_gain_opponent": "P1",
+   "paid_by_subject": 0.4010416666666667,
+   "paid_by_bystander": 0.00520833333333337,
+   "bystander": "P3",
+   "punishment_loss": {
+    "P1": 0.4010416666666666,
+    "P3": 0.29687499999999994
+   },
+   "max_punishment_loss": 0.4010416666666666
+  },
+  {
+   "subject": "uniform random",
+   "seat": "P2",
+   "reference": "CFR+ (OpenSpiel, 5000 iterations)",
+   "subject_ev": -0.14583627622320988,
+   "reference_ev": -0.020833369041985184,
+   "loss_vs_reference": 0.1250029071812247,
+   "seat_regret": 0.1250037392243567,
+   "opponent_gains": {
+    "P1": 0.35102610324049166,
+    "P3": 0.21874604749713633
+   },
+   "max_opponent_gain": 0.35102610324049166,
+   "max_gain_opponent": "P1",
+   "paid_by_subject": 0.4270804265480042,
+   "paid_by_bystander": -0.0760543233075125,
+   "bystander": "P3",
+   "punishment_loss": {
+    "P1": 0.4270804265480042,
+    "P3": 0.32291480141408896
+   },
+   "max_punishment_loss": 0.4270804265480042
+  },
+  {
+   "subject": "uniform random",
+   "seat": "P3",
+   "reference": "family beta=0",
+   "subject_ev": -0.06250000000000006,
+   "reference_ev": 0.04166666666666663,
+   "loss_vs_reference": 0.10416666666666669,
+   "seat_regret": 0.10416666666666669,
+   "opponent_gains": {
+    "P1": 0.4375,
+    "P2": 0.22916666666666663
+   },
+   "max_opponent_gain": 0.4375,
+   "max_gain_opponent": "P1",
+   "paid_by_subject": 0.49999999999999994,
+   "paid_by_bystander": -0.06249999999999989,
+   "bystander": "P2",
+   "punishment_loss": {
+    "P1": 0.49999999999999994,
+    "P2": 0.49999999999999994
+   },
+   "max_punishment_loss": 0.49999999999999994
+  },
+  {
+   "subject": "uniform random",
+   "seat": "P3",
+   "reference": "family beta=1/4",
+   "subject_ev": -0.18750000000000006,
+   "reference_ev": 0.052083333333333315,
+   "loss_vs_reference": 0.23958333333333337,
+   "seat_regret": 0.23958333333333343,
+   "opponent_gains": {
+    "P1": 0.24479166666666663,
+    "P2": 0.13541666666666663
+   },
+   "max_opponent_gain": 0.24479166666666663,
+   "max_gain_opponent": "P1",
+   "paid_by_subject": 0.19010416666666669,
+   "paid_by_bystander": 0.05468750000000011,
+   "bystander": "P2",
+   "punishment_loss": {
+    "P1": 0.43359374999999994,
+    "P2": 0.37499999999999994
+   },
+   "max_punishment_loss": 0.43359374999999994
+  },
+  {
+   "subject": "uniform random",
+   "seat": "P3",
+   "reference": "CFR+ (OpenSpiel, 5000 iterations)",
+   "subject_ev": -0.11868193494975832,
+   "reference_ev": 0.047317530842384214,
+   "loss_vs_reference": 0.16599946579214253,
+   "seat_regret": 0.16599960805939212,
+   "opponent_gains": {
+    "P1": 0.30231335025436656,
+    "P2": 0.18762709783758375
+   },
+   "max_opponent_gain": 0.30231335025436656,
+   "max_gain_opponent": "P1",
+   "paid_by_subject": 0.4650904403597993,
+   "paid_by_bystander": -0.16277709010543273,
+   "bystander": "P2",
+   "punishment_loss": {
+    "P1": 0.4650904403597993,
+    "P2": 0.443818151008712
+   },
+   "max_punishment_loss": 0.4650904403597993
+  },
+  {
+   "subject": "always bet or call",
+   "seat": "P1",
+   "reference": "family beta=0",
+   "subject_ev": -0.125,
+   "reference_ev": -0.02083333333333337,
+   "loss_vs_reference": 0.10416666666666663,
+   "seat_regret": 0.10416666666666663,
+   "opponent_gains": {
+    "P2": 0.16666666666666669,
+    "P3": 0.16666666666666669
+   },
+   "max_opponent_gain": 0.16666666666666669,
+   "max_gain_opponent": "P2",
+   "paid_by_subject": 0.2499999999999999,
+   "paid_by_bystander": -0.08333333333333326,
+   "bystander": "P3",
+   "punishment_loss": {
+    "P2": 0.2499999999999999,
+    "P3": 0.16666666666666663
+   },
+   "max_punishment_loss": 0.2499999999999999
+  },
+  {
+   "subject": "always bet or call",
+   "seat": "P1",
+   "reference": "family beta=1/4",
+   "subject_ev": -0.2343749999999999,
+   "reference_ev": -0.03125,
+   "loss_vs_reference": 0.2031249999999999,
+   "seat_regret": 0.2031249999999999,
+   "opponent_gains": {
+    "P2": 0.010416666666666685,
+    "P3": 0.25000000000000017
+   },
+   "max_opponent_gain": 0.25000000000000017,
+   "max_gain_opponent": "P3",
+   "paid_by_subject": 0.2500000000000001,
+   "paid_by_bystander": 0.0,
+   "bystander": "P2",
+   "punishment_loss": {
+    "P2": 0.05729166666666674,
+    "P3": 0.2500000000000001
+   },
+   "max_punishment_loss": 0.2500000000000001
+  },
+  {
+   "subject": "always bet or call",
+   "seat": "P1",
+   "reference": "CFR+ (OpenSpiel, 5000 iterations)",
+   "subject_ev": -0.1265069815676202,
+   "reference_ev": -0.02648416180039903,
+   "loss_vs_reference": 0.10002281976722116,
+   "seat_regret": 0.100023569998548,
+   "opponent_gains": {
+    "P2": 0.10994016980778448,
+    "P3": 0.20858280598775114
+   },
+   "max_opponent_gain": 0.20858280598775114,
+   "max_gain_opponent": "P3",
+   "paid_by_subject": 0.20858278918391782,
+   "paid_by_bystander": 1.680383349134118e-08,
+   "bystander": "P2",
+   "punishment_loss": {
+    "P2": 0.18586814203047997,
+    "P3": 0.20858278918391782
+   },
+   "max_punishment_loss": 0.20858278918391782
+  },
+  {
+   "subject": "always bet or call",
+   "seat": "P2",
+   "reference": "family beta=0",
+   "subject_ev": -0.125,
+   "reference_ev": -0.020833333333333343,
+   "loss_vs_reference": 0.10416666666666666,
+   "seat_regret": 0.10416666666666669,
+   "opponent_gains": {
+    "P1": 0.16666666666666674,
+    "P3": 0.1666666666666668
+   },
+   "max_opponent_gain": 0.1666666666666668,
+   "max_gain_opponent": "P3",
+   "paid_by_subject": 0.25,
+   "paid_by_bystander": -0.08333333333333326,
+   "bystander": "P1",
+   "punishment_loss": {
+    "P1": 0.16666666666666669,
+    "P3": 0.25
+   },
+   "max_punishment_loss": 0.25
+  },
+  {
+   "subject": "always bet or call",
+   "seat": "P2",
+   "reference": "family beta=1/4",
+   "subject_ev": -0.125,
+   "reference_ev": -0.020833333333333315,
+   "loss_vs_reference": 0.10416666666666669,
+   "seat_regret": 0.10416666666666669,
+   "opponent_gains": {
+    "P1": 0.16666666666666674,
+    "P3": 0.1666666666666668
+   },
+   "max_opponent_gain": 0.1666666666666668,
+   "max_gain_opponent": "P3",
+   "paid_by_subject": 0.25,
+   "paid_by_bystander": -0.08333333333333326,
+   "bystander": "P1",
+   "punishment_loss": {
+    "P1": 0.16666666666666669,
+    "P3": 0.25
+   },
+   "max_punishment_loss": 0.25
+  },
+  {
+   "subject": "always bet or call",
+   "seat": "P2",
+   "reference": "CFR+ (OpenSpiel, 5000 iterations)",
+   "subject_ev": -0.1250018388206342,
+   "reference_ev": -0.020833369041985184,
+   "loss_vs_reference": 0.10416846977864902,
+   "seat_regret": 0.10416930182178102,
+   "opponent_gains": {
+    "P1": 0.1666652607795216,
+    "P3": 0.16666659040298826
+   },
+   "max_opponent_gain": 0.16666659040298826,
+   "max_gain_opponent": "P3",
+   "paid_by_subject": 0.24999934058488615,
+   "paid_by_bystander": -0.08333275018189779,
+   "bystander": "P1",
+   "punishment_loss": {
+    "P1": 0.1666650513251054,
+    "P3": 0.24999941384767
+   },
+   "max_punishment_loss": 0.24999941384767
+  },
+  {
+   "subject": "always bet or call",
+   "seat": "P3",
+   "reference": "family beta=0",
+   "subject_ev": -0.125,
+   "reference_ev": 0.04166666666666663,
+   "loss_vs_reference": 0.16666666666666663,
+   "seat_regret": 0.16666666666666663,
+   "opponent_gains": {
+    "P1": 0.16666666666666674,
+    "P2": 0.16666666666666674
+   },
+   "max_opponent_gain": 0.16666666666666674,
+   "max_gain_opponent": "P1",
+   "paid_by_subject": 0.25,
+   "paid_by_bystander": -0.08333333333333337,
+   "bystander": "P2",
+   "punishment_loss": {
+    "P1": 0.25,
+    "P2": 0.16666666666666663
+   },
+   "max_punishment_loss": 0.25
+  },
+  {
+   "subject": "always bet or call",
+   "seat": "P3",
+   "reference": "family beta=1/4",
+   "subject_ev": -0.1875,
+   "reference_ev": 0.052083333333333315,
+   "loss_vs_reference": 0.23958333333333331,
+   "seat_regret": 0.23958333333333337,
+   "opponent_gains": {
+    "P1": 0.28645833333333337,
+    "P2": 0.14583333333333337
+   },
+   "max_opponent_gain": 0.28645833333333337,
+   "max_gain_opponent": "P1",
+   "paid_by_subject": 0.171875,
+   "paid_by_bystander": 0.11458333333333337,
+   "bystander": "P2",
+   "punishment_loss": {
+    "P1": 0.23958333333333331,
+    "P2": 0.10416666666666663
+   },
+   "max_punishment_loss": 0.23958333333333331
+  },
+  {
+   "subject": "always bet or call",
+   "seat": "P3",
+   "reference": "CFR+ (OpenSpiel, 5000 iterations)",
+   "subject_ev": -0.14951855692878274,
+   "reference_ev": 0.047317530842384214,
+   "loss_vs_reference": 0.19683608777116696,
+   "seat_regret": 0.19683623003841655,
+   "opponent_gains": {
+    "P1": 0.19394286766304025,
+    "P2": 0.16167156171835856
+   },
+   "max_opponent_gain": 0.19394286766304025,
+   "max_gain_opponent": "P1",
+   "paid_by_subject": 0.18806693787932055,
+   "paid_by_bystander": 0.005875929783719591,
+   "bystander": "P2",
+   "punishment_loss": {
+    "P1": 0.24703198201692855,
+    "P2": 0.14215001846780034
+   },
+   "max_punishment_loss": 0.24703198201692855
+  },
+  {
+   "subject": "passive (never bet, call only with the Ace)",
+   "seat": "P1",
+   "reference": "family beta=0",
+   "subject_ev": -0.02083333333333337,
+   "reference_ev": -0.02083333333333337,
+   "loss_vs_reference": 0.0,
+   "seat_regret": 0.0,
+   "opponent_gains": {
+    "P2": 0.1666666666666667,
+    "P3": 0.0
+   },
+   "max_opponent_gain": 0.1666666666666667,
+   "max_gain_opponent": "P2",
+   "paid_by_subject": 0.04166666666666663,
+   "paid_by_bystander": 0.12499999999999994,
+   "bystander": "P3",
+   "punishment_loss": {
+    "P2": 0.04166666666666663,
+    "P3": 0.0625
+   },
+   "max_punishment_loss": 0.0625
+  },
+  {
+   "subject": "passive (never bet, call only with the Ace)",
+   "seat": "P1",
+   "reference": "family beta=1/4",
+   "subject_ev": -0.03125,
+   "reference_ev": -0.03125,
+   "loss_vs_reference": 0.0,
+   "seat_regret": 0.0,
+   "opponent_gains": {
+    "P2": 0.16666666666666669,
+    "P3": 5.551115123125783e-17
+   },
+   "max_opponent_gain": 0.16666666666666669,
+   "max_gain_opponent": "P2",
+   "paid_by_subject": 0.03125,
+   "paid_by_bystander": 0.13541666666666663,
+   "bystander": "P3",
+   "punishment_loss": {
+    "P2": 0.03125,
+    "P3": 0.03125
+   },
+   "max_punishment_loss": 0.03125
+  },
+  {
+   "subject": "passive (never bet, call only with the Ace)",
+   "seat": "P1",
+   "reference": "CFR+ (OpenSpiel, 5000 iterations)",
+   "subject_ev": -0.0264834115690723,
+   "reference_ev": -0.02648416180039903,
+   "loss_vs_reference": -7.502313267293559e-07,
+   "seat_regret": 1.1102230246251565e-16,
+   "opponent_gains": {
+    "P2": 0.16666694623689168,
+    "P3": 1.1859954435755604e-06
+   },
+   "max_opponent_gain": 0.16666694623689168,
+   "max_gain_opponent": "P2",
+   "paid_by_subject": 0.03601628780722532,
+   "paid_by_bystander": 0.13065065842966622,
+   "bystander": "P3",
+   "punishment_loss": {
+    "P2": 0.03601628780722521,
+    "P3": 0.04708905965859711
+   },
+   "max_punishment_loss": 0.04708905965859711
+  },
+  {
+   "subject": "passive (never bet, call only with the Ace)",
+   "seat": "P2",
+   "reference": "family beta=0",
+   "subject_ev": -0.020833333333333315,
+   "reference_ev": -0.020833333333333343,
+   "loss_vs_reference": -2.7755575615628914e-17,
+   "seat_regret": 0.0,
+   "opponent_gains": {
+    "P1": 0.0,
+    "P3": 0.125
+   },
+   "max_opponent_gain": 0.125,
+   "max_gain_opponent": "P3",
+   "paid_by_subject": 0.06250000000000003,
+   "paid_by_bystander": 0.0625,
+   "bystander": "P1",
+   "punishment_loss": {
+    "P1": 0.04166666666666666,
+    "P3": 0.06250000000000003
+   },
+   "max_punishment_loss": 0.06250000000000003
+  },
+  {
+   "subject": "passive (never bet, call only with the Ace)",
+   "seat": "P2",
+   "reference": "family beta=1/4",
+   "subject_ev": -0.020833333333333315,
+   "reference_ev": -0.020833333333333315,
+   "loss_vs_reference": 0.0,
+   "seat_regret": 0.0,
+   "opponent_gains": {
+    "P1": 0.16666666666666669,
+    "P3": 0.125
+   },
+   "max_opponent_gain": 0.16666666666666669,
+   "max_gain_opponent": "P1",
+   "paid_by_subject": 0.04166666666666666,
+   "paid_by_bystander": 0.12499999999999994,
+   "bystander": "P3",
+   "punishment_loss": {
+    "P1": 0.04166666666666666,
+    "P3": 0.06250000000000003
+   },
+   "max_punishment_loss": 0.06250000000000003
+  },
+  {
+   "subject": "passive (never bet, call only with the Ace)",
+   "seat": "P2",
+   "reference": "CFR+ (OpenSpiel, 5000 iterations)",
+   "subject_ev": -0.02083305204701244,
+   "reference_ev": -0.020833369041985184,
+   "loss_vs_reference": -3.169949727432897e-07,
+   "seat_regret": 5.150481592608447e-07,
+   "opponent_gains": {
+    "P1": 0.11144422217242933,
+    "P3": 0.1249961513729056
+   },
+   "max_opponent_gain": 0.1249961513729056,
+   "max_gain_opponent": "P3",
+   "paid_by_subject": 0.06249888211623722,
+   "paid_by_bystander": 0.06249726925666854,
+   "bystander": "P1",
+   "punishment_loss": {
+    "P1": 0.041666844083557836,
+    "P3": 0.06249888211623725
+   },
+   "max_punishment_loss": 0.06249888211623725
+  },
+  {
+   "subject": "passive (never bet, call only with the Ace)",
+   "seat": "P3",
+   "reference": "family beta=0",
+   "subject_ev": -2.7755575615628914e-17,
+   "reference_ev": 0.04166666666666663,
+   "loss_vs_reference": 0.04166666666666666,
+   "seat_regret": 0.04166666666666666,
+   "opponent_gains": {
+    "P1": 0.16666666666666669,
+    "P2": 0.04166666666666663
+   },
+   "max_opponent_gain": 0.16666666666666669,
+   "max_gain_opponent": "P1",
+   "paid_by_subject": 0.08333333333333331,
+   "paid_by_bystander": 0.08333333333333331,
+   "bystander": "P2",
+   "punishment_loss": {
+    "P1": 0.08333333333333326,
+    "P2": 0.08333333333333329
+   },
+   "max_punishment_loss": 0.08333333333333329
+  },
+  {
+   "subject": "passive (never bet, call only with the Ace)",
+   "seat": "P3",
+   "reference": "family beta=1/4",
+   "subject_ev": -0.02083333333333337,
+   "reference_ev": 0.052083333333333315,
+   "loss_vs_reference": 0.07291666666666669,
+   "seat_regret": 0.07291666666666674,
+   "opponent_gains": {
+    "P1": 0.03645833333333337,
+    "P2": 0.0
+   },
+   "max_opponent_gain": 0.03645833333333337,
+   "max_gain_opponent": "P1",
+   "paid_by_subject": 0.0,
+   "paid_by_bystander": 0.03645833333333337,
+   "bystander": "P2",
+   "punishment_loss": {
+    "P1": -5.551115123125783e-17,
+    "P2": 0.062499999999999944
+   },
+   "max_punishment_loss": 0.062499999999999944
+  },
+  {
+   "subject": "passive (never bet, call only with the Ace)",
+   "seat": "P3",
+   "reference": "CFR+ (OpenSpiel, 5000 iterations)",
+   "subject_ev": -0.009760291728376447,
+   "reference_ev": 0.047317530842384214,
+   "loss_vs_reference": 0.05707782257076066,
+   "seat_regret": 0.05707796483801025,
+   "opponent_gains": {
+    "P1": 0.06205607675259983,
+    "P2": 0.02214598816275587
+   },
+   "max_opponent_gain": 0.06205607675259983,
+   "max_gain_opponent": "P1",
+   "paid_by_subject": 0.035449198709960134,
+   "paid_by_bystander": 0.02660687804263956,
+   "bystander": "P2",
+   "punishment_loss": {
+    "P1": 0.035449198709960134,
+    "P2": 0.07357293676378898
+   },
+   "max_punishment_loss": 0.07357293676378898
+  },
+  {
+   "subject": "equilibrium strategy from another member (c11=1/2, beta=1/4)",
+   "seat": "P1",
+   "reference": "family beta=0",
+   "subject_ev": -0.02083333333333337,
+   "reference_ev": -0.02083333333333337,
+   "loss_vs_reference": 0.0,
+   "seat_regret": 0.0,
+   "opponent_gains": {
+    "P2": 2.7755575615628914e-17,
+    "P3": 0.0
+   },
+   "max_opponent_gain": 2.7755575615628914e-17,
+   "max_gain_opponent": "P2",
+   "paid_by_subject": 0.0,
+   "paid_by_bystander": 0.0,
+   "bystander": "P3",
+   "punishment_loss": {
+    "P2": 0.04166666666666663,
+    "P3": 0.0625
+   },
+   "max_punishment_loss": 0.0625
+  },
+  {
+   "subject": "equilibrium strategy from another member (c11=1/2, beta=1/4)",
+   "seat": "P1",
+   "reference": "family beta=1/4",
+   "subject_ev": -0.03125,
+   "reference_ev": -0.03125,
+   "loss_vs_reference": 0.0,
+   "seat_regret": 0.0,
+   "opponent_gains": {
+    "P2": 0.0,
+    "P3": 5.551115123125783e-17
+   },
+   "max_opponent_gain": 5.551115123125783e-17,
+   "max_gain_opponent": "P3",
+   "paid_by_subject": -0.01041666666666663,
+   "paid_by_bystander": 0.010416666666666685,
+   "bystander": "P2",
+   "punishment_loss": {
+    "P2": 0.03125,
+    "P3": 0.03125
+   },
+   "max_punishment_loss": 0.03125
+  },
+  {
+   "subject": "equilibrium strategy from another member (c11=1/2, beta=1/4)",
+   "seat": "P1",
+   "reference": "CFR+ (OpenSpiel, 5000 iterations)",
+   "subject_ev": -0.02648385051476465,
+   "reference_ev": -0.02648416180039903,
+   "loss_vs_reference": -3.112856343800985e-07,
+   "seat_regret": 4.389456924602797e-07,
+   "opponent_gains": {
+    "P2": 5.533363680032544e-07,
+    "P3": 1.1859954435755604e-06
+   },
+   "max_opponent_gain": 1.1859954435755604e-06,
+   "max_gain_opponent": "P3",
+   "paid_by_subject": 0.016723140813462156,
+   "paid_by_bystander": -0.016721954818018775,
+   "bystander": "P2",
+   "punishment_loss": {
+    "P2": 0.03601623169233081,
+    "P3": 0.04708906200069407
+   },
+   "max_punishment_loss": 0.04708906200069407
+  },
+  {
+   "subject": "equilibrium strategy from another member (c11=1/2, beta=1/4)",
+   "seat": "P2",
+   "reference": "family beta=0",
+   "subject_ev": -0.03125000000000003,
+   "reference_ev": -0.020833333333333343,
+   "loss_vs_reference": 0.010416666666666685,
+   "seat_regret": 0.010416666666666713,
+   "opponent_gains": {
+    "P1": 0.0,
+    "P3": 5.551115123125783e-17
+   },
+   "max_opponent_gain": 5.551115123125783e-17,
+   "max_gain_opponent": "P3",
+   "paid_by_subject": 0.01041666666666663,
+   "paid_by_bystander": -0.01041666666666663,
+   "bystander": "P1",
+   "punishment_loss": {
+    "P1": 0.046874999999999944,
+    "P3": 0.01041666666666663
+   },
+   "max_punishment_loss": 0.046874999999999944
+  },
+  {
+   "subject": "equilibrium strategy from another member (c11=1/2, beta=1/4)",
+   "seat": "P2",
+   "reference": "family beta=1/4",
+   "subject_ev": -0.03125000000000003,
+   "reference_ev": -0.020833333333333315,
+   "loss_vs_reference": 0.010416666666666713,
+   "seat_regret": 0.010416666666666713,
+   "opponent_gains": {
+    "P1": 0.16666666666666669,
+    "P3": 5.551115123125783e-17
+   },
+   "max_opponent_gain": 0.16666666666666669,
+   "max_gain_opponent": "P1",
+   "paid_by_subject": 0.046874999999999944,
+   "paid_by_bystander": 0.11979166666666666,
+   "bystander": "P3",
+   "punishment_loss": {
+    "P1": 0.046874999999999944,
+    "P3": 0.01041666666666663
+   },
+   "max_punishment_loss": 0.046874999999999944
+  },
+  {
+   "subject": "equilibrium strategy from another member (c11=1/2, beta=1/4)",
+   "seat": "P2",
+   "reference": "CFR+ (OpenSpiel, 5000 iterations)",
+   "subject_ev": -0.02083356859469132,
+   "reference_ev": -0.020833369041985184,
+   "loss_vs_reference": 1.995527061371405e-07,
+   "seat_regret": 1.0315958381412749e-06,
+   "opponent_gains": {
+    "P1": 0.11144394771418192,
+    "P3": 1.113448086453861e-06
+   },
+   "max_opponent_gain": 0.11144394771418192,
+   "max_gain_opponent": "P1",
+   "paid_by_subject": 0.04687518441568503,
+   "paid_by_bystander": 0.06456876329849714,
+   "bystander": "P3",
+   "punishment_loss": {
+    "P1": 0.04687518441568503,
+    "P3": 0.020832894018068093
+   },
+   "max_punishment_loss": 0.04687518441568503
+  },
+  {
+   "subject": "equilibrium strategy from another member (c11=1/2, beta=1/4)",
+   "seat": "P3",
+   "reference": "family beta=0",
+   "subject_ev": 0.04166666666666663,
+   "reference_ev": 0.04166666666666663,
+   "loss_vs_reference": 0.0,
+   "seat_regret": 0.0,
+   "opponent_gains": {
+    "P1": 0.0,
+    "P2": 2.7755575615628914e-17
+   },
+   "max_opponent_gain": 2.7755575615628914e-17,
+   "max_gain_opponent": "P2",
+   "paid_by_subject": 0.0,
+   "paid_by_bystander": 0.0,
+   "bystander": "P1",
+   "punishment_loss": {
+    "P1": 0.0,
+    "P2": 0.12499999999999992
+   },
+   "max_punishment_loss": 0.12499999999999992
+  },
+  {
+   "subject": "equilibrium strategy from another member (c11=1/2, beta=1/4)",
+   "seat": "P3",
+   "reference": "family beta=1/4",
+   "subject_ev": 0.052083333333333315,
+   "reference_ev": 0.052083333333333315,
+   "loss_vs_reference": 0.0,
+   "seat_regret": 5.551115123125783e-17,
+   "opponent_gains": {
+    "P1": 0.05208333333333337,
+    "P2": 0.0
+   },
+   "max_opponent_gain": 0.05208333333333337,
+   "max_gain_opponent": "P1",
+   "paid_by_subject": -0.02083333333333337,
+   "paid_by_bystander": 0.07291666666666671,
+   "bystander": "P2",
+   "punishment_loss": {
+    "P1": 0.005208333333333259,
+    "P2": 0.1354166666666666
+   },
+   "max_punishment_loss": 0.1354166666666666
+  },
+  {
+   "subject": "equilibrium strategy from another member (c11=1/2, beta=1/4)",
+   "seat": "P3",
+   "reference": "CFR+ (OpenSpiel, 5000 iterations)",
+   "subject_ev": 0.04731757647824125,
+   "reference_ev": 0.047317530842384214,
+   "loss_vs_reference": -4.5635857037762406e-08,
+   "seat_regret": 9.663139255433606e-08,
+   "opponent_gains": {
+    "P1": 0.010898078251818655,
+    "P2": 5.799368695547091e-07
+   },
+   "max_opponent_gain": 0.010898078251818655,
+   "max_gain_opponent": "P1",
+   "paid_by_subject": 0.0020551626044192917,
+   "paid_by_bystander": 0.008842915647399141,
+   "bystander": "P2",
+   "punishment_loss": {
+    "P1": 0.0029504414145739566,
+    "P2": 0.13065079712270902
+   },
+   "max_punishment_loss": 0.13065079712270902
+  }
+ ],
+ "self_play": {
+  "uniform random": {
+   "gains": [
+    0.5468749999999998,
+    0.6927083333333334,
+    0.822916666666667
+   ],
+   "ev": [
+    0.234375,
+    -0.046875,
+    -0.18750000000000006
+   ]
+  },
+  "always bet or call": {
+   "gains": [
+    0.5,
+    0.49999999999999994,
+    0.5
+   ],
+   "ev": [
+    0.0,
+    0.0,
+    -5.551115123125783e-17
+   ]
+  },
+  "passive (never bet, call only with the Ace)": {
+   "gains": [
+    0.16666666666666669,
+    0.16666666666666663,
+    0.16666666666666666
+   ],
+   "ev": [
+    0.0,
+    0.0,
+    -2.7755575615628914e-17
+   ]
+  },
+  "equilibrium strategy from another member (c11=1/2, beta=1/4)": {
+   "gains": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "ev": [
+    -0.03125,
+    -0.020833333333333315,
+    0.05208333333333337
+   ]
+  }
+ }
+}
