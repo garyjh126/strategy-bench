@@ -66,6 +66,13 @@ def test_http_error_classification():
     with pytest.raises(RetryableError) as e:
         _raise_for_http("gemini", _resp(429, '{"quotaId": "PerMinute"}', {"retry-after": "7"}))
     assert e.value.retry_after == 7.0
+    # Retry-After may also be an HTTP date (RFC 9110); that is still a retryable rate limit.
+    with pytest.raises(RetryableError) as e:
+        _raise_for_http("deepseek", _resp(429, "slow down", {"retry-after": "Wed, 21 Oct 2015 07:28:00 GMT"}))
+    assert e.value.retry_after is None or e.value.retry_after >= 0
+    with pytest.raises(RetryableError) as e:
+        _raise_for_http("deepseek", _resp(429, "slow down", {"retry-after": "soon"}))
+    assert e.value.retry_after is None
     with pytest.raises(QuotaExhausted):
         _raise_for_http("deepseek", _resp(402, "Insufficient Balance"))
     with pytest.raises(RetryableError):

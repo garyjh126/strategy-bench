@@ -14,12 +14,14 @@ API keys are read from the environment only and never logged.
 
 from __future__ import annotations
 
+import email.utils
 import json
 import os
 import random
 import threading
 import time
 from collections.abc import Callable
+from datetime import UTC, datetime
 from typing import Any
 
 import anthropic
@@ -140,6 +142,23 @@ class AnthropicClient(_BaseClient):
         )
 
 
+def _retry_after_seconds(value: str | None) -> float | None:
+    """Seconds to wait from a Retry-After header, which is either seconds or an HTTP date."""
+    if not value:
+        return None
+    try:
+        return max(0.0, float(value))
+    except ValueError:
+        pass
+    try:
+        when = email.utils.parsedate_to_datetime(value)
+    except (TypeError, ValueError):
+        return None
+    if when.tzinfo is None:
+        when = when.replace(tzinfo=UTC)
+    return max(0.0, (when - datetime.now(UTC)).total_seconds())
+
+
 def _raise_for_http(provider: str, r: httpx.Response) -> None:
     if r.status_code == 200:
         return
@@ -147,8 +166,7 @@ def _raise_for_http(provider: str, r: httpx.Response) -> None:
     if r.status_code == 429:
         if "PerDay" in body or "per day" in body.lower():
             raise QuotaExhausted(f"{provider}: daily quota reached; rerun later to resume from cache")
-        retry_after = r.headers.get("retry-after")
-        raise RetryableError(f"{provider}: rate limited", float(retry_after) if retry_after else None)
+        raise RetryableError(f"{provider}: rate limited", _retry_after_seconds(r.headers.get("retry-after")))
     if r.status_code == 402:
         raise QuotaExhausted(f"{provider}: insufficient balance")
     if r.status_code >= 500:
