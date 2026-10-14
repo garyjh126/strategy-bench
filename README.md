@@ -112,7 +112,12 @@ scripts/       entry-point scripts
 tests/         pytest suite
 docs/          methodology and design notes
 runs/          generated run logs and results (not committed)
+apps/gui/      local web app: play the games against bots, browse a run's strategy (calls no model)
+research/      exploratory work outside the benchmark (multiway/: three-player Kuhn and Leduc)
 ```
+
+`uv run pytest` also runs the tests in `apps/gui/tests` and `research/multiway`. See
+[apps/gui/README.md](apps/gui/README.md) and [docs/research/multiway.md](docs/research/multiway.md).
 
 ## License
 
