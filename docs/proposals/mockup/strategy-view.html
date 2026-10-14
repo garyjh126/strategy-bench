@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Strategy view mockup</title>
+<style>
+:root {
+  color-scheme: light;
+  --page: #f9f9f7; --surface: #fcfcfb; --surface-2: #f1f0ec;
+  --ink: #0b0b0b; --ink-2: #52514e; --muted: #676661;
+  --grid: #e1e0d9; --rule: #c3c2b7; --border: rgba(11, 11, 11, 0.1);
+  --accent: #2a78d6; --accent-ink: #1c5cab; --accent-wash: rgba(42, 120, 214, 0.09);
+  --notice-bg: #eef4fc; --notice-border: #b7d3f6;
+  --warn-bg: #fbf0d4; --warn-ink: #5c4300;
+  --act-0: #2a78d6; --act-1: #eb6834; --gain: #52514e;
+  --felt: #f1f0ec; --felt-rim: #c3c2b7;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --page: #0d0d0d; --surface: #1a1a19; --surface-2: #252523;
+    --ink: #ffffff; --ink-2: #c3c2b7; --muted: #a3a197;
+    --grid: #2c2c2a; --rule: #4a4a46; --border: rgba(255, 255, 255, 0.1);
+    --accent: #3987e5; --accent-ink: #86b6ef; --accent-wash: rgba(57, 135, 229, 0.15);
+    --notice-bg: #12213a; --notice-border: #1c5cab;
+    --warn-bg: #30270f; --warn-ink: #f0c96a;
+    --act-0: #3987e5; --act-1: #d95926; --gain: #c3c2b7;
+    --felt: #252523; --felt-rim: #4a4a46;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #0d0d0d; --surface: #1a1a19; --surface-2: #252523;
+  --ink: #ffffff; --ink-2: #c3c2b7; --muted: #a3a197;
+  --grid: #2c2c2a; --rule: #4a4a46; --border: rgba(255, 255, 255, 0.1);
+  --accent: #3987e5; --accent-ink: #86b6ef; --accent-wash: rgba(57, 135, 229, 0.15);
+  --notice-bg: #12213a; --notice-border: #1c5cab;
+  --warn-bg: #30270f; --warn-ink: #f0c96a;
+  --act-0: #3987e5; --act-1: #d95926; --gain: #c3c2b7;
+  --felt: #252523; --felt-rim: #4a4a46;
+}
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; background: var(--page); color: var(--ink); font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+.wrap { max-width: 1160px; margin: 0 auto; padding: 0 16px; }
+a { color: var(--accent-ink); text-underline-offset: 2px; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.site-header { background: var(--surface); border-bottom: 1px solid var(--border); }
+.header-row { display: flex; align-items: center; gap: 20px; min-height: 56px; }
+.brand { font-weight: 700; color: var(--ink); text-decoration: none; letter-spacing: -0.01em; font-size: 1.05rem; }
+.site-header nav { display: flex; gap: 18px; }
+.site-header nav a { color: var(--ink-2); text-decoration: none; padding: 16px 0; font-size: 0.95rem; }
+.theme-toggle { margin-left: auto; display: inline-flex; padding: 7px; cursor: pointer; background: none; border: 1px solid var(--border); border-radius: 8px; color: var(--ink-2); }
+main.wrap { padding-top: 28px; padding-bottom: 56px; }
+.crumbs { font-size: 0.9rem; margin: 0 0 6px; }
+h1 { font-size: clamp(1.6rem, 3.6vw, 2.3rem); line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 10px; }
+h2 { font-size: 1.15rem; line-height: 1.3; margin: 0 0 10px; }
+.chip { display: inline-block; vertical-align: middle; font-size: 0.68rem; font-weight: 650; text-transform: uppercase; letter-spacing: 0.05em; line-height: 1.6; padding: 0 7px; border-radius: 999px; border: 1px solid var(--rule); color: var(--ink-2); white-space: nowrap; }
+h1 .chip { font-size: 0.75rem; }
+.chip.warn { background: var(--warn-bg); color: var(--warn-ink); border-color: transparent; }
+.tabs { display: flex; gap: 22px; border-bottom: 1px solid var(--border); margin: 6px 0 18px; }
+.tabs a { color: var(--ink-2); text-decoration: none; padding: 8px 0; }
+.tabs a[aria-current="page"] { color: var(--ink); box-shadow: inset 0 -2px var(--accent); }
+.notice { background: var(--notice-bg); border: 1px solid var(--notice-border); border-radius: 10px; padding: 10px 14px; margin: 0 0 18px; max-width: 92ch; font-size: 0.9rem; }
+.toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 22px; margin: 0 0 16px; font-size: 0.9rem; color: var(--ink-2); }
+.seg { display: inline-flex; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; background: var(--surface); }
+.seg button { border: 0; background: none; padding: 6px 12px; cursor: pointer; color: var(--ink-2); }
+.seg button[aria-pressed="true"] { background: var(--accent-wash); color: var(--accent-ink); font-weight: 600; }
+.seg button[disabled] { cursor: not-allowed; opacity: 0.6; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 0.8rem; color: var(--ink-2); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.sw { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+.sw.a0 { background: var(--act-0); } .sw.a1 { background: var(--act-1); }
+.sw.gain { background: var(--gain); height: 6px; border-radius: 0 3px 3px 0; }
+
+/* Action path */
+.path { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 4px; margin-bottom: 18px; }
+.step { flex: 0 0 auto; min-width: 210px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px 8px; }
+.step.current { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+.step .who { display: flex; align-items: center; gap: 8px; font-weight: 650; font-size: 0.92rem; }
+.step .where { font-size: 0.8rem; color: var(--muted); margin: 0 0 6px; }
+.step ol { list-style: none; margin: 0; padding: 0; }
+.step li button { width: 100%; display: grid; grid-template-columns: 12px 1fr auto; align-items: center; gap: 8px; text-align: left; border: 0; background: none; padding: 4px 6px; border-radius: 6px; cursor: pointer; font-size: 0.86rem; font-variant-numeric: tabular-nums; }
+.step li button:hover { background: var(--surface-2); }
+.step li button[aria-current="step"] { background: var(--accent-wash); font-weight: 650; }
+.step li .freq { color: var(--ink-2); }
+.step.end { display: flex; flex-direction: column; justify-content: center; color: var(--muted); font-size: 0.86rem; min-width: 150px; }
+
+/* Main area */
+.viewer { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 18px; align-items: start; }
+.panel { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; }
+.panel + .panel { margin-top: 14px; }
+.panel-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 16px; margin-bottom: 12px; }
+.panel-head h2 { margin: 0; }
+.hands { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.hand { text-align: left; border: 1px solid var(--border); background: var(--surface); border-radius: 10px; padding: 12px 12px 10px; cursor: pointer; display: flex; flex-direction: column; gap: 8px; min-height: 196px; }
+.hand:hover { border-color: var(--rule); }
+.hand[aria-pressed="true"] { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+.hand .card { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.hand .card b { font-size: 1.15rem; letter-spacing: -0.01em; }
+.hand .card span { font-size: 0.78rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.row-label { font-size: 0.72rem; font-weight: 650; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-2); margin-bottom: 3px; }
+.stack { display: flex; gap: 2px; height: 26px; border-radius: 4px; overflow: hidden; background: var(--surface-2); }
+.stack.thin { height: 12px; }
+.stack div { min-width: 0; }
+.stack .a0 { background: var(--act-0); } .stack .a1 { background: var(--act-1); }
+.stack-nums { display: flex; justify-content: space-between; font-size: 0.78rem; color: var(--ink-2); font-variant-numeric: tabular-nums; margin-top: 2px; }
+.br { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 0.84rem; }
+.br .pill { display: inline-flex; align-items: center; gap: 6px; border: 1.5px solid var(--ink-2); border-radius: 999px; padding: 0 9px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; line-height: 1.7; }
+.gainbar { height: 6px; background: var(--surface-2); border-radius: 0 3px 3px 0; }
+.gainbar div { height: 100%; background: var(--gain); border-radius: 0 3px 3px 0; }
+.hand .foot { margin-top: auto; font-size: 0.78rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.hand .foot strong { color: var(--ink); font-weight: 650; }
+.quiet { color: var(--muted); font-size: 0.82rem; }
+
+/* Table diagram */
+.table-svg { width: 100%; height: auto; display: block; }
+.table-svg .felt { fill: var(--felt); stroke: var(--felt-rim); stroke-width: 2; }
+.table-svg .seat { fill: var(--surface); stroke: var(--rule); stroke-width: 1.5; }
+.table-svg .seat.acting { stroke: var(--accent); stroke-width: 3; }
+.table-svg text { fill: var(--ink); font: 600 13px system-ui, -apple-system, "Segoe UI", sans-serif; }
+.table-svg .small { fill: var(--ink-2); font-weight: 500; font-size: 11px; }
+.table-svg .pot { font-size: 15px; }
+.table-svg .last { fill: var(--ink-2); font-size: 11px; font-weight: 650; letter-spacing: 0.04em; }
+
+/* Overall bars and details */
+.overall-row { display: grid; grid-template-columns: 7.5rem minmax(0, 1fr); align-items: center; gap: 8px; margin: 6px 0; font-size: 0.82rem; }
+.kv { width: 100%; border-collapse: collapse; font-size: 0.85rem; font-variant-numeric: tabular-nums; }
+.kv th, .kv td { padding: 5px 4px; border-bottom: 1px solid var(--grid); text-align: left; vertical-align: top; }
+.kv td.r, .kv th.r { text-align: right; }
+.kv thead th { font-size: 0.72rem; color: var(--ink-2); font-weight: 650; }
+.kv tbody th { font-weight: 500; color: var(--ink-2); }
+.explain { font-size: 0.88rem; margin: 10px 0 0; }
+.caption { font-size: 0.78rem; color: var(--muted); margin: 8px 0 0; }
+
+/* Where the best response wins */
+.leaks { margin-top: 14px; }
+.leaks .panel-head h2 { font-size: 1.05rem; }
+.leak { width: 100%; display: grid; grid-template-columns: minmax(10rem, 15rem) minmax(0, 1fr) 7.5rem; align-items: center; gap: 12px; border: 0; background: none; padding: 6px 4px; border-radius: 6px; text-align: left; cursor: pointer; font-size: 0.88rem; font-variant-numeric: tabular-nums; }
+.leak:hover { background: var(--surface-2); }
+.leak .gainbar { height: 10px; }
+.leak .amount { text-align: right; color: var(--ink-2); }
+.split { display: flex; gap: 2px; height: 14px; border-radius: 4px; overflow: hidden; margin: 6px 0 4px; }
+.split .passive { background: var(--rule); }
+.split .active { background: var(--gain); }
+
+.site-footer { border-top: 1px solid var(--border); color: var(--muted); font-size: 0.82rem; padding: 20px 0 32px; }
+
+@media (max-width: 900px) {
+  .viewer { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 620px) {
+  .hands { grid-template-columns: minmax(0, 1fr); }
+  .hand { min-height: 0; }
+  .leak { grid-template-columns: minmax(0, 1fr) 7rem; }
+  .leak .gainbar { grid-column: 1 / -1; grid-row: 2; }
+}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap header-row">
+    <a class="brand" href="#">StrategyBench</a>
+    <nav aria-label="Site"><a href="#">Leaderboard</a><a href="#">Methodology</a></nav>
+    <button class="theme-toggle" type="button" aria-label="Switch colour theme">
+      <svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><circle cx="10" cy="10" r="7.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M10 2.5a7.5 7.5 0 0 1 0 15z" fill="currentColor"/></svg>
+    </button>
+  </div>
+</header>
+<main class="wrap">
+  <p class="crumbs"><a href="#">Leaderboard</a> / <a href="#">Kuhn poker</a> / <a href="#">Example subject</a></p>
+  <h1>Example subject <span class="chip warn">Mockup</span></h1>
+  <nav class="tabs" aria-label="Run"><a href="#">Results</a><a href="#">Replay</a><a href="#" aria-current="page">Strategy</a></nav>
+  <p class="notice"><strong>Invented numbers.</strong> The subject's action frequencies and sample counts are made up for this mockup. Everything that follows from them (best responses, edges, contributions, values) was computed exactly with the project's breakdown code against its CFR+ reference.</p>
+
+  <div class="toolbar">
+    <span>Seat</span>
+    <span class="seg" role="group" aria-label="Subject's seat">
+      <button type="button" aria-pressed="true">Subject as Player 1</button>
+      <button type="button" aria-pressed="false" disabled title="Not in the mockup">as Player 2</button>
+    </span>
+    <span class="legend" aria-label="Action colours">
+      <span><i class="sw a0"></i>Check / fold</span>
+      <span><i class="sw a1"></i>Bet / call</span>
+      <span><i class="sw gain"></i>Chips the best response wins</span>
+    </span>
+  </div>
+
+  <section class="path" id="path" aria-label="Action path"></section>
+
+  <div class="viewer">
+    <div>
+    <section class="panel" aria-labelledby="hands-title">
+      <div class="panel-head">
+        <h2 id="hands-title"></h2>
+        <span class="quiet" id="hands-sub"></span>
+      </div>
+      <div class="hands" id="hands"></div>
+      <p class="caption" id="hands-caption"></p>
+    </section>
+    <section class="panel leaks" aria-labelledby="leaks-title">
+      <div class="panel-head">
+        <h2 id="leaks-title">Where the best response wins against the subject as Player 1</h2>
+        <span class="quiet" id="leaks-total"></span>
+      </div>
+      <div class="split" id="split" aria-hidden="true"></div>
+      <p class="caption" id="split-caption"></p>
+      <div id="leaks"></div>
+    </section>
+    </div>
+    <aside>
+      <section class="panel" aria-label="Table"><svg class="table-svg" id="table" viewBox="0 0 320 196" role="img"></svg></section>
+      <section class="panel" aria-labelledby="overall-title">
+        <h2 id="overall-title">Overall at this decision</h2>
+        <div id="overall"></div>
+        <p class="caption">Each strategy's frequencies are averaged over the hands it holds here under its own play, the other seat at equilibrium.</p>
+      </section>
+      <section class="panel" aria-labelledby="detail-title">
+        <h2 id="detail-title"></h2>
+        <div id="detail"></div>
+      </section>
+    </aside>
+  </div>
+
+
+</main>
+<footer class="site-footer"><div class="wrap">Mockup for a proposed page; not part of the built site. Game solving and best responses use OpenSpiel.</div></footer>
+<script>
+const DATA = {"note":"Invented subject frequencies; everything else computed exactly from them.","subject_seat":0,"unit":"ante","gain":0.11691102192449482,"passive":0.024384935471508273,"active":0.09252608645298654,"game_value_p1":-0.055555644742171784,"subject_value_vs_eq_p1":-0.07994058021368006,"eq_exploitability":null,"nodes":[{"history":"","player":0,"labels":["CHECK","BET"],"name":"Player 1 to act","pot":2,"cells":[{"card":"Jack","key":"0","equilibrium":[0.7772668085709556,0.22273319142904435],"role":"subject","estimated":[0.64,0.36],"counts":[128,72],"ci_aggressive":[0.29669087731339805,0.42858600434373184],"reach":0.3333333333333333,"distance":0.13726680857095563},{"card":"Queen","key":"1","equilibrium":[0.9999943810133937,5.618986606298832e-06],"role":"subject","estimated":[0.81,0.19],"counts":[162,38],"ci_aggressive":[0.14167093792456506,0.250013585744794],"reach":0.3333333333333333,"distance":0.18999438101339367},{"card":"King","key":"2","equilibrium":[0.33188780758547143,0.6681121924145286],"role":"subject","estimated":[0.47,0.53],"counts":[94,106],"ci_aggressive":[0.46091557335361155,0.5979536662912893],"reach":0.3333333333333333,"distance":0.13811219241452855}],"overall_equilibrium":[0.7030496657232735,0.2969503342767264],"overall_estimated":[0.64,0.36],"reached":1.0},{"history":"p","player":1,"labels":["CHECK","BET"],"name":"Player 1 checked","pot":2,"cells":[{"card":"Jack","key":"0p","equilibrium":[0.6665073136784122,0.33349268632158774],"role":"responder","best_response":1,"values":[-1.0,-0.7789062499999999],"eq_mix_value":-0.9262668513835863,"edge":0.14736060138358642,"reach":0.21333333333333332,"contribution":0.031436928295165104,"share":0.3397628658069152},{"card":"Queen","key":"1p","equilibrium":[0.9999975012493754,2.4987506246876562e-06],"role":"responder","best_response":0,"values":[0.15315315315315317,-0.16180180180180162],"eq_mix_value":0.15315236615926275,"edge":7.869938904170315e-07,"reach":0.185,"contribution":1.4559386972715081e-07,"share":1.5735440167041817e-06},{"card":"King","key":"2p","equilibrium":[7.496251874062968e-07,0.9999992503748126],"role":"responder","best_response":1,"values":[1.0,1.2564137931034483],"eq_mix_value":1.2564136008892106,"edge":1.9221423763760015e-07,"reach":0.24166666666666667,"contribution":4.645177409575337e-08,"share":5.020397584777996e-07}],"overall_equilibrium":[0.4733810648925349,0.5266189351074652],"overall_best_response":[0.2890625,0.7109374999999999],"reached":0.64},{"history":"b","player":1,"labels":["FOLD","CALL"],"name":"Player 1 bet","pot":3,"cells":[{"card":"Jack","key":"0b","equilibrium":[0.9999997501249376,2.498750624687656e-07],"role":"responder","best_response":0,"values":[-1.0,-2.0],"eq_mix_value":-1.0000002498750624,"edge":2.4987506241913593e-07,"reach":0.12,"contribution":2.998500749029631e-08,"share":3.2407085006812647e-07},{"card":"Queen","key":"1b","equilibrium":[0.6664240081257605,0.33357599187423953],"role":"responder","best_response":1,"values":[-1.0,-0.3820224719101124],"eq_mix_value":-0.793857533111425,"edge":0.41183506120131264,"reach":0.14833333333333332,"contribution":0.06108886741152803,"share":0.6602339918760955},{"card":"King","key":"2b","equilibrium":[2.498750624687656e-07,0.9999997501249376],"role":"responder","best_response":1,"values":[-1.0,2.0],"eq_mix_value":1.9999992503748127,"edge":7.496251872574078e-07,"reach":0.09166666666666666,"contribution":6.871564216526238e-08,"share":7.426623647394565e-07}],"overall_equilibrium":[0.7081983673053844,0.29180163269461556],"overall_best_response":[0.3333333333333333,0.6666666666666666],"reached":0.36},{"history":"pb","player":0,"labels":["FOLD","CALL"],"name":"Player 1 checked, Player 2 bet","pot":3,"cells":[{"card":"Jack","key":"0pb","equilibrium":[0.9999998392604318,1.6073956826239253e-07],"role":"subject","estimated":[0.9,0.1],"counts":[180,20],"ci_aggressive":[0.06566994117157123,0.14940686356308552],"reach":0.10666685324004664,"distance":0.09999983926043175},{"card":"Queen","key":"1pb","equilibrium":[0.4439027039280385,0.5560972960719616],"role":"subject","estimated":[0.62,0.38],"counts":[124,76],"ci_aggressive":[0.3155889366123922,0.4489341048080049],"reach":0.18002141145401407,"distance":0.17609729607196153},{"card":"King","key":"2pb","equilibrium":[3.7644507685690654e-07,0.9999996235549231],"role":"subject","estimated":[0.040000000000000036,0.96],"counts":[8,192],"ci_aggressive":[0.9230670617058012,0.9795946128493436],"reach":0.026123789497323302,"distance":0.03999962355492316}],"overall_equilibrium":[0.6163606257526829,0.383639374247317],"overall_estimated":[0.6670407735303023,0.3329592264696977],"reached":0.312812054191384}]};
+(function () {
+  "use strict";
+  const MINUS = "−";
+  const nodes = Object.fromEntries(DATA.nodes.map((n) => [n.history, n]));
+  const ROLE = ["Subject", "Best responder"];
+  const KIDS = { "": ["p", "b"], p: ["showdown", "pb"], b: ["end", "end"], pb: ["end", "end"] };
+  const state = { node: "b", hand: 1 };
+  const TINY = 5e-4; // below the displayed precision (3 decimals)
+
+  const pct = (p) => (p * 100).toFixed(1) + "%";
+  const signed = (x, d = 3) => (x < 0 ? MINUS : x > 0 ? "+" : "") + Math.abs(x).toFixed(d);
+  const fix = (x, d = 3) => (x < 0 ? MINUS : "") + Math.abs(x).toFixed(d);
+  function h(tag, attrs, ...kids) {
+    const el = document.createElement(tag);
+    for (const [k, v] of Object.entries(attrs || {})) {
+      if (v == null || v === false) continue;
+      if (k === "class") el.className = v;
+      else if (k === "style") el.style.cssText = v;
+      else if (k.startsWith("on")) el.addEventListener(k.slice(2), v);
+      else el.setAttribute(k, v === true ? "" : v);
+    }
+    for (const c of kids.flat()) if (c != null && c !== false) el.append(c instanceof Node ? c : String(c));
+    return el;
+  }
+  const stack = (probs, labels, thin) =>
+    h("div", { class: "stack" + (thin ? " thin" : ""), role: "img", "aria-label": labels.map((l, i) => l + " " + pct(probs[i])).join(", ") },
+      probs.map((p, i) => (p > 0.0005 ? h("div", { class: "a" + i, style: "flex: " + p + " 1 0", title: labels[i] + " " + pct(p) }) : null)));
+  const stackNums = (probs, labels) => h("div", { class: "stack-nums" }, h("span", null, labels[0] + " " + pct(probs[0])), h("span", null, labels[1] + " " + pct(probs[1])));
+
+  function pathOf(hist) {
+    const out = [];
+    for (let i = 0; i < hist.length; i++) out.push({ node: hist.slice(0, i), chosen: hist[i] === "b" ? 1 : 0 });
+    out.push({ node: hist, chosen: null });
+    return out;
+  }
+
+  function renderPath() {
+    const box = document.getElementById("path");
+    box.replaceChildren();
+    for (const step of pathOf(state.node)) {
+      const n = nodes[step.node];
+      const subject = n.player === DATA.subject_seat;
+      const overall = subject ? n.overall_estimated : n.overall_equilibrium;
+      const items = n.labels.map((lab, a) => {
+        const kid = KIDS[n.history][a];
+        const go = nodes[kid] ? () => { state.node = kid; state.hand = 1; render(); } : null;
+        const freq = subject ? pct(overall[a]) + " · eq " + pct(n.overall_equilibrium[a]) : "eq " + pct(overall[a]);
+        return h("li", null, h("button", { type: "button", onclick: go, disabled: !go, "aria-current": step.chosen === a ? "step" : null, title: go ? "Go to the next decision" : "The hand ends" },
+          h("i", { class: "sw a" + a }), lab, h("span", { class: "freq" }, freq)));
+      });
+      box.append(h("div", { class: "step" + (step.chosen === null ? " current" : "") },
+        h("div", { class: "who" }, "Player " + (n.player + 1), h("span", { class: "chip" }, ROLE[subject ? 0 : 1])),
+        h("p", { class: "where" }, n.name + " · pot " + n.pot),
+        h("ol", null, items)));
+    }
+  }
+
+  function renderHands() {
+    const n = nodes[state.node];
+    const subject = n.player === DATA.subject_seat;
+    document.getElementById("hands-title").textContent = "Player " + (n.player + 1) + "'s hands · " + n.name;
+    document.getElementById("hands-sub").textContent = subject ? "subject's measured strategy against CFR+" : "CFR+ mix, best response and what it wins";
+    const most = Math.max(...n.cells.map((c) => c.contribution || 0), 1e-12);
+    const box = document.getElementById("hands");
+    box.replaceChildren();
+    n.cells.forEach((c, i) => {
+      const kids = [h("div", { class: "card" }, h("b", null, c.card), h("span", null, "reach " + pct(c.reach)))];
+      if (subject) {
+        kids.push(h("div", null, h("div", { class: "row-label" }, "Subject"), stack(c.estimated, n.labels), stackNums(c.estimated, n.labels)));
+        kids.push(h("div", null, h("div", { class: "row-label" }, "CFR+"), stack(c.equilibrium, n.labels, true), stackNums(c.equilibrium, n.labels)));
+        kids.push(h("div", { class: "foot" }, "N = " + (c.counts[0] + c.counts[1]) + " · distance ", h("strong", null, c.distance.toFixed(3))));
+      } else {
+        kids.push(h("div", null, h("div", { class: "row-label" }, "CFR+ mix"), stack(c.equilibrium, n.labels), stackNums(c.equilibrium, n.labels)));
+        kids.push(h("div", { class: "br" }, "Best response", h("span", { class: "pill" }, h("i", { class: "sw a" + c.best_response }), n.labels[c.best_response])));
+        if (c.contribution >= TINY) {
+          kids.push(h("div", null, h("div", { class: "row-label" }, "Wins here"), h("div", { class: "gainbar", title: signed(c.contribution) + " " + DATA.unit + " per hand" }, h("div", { style: "width: " + (100 * c.contribution) / most + "%" }))));
+          kids.push(h("div", { class: "foot" }, "edge " + signed(c.edge) + " per visit · ", h("strong", null, signed(c.contribution) + " per hand"), " (" + (100 * c.share).toFixed(0) + "%)"));
+        } else {
+          kids.push(h("div", { class: "foot" }, "Same as the equilibrium here: nothing to gain."));
+        }
+      }
+      box.append(h("button", { type: "button", class: "hand", "aria-pressed": String(i === state.hand), onclick: () => { state.hand = i; render(); } }, kids));
+    });
+    document.getElementById("hands-caption").textContent = subject
+      ? "Bars: how often each action is played with this card. Reach: how often the subject holds this card at this decision, Player 2 at equilibrium."
+      : "The best responder's gain is earned at its own decisions; a leak in the subject's play shows up at the decision that follows it.";
+  }
+
+  function renderTable() {
+    const n = nodes[state.node];
+    const svg = document.getElementById("table");
+    const NS = "http://www.w3.org/2000/svg";
+    const el = (tag, attrs, text) => { const e = document.createElementNS(NS, tag); for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v); if (text != null) e.textContent = text; return e; };
+    const last = n.history ? (n.history.slice(-1) === "b" ? "BET" : "CHECK") : null;
+    const lastBy = n.history.length % 2 === 1 ? 0 : 1;
+    svg.replaceChildren(
+      el("ellipse", { class: "felt", cx: 160, cy: 98, rx: 136, ry: 44 }),
+      el("text", { class: "pot", x: 160, y: 96, "text-anchor": "middle" }, "Pot " + n.pot),
+      el("text", { class: "small", x: 160, y: 112, "text-anchor": "middle" }, "chips, antes included"),
+    );
+    [[0, 173, "Subject"], [1, 23, "Best responder"]].forEach(([p, y, role]) => {
+      svg.append(el("rect", { class: "seat" + (n.player === p ? " acting" : ""), x: 96, y: y - 19, width: 128, height: 38, rx: 10 }));
+      svg.append(el("text", { x: 160, y: y - 2, "text-anchor": "middle" }, "Player " + (p + 1)));
+      svg.append(el("text", { class: "small", x: 160, y: y + 13, "text-anchor": "middle" }, role));
+    });
+    if (last) svg.append(el("text", { class: "last", x: 160, y: lastBy === 0 ? 136 : 72, "text-anchor": "middle" }, last));
+    svg.setAttribute("aria-label", "Pot " + n.pot + "; Player " + (n.player + 1) + " to act");
+  }
+
+  function renderOverall() {
+    const n = nodes[state.node];
+    const subject = n.player === DATA.subject_seat;
+    const rows = subject
+      ? [["Subject", n.overall_estimated], ["CFR+", n.overall_equilibrium]]
+      : [["CFR+ mix", n.overall_equilibrium], ["Best response", n.overall_best_response]];
+    const box = document.getElementById("overall");
+    box.replaceChildren(...rows.map(([name, probs]) => h("div", null,
+      h("div", { class: "overall-row" }, h("span", null, name), stack(probs, n.labels)),
+      h("div", { class: "overall-row" }, h("span"), stackNums(probs, n.labels)))));
+  }
+
+  function renderDetail() {
+    const n = nodes[state.node];
+    const c = n.cells[state.hand];
+    const subject = n.player === DATA.subject_seat;
+    document.getElementById("detail-title").textContent = c.card + " · " + n.name;
+    const box = document.getElementById("detail");
+    if (subject) {
+      const [lo, hi] = c.ci_aggressive;
+      box.replaceChildren(
+        h("table", { class: "kv" },
+          h("thead", null, h("tr", null, h("th", null, "Action"), h("th", { class: "r" }, "Subject"), h("th", { class: "r" }, "Samples"), h("th", { class: "r" }, "CFR+"))),
+          h("tbody", null, n.labels.map((lab, a) => h("tr", null, h("th", null, lab), h("td", { class: "r" }, pct(c.estimated[a])), h("td", { class: "r" }, String(c.counts[a])), h("td", { class: "r" }, pct(c.equilibrium[a])))))),
+        h("table", { class: "kv" }, h("tbody", null,
+          h("tr", null, h("th", null, "95% interval, " + n.labels[1]), h("td", { class: "r" }, pct(lo) + " to " + pct(hi))),
+          h("tr", null, h("th", null, "Distance from CFR+"), h("td", { class: "r" }, c.distance.toFixed(3))),
+          h("tr", null, h("th", null, "Reach"), h("td", { class: "r" }, pct(c.reach))))),
+        h("p", { class: "explain" }, "The subject plays " + n.labels[1] + " with the " + c.card + " " + pct(c.estimated[1]) + " of the time (" + c.counts[1] + " of " + (c.counts[0] + c.counts[1]) + " samples); the CFR+ reference plays it " + pct(c.equilibrium[1]) + ". Where this costs chips shows at Player 2's next decision."));
+    } else {
+      box.replaceChildren(
+        h("table", { class: "kv" },
+          h("thead", null, h("tr", null, h("th", null, "Action"), h("th", { class: "r" }, "CFR+"), h("th", { class: "r" }, "Value per visit"))),
+          h("tbody", null, n.labels.map((lab, a) => h("tr", null, h("th", null, lab + (a === c.best_response ? " (best)" : "")), h("td", { class: "r" }, pct(c.equilibrium[a])), h("td", { class: "r" }, fix(c.values[a])))))),
+        h("table", { class: "kv" }, h("tbody", null,
+          h("tr", null, h("th", null, "CFR+ mix, per visit"), h("td", { class: "r" }, fix(c.eq_mix_value))),
+          h("tr", null, h("th", null, "Edge of the best response"), h("td", { class: "r" }, signed(c.edge))),
+          h("tr", null, h("th", null, "Reach"), h("td", { class: "r" }, pct(c.reach))),
+          h("tr", null, h("th", null, "Gain per hand"), h("td", { class: "r" }, signed(c.contribution) + " (" + (100 * c.share).toFixed(0) + "%)")))),
+        h("p", { class: "explain" }, c.contribution >= TINY
+          ? "A best responder plays " + n.labels[c.best_response] + " with the " + c.card + " here, earning " + fix(c.values[c.best_response]) + " " + DATA.unit + " per visit against " + fix(c.eq_mix_value) + " for the equilibrium mix. The situation arises in " + pct(c.reach) + " of hands, adding " + fix(c.contribution) + " " + DATA.unit + " per hand (" + (100 * c.share).toFixed(0) + "% of what adapting gains)."
+          : "The best response is the equilibrium's own choice here, so adapting gains nothing with the " + c.card + "."));
+    }
+  }
+
+  function renderLeaks() {
+    const all = [];
+    DATA.nodes.forEach((n) => n.cells.forEach((c, i) => { if (c.role === "responder" && c.contribution >= TINY) all.push({ n, c, i }); }));
+    all.sort((a, b) => b.c.contribution - a.c.contribution);
+    const most = all.length ? all[0].c.contribution : 1;
+    document.getElementById("leaks-total").textContent = "best-response gain " + fix(DATA.gain) + " " + DATA.unit + " per hand";
+    const split = document.getElementById("split");
+    split.replaceChildren(h("div", { class: "passive", style: "flex: " + DATA.passive / DATA.gain + " 1 0" }), h("div", { class: "active", style: "flex: " + DATA.active / DATA.gain + " 1 0" }));
+    document.getElementById("split-caption").replaceChildren(
+      h("span", { class: "stack-nums" }, h("span", null, "Without adapting: " + fix(DATA.passive)), h("span", null, "Adapting: " + signed(DATA.active))),
+      "Adapting to the subject adds " + fix(DATA.active) + " " + DATA.unit + " per hand, earned at these situations:");
+    const box = document.getElementById("leaks");
+    box.replaceChildren(...all.map(({ n, c, i }) => h("button", { type: "button", class: "leak", onclick: () => { state.node = n.history; state.hand = i; render(); } },
+      h("span", null, h("strong", null, c.card), " · " + n.name + " · ", n.labels[c.best_response]),
+      h("div", { class: "gainbar" }, h("div", { style: "width: " + (100 * c.contribution) / most + "%" })),
+      h("span", { class: "amount" }, signed(c.contribution) + " (" + (100 * c.share).toFixed(0) + "%)"))),
+      h("p", { class: "caption" }, "Every other situation: less than 0.001 " + DATA.unit + " per hand, where the best response is the equilibrium's own choice."));
+  }
+
+  function render() {
+    renderPath();
+    renderHands();
+    renderTable();
+    renderOverall();
+    renderDetail();
+    renderLeaks();
+    history.replaceState(null, "", "#node=" + (state.node || "root") + "&hand=" + state.hand);
+  }
+
+  const params = new URLSearchParams(location.hash.slice(1));
+  if (params.has("node")) state.node = params.get("node") === "root" ? "" : params.get("node");
+  if (params.has("hand")) state.hand = Number(params.get("hand"));
+  document.querySelector(".theme-toggle").addEventListener("click", () => {
+    const root = document.documentElement;
+    const dark = root.dataset.theme ? root.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+    root.dataset.theme = dark ? "light" : "dark";
+  });
+  render();
+})();
+</script>
+</body>
+</html>

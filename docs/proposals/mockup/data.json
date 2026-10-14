@@ -1,0 +1,349 @@
+{
+ "note": "Invented subject frequencies; everything else computed exactly from them.",
+ "subject_seat": 0,
+ "unit": "ante",
+ "gain": 0.11691102192449482,
+ "passive": 0.024384935471508273,
+ "active": 0.09252608645298654,
+ "game_value_p1": -0.055555644742171784,
+ "subject_value_vs_eq_p1": -0.07994058021368006,
+ "eq_exploitability": null,
+ "nodes": [
+  {
+   "history": "",
+   "player": 0,
+   "labels": [
+    "CHECK",
+    "BET"
+   ],
+   "name": "Player 1 to act",
+   "pot": 2,
+   "cells": [
+    {
+     "card": "Jack",
+     "key": "0",
+     "equilibrium": [
+      0.7772668085709556,
+      0.22273319142904435
+     ],
+     "role": "subject",
+     "estimated": [
+      0.64,
+      0.36
+     ],
+     "counts": [
+      128,
+      72
+     ],
+     "ci_aggressive": [
+      0.29669087731339805,
+      0.42858600434373184
+     ],
+     "reach": 0.3333333333333333,
+     "distance": 0.13726680857095563
+    },
+    {
+     "card": "Queen",
+     "key": "1",
+     "equilibrium": [
+      0.9999943810133937,
+      5.618986606298832e-06
+     ],
+     "role": "subject",
+     "estimated": [
+      0.81,
+      0.19
+     ],
+     "counts": [
+      162,
+      38
+     ],
+     "ci_aggressive": [
+      0.14167093792456506,
+      0.250013585744794
+     ],
+     "reach": 0.3333333333333333,
+     "distance": 0.18999438101339367
+    },
+    {
+     "card": "King",
+     "key": "2",
+     "equilibrium": [
+      0.33188780758547143,
+      0.6681121924145286
+     ],
+     "role": "subject",
+     "estimated": [
+      0.47,
+      0.53
+     ],
+     "counts": [
+      94,
+      106
+     ],
+     "ci_aggressive": [
+      0.46091557335361155,
+      0.5979536662912893
+     ],
+     "reach": 0.3333333333333333,
+     "distance": 0.13811219241452855
+    }
+   ],
+   "overall_equilibrium": [
+    0.7030496657232735,
+    0.2969503342767264
+   ],
+   "overall_estimated": [
+    0.64,
+    0.36
+   ],
+   "reached": 1.0
+  },
+  {
+   "history": "p",
+   "player": 1,
+   "labels": [
+    "CHECK",
+    "BET"
+   ],
+   "name": "Player 1 checked",
+   "pot": 2,
+   "cells": [
+    {
+     "card": "Jack",
+     "key": "0p",
+     "equilibrium": [
+      0.6665073136784122,
+      0.33349268632158774
+     ],
+     "role": "responder",
+     "best_response": 1,
+     "values": [
+      -1.0,
+      -0.7789062499999999
+     ],
+     "eq_mix_value": -0.9262668513835863,
+     "edge": 0.14736060138358642,
+     "reach": 0.21333333333333332,
+     "contribution": 0.031436928295165104,
+     "share": 0.3397628658069152
+    },
+    {
+     "card": "Queen",
+     "key": "1p",
+     "equilibrium": [
+      0.9999975012493754,
+      2.4987506246876562e-06
+     ],
+     "role": "responder",
+     "best_response": 0,
+     "values": [
+      0.15315315315315317,
+      -0.16180180180180162
+     ],
+     "eq_mix_value": 0.15315236615926275,
+     "edge": 7.869938904170315e-07,
+     "reach": 0.185,
+     "contribution": 1.4559386972715081e-07,
+     "share": 1.5735440167041817e-06
+    },
+    {
+     "card": "King",
+     "key": "2p",
+     "equilibrium": [
+      7.496251874062968e-07,
+      0.9999992503748126
+     ],
+     "role": "responder",
+     "best_response": 1,
+     "values": [
+      1.0,
+      1.2564137931034483
+     ],
+     "eq_mix_value": 1.2564136008892106,
+     "edge": 1.9221423763760015e-07,
+     "reach": 0.24166666666666667,
+     "contribution": 4.645177409575337e-08,
+     "share": 5.020397584777996e-07
+    }
+   ],
+   "overall_equilibrium": [
+    0.4733810648925349,
+    0.5266189351074652
+   ],
+   "overall_best_response": [
+    0.2890625,
+    0.7109374999999999
+   ],
+   "reached": 0.64
+  },
+  {
+   "history": "b",
+   "player": 1,
+   "labels": [
+    "FOLD",
+    "CALL"
+   ],
+   "name": "Player 1 bet",
+   "pot": 3,
+   "cells": [
+    {
+     "card": "Jack",
+     "key": "0b",
+     "equilibrium": [
+      0.9999997501249376,
+      2.498750624687656e-07
+     ],
+     "role": "responder",
+     "best_response": 0,
+     "values": [
+      -1.0,
+      -2.0
+     ],
+     "eq_mix_value": -1.0000002498750624,
+     "edge": 2.4987506241913593e-07,
+     "reach": 0.12,
+     "contribution": 2.998500749029631e-08,
+     "share": 3.2407085006812647e-07
+    },
+    {
+     "card": "Queen",
+     "key": "1b",
+     "equilibrium": [
+      0.6664240081257605,
+      0.33357599187423953
+     ],
+     "role": "responder",
+     "best_response": 1,
+     "values": [
+      -1.0,
+      -0.3820224719101124
+     ],
+     "eq_mix_value": -0.793857533111425,
+     "edge": 0.41183506120131264,
+     "reach": 0.14833333333333332,
+     "contribution": 0.06108886741152803,
+     "share": 0.6602339918760955
+    },
+    {
+     "card": "King",
+     "key": "2b",
+     "equilibrium": [
+      2.498750624687656e-07,
+      0.9999997501249376
+     ],
+     "role": "responder",
+     "best_response": 1,
+     "values": [
+      -1.0,
+      2.0
+     ],
+     "eq_mix_value": 1.9999992503748127,
+     "edge": 7.496251872574078e-07,
+     "reach": 0.09166666666666666,
+     "contribution": 6.871564216526238e-08,
+     "share": 7.426623647394565e-07
+    }
+   ],
+   "overall_equilibrium": [
+    0.7081983673053844,
+    0.29180163269461556
+   ],
+   "overall_best_response": [
+    0.3333333333333333,
+    0.6666666666666666
+   ],
+   "reached": 0.36
+  },
+  {
+   "history": "pb",
+   "player": 0,
+   "labels": [
+    "FOLD",
+    "CALL"
+   ],
+   "name": "Player 1 checked, Player 2 bet",
+   "pot": 3,
+   "cells": [
+    {
+     "card": "Jack",
+     "key": "0pb",
+     "equilibrium": [
+      0.9999998392604318,
+      1.6073956826239253e-07
+     ],
+     "role": "subject",
+     "estimated": [
+      0.9,
+      0.1
+     ],
+     "counts": [
+      180,
+      20
+     ],
+     "ci_aggressive": [
+      0.06566994117157123,
+      0.14940686356308552
+     ],
+     "reach": 0.10666685324004664,
+     "distance": 0.09999983926043175
+    },
+    {
+     "card": "Queen",
+     "key": "1pb",
+     "equilibrium": [
+      0.4439027039280385,
+      0.5560972960719616
+     ],
+     "role": "subject",
+     "estimated": [
+      0.62,
+      0.38
+     ],
+     "counts": [
+      124,
+      76
+     ],
+     "ci_aggressive": [
+      0.3155889366123922,
+      0.4489341048080049
+     ],
+     "reach": 0.18002141145401407,
+     "distance": 0.17609729607196153
+    },
+    {
+     "card": "King",
+     "key": "2pb",
+     "equilibrium": [
+      3.7644507685690654e-07,
+      0.9999996235549231
+     ],
+     "role": "subject",
+     "estimated": [
+      0.040000000000000036,
+      0.96
+     ],
+     "counts": [
+      8,
+      192
+     ],
+     "ci_aggressive": [
+      0.9230670617058012,
+      0.9795946128493436
+     ],
+     "reach": 0.026123789497323302,
+     "distance": 0.03999962355492316
+    }
+   ],
+   "overall_equilibrium": [
+    0.6163606257526829,
+    0.383639374247317
+   ],
+   "overall_estimated": [
+    0.6670407735303023,
+    0.3329592264696977
+   ],
+   "reached": 0.312812054191384
+  }
+ ]
+}

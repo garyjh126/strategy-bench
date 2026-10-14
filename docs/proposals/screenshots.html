@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>StrategyBench session report</title>
+<style>
+:root { color-scheme: light; --page: #f9f9f7; --surface: #fcfcfb; --ink: #0b0b0b; --ink-2: #52514e; --muted: #676661; --border: rgba(11, 11, 11, 0.1); --accent-ink: #1c5cab; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { color-scheme: dark; --page: #0d0d0d; --surface: #1a1a19; --ink: #ffffff; --ink-2: #c3c2b7; --muted: #a3a197; --border: rgba(255, 255, 255, 0.1); --accent-ink: #86b6ef; }
+}
+:root[data-theme="dark"] { color-scheme: dark; --page: #0d0d0d; --surface: #1a1a19; --ink: #ffffff; --ink-2: #c3c2b7; --muted: #a3a197; --border: rgba(255, 255, 255, 0.1); --accent-ink: #86b6ef; }
+body { margin: 0; background: var(--page); color: var(--ink); font: 16px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif; }
+.wrap { max-width: 1160px; margin: 0 auto; padding: 32px 16px 64px; }
+h1 { font-size: clamp(1.6rem, 3.6vw, 2.2rem); letter-spacing: -0.02em; margin: 0 0 8px; }
+h2 { font-size: 1.3rem; margin: 40px 0 6px; }
+p { color: var(--ink-2); max-width: 80ch; }
+a { color: var(--accent-ink); }
+figure { margin: 18px 0 30px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px; }
+figure img { width: 100%; height: auto; display: block; border-radius: 6px; border: 1px solid var(--border); }
+figure.narrow img { max-width: 390px; }
+figcaption { font-size: 0.9rem; color: var(--ink-2); margin-top: 10px; max-width: 90ch; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Screenshots from this session</h1>
+  <p>The local GUI (<code>apps/gui</code>), driven through every screen with headless Chrome on 2026-10-14, and the strategy-viewer mockup from proposal B. They accompany the two proposals in this folder: <a href="A-multiway-next-steps.md">A-multiway-next-steps.md</a> and <a href="B-strategy-viewer.md">B-strategy-viewer.md</a>.</p>
+
+  <h2>GUI</h2>
+  <figure><img src="img/01-setup-kuhn.png" alt="Setup screen"><figcaption><strong>Setup.</strong> The three registered games, any OpenSpiel game string, a seat per player (human, uniform, CFR profile or a measured run), and the CFR profile's status with an honest statement of what it guarantees.</figcaption></figure>
+  <figure><img src="img/08-kuhn-human-decision-coach-hint.png" alt="Playing Kuhn with the coach and best-response values"><figcaption><strong>Playing Kuhn against the CFR profile.</strong> Your card is shown, the opponent's is hidden. The coach shows the CFR profile's mix in this situation; best-response values show what each action is worth against the opponent's actual policy.</figcaption></figure>
+  <figure><img src="img/12-kuhn-bots-autodeal.png" alt="Bots-only table"><figcaption><strong>Bots only.</strong> CFR profile against uniform random, dealing automatically; totals, per-hand means and the hand history (eight hands here, netting to exactly 0).</figcaption></figure>
+  <figure><img src="img/16-kuhn3-table-three-seats.png" alt="Three-player Kuhn table"><figcaption><strong>Three-player Kuhn</strong> (a custom game string). OpenSpiel's own text, three seats, no best-response panel (two-player only), and the "no equilibrium guarantee" warning with NashConv and its unit (one of the two fixes).</figcaption></figure>
+  <figure><img src="img/07a-leduc3-progress.png" alt="Background CFR computation"><figcaption><strong>A long CFR computation</strong> (three-player Leduc, about 7 minutes) runs in a background process with progress and a Cancel button; cancelling stops the process.</figcaption></figure>
+  <figure><img src="img/15-liars-dice-human-decision.png" alt="Liar's Dice"><figcaption><strong>Liar's Dice</strong>: six bids, the coach and the best-response values.</figcaption></figure>
+  <figure><img src="img/17-explorer-kuhn.png" alt="Strategy explorer"><figcaption><strong>Explorer.</strong> Every Kuhn situation, most likely first: bars are a measured run, ticks the CFR profile. Every track now has the same length (the other fix), so bars compare across rows.</figcaption></figure>
+  <figure><img src="img/21-dark-table.png" alt="Dark theme"><figcaption><strong>Dark theme.</strong></figcaption></figure>
+  <figure class="narrow"><img src="img/24-mobile-table.png" alt="Phone width"><figcaption><strong>Phone width</strong>: no horizontal scrolling on any screen.</figcaption></figure>
+
+  <h2>Proposal B mockup (invented subject)</h2>
+  <figure><img src="img/mockup-responder-node.png" alt="Strategy viewer at Player 2's decision"><figcaption><strong>Where the best response wins.</strong> Player 2 facing a bet: the CFR+ mix per card, the best response, and the 0.061 ante per hand it wins with the Queen. The subject's frequencies are invented; everything else was computed exactly with the project's breakdown code.</figcaption></figure>
+  <figure><img src="img/mockup-subject-node.png" alt="Strategy viewer at the subject's decision"><figcaption><strong>The subject against CFR+</strong> at Player 1's first decision, with exact numbers for the Jack.</figcaption></figure>
+</div>
+</body>
+</html>
