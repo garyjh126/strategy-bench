@@ -187,7 +187,7 @@ def play_match(
                 for records, action in attempts:
                     for r in records:
                         log.write({**r, "mode": "play", "hand": hand})
-                    tally(result.reliability, records, action)
+                    tally(result.reliability, records, action, budget.cost_fn)
                 subject_events = [e for e in events if e.get("subject")]
                 result.subject_decisions += len(subject_events)
                 result.fallbacks += sum(e["fallback"] for e in subject_events)

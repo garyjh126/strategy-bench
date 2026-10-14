@@ -145,7 +145,9 @@ def run_direct(
         else {},
         "equilibrium": {"values": eq.values, "exploitability": eq.exploitability},
         "reliability": {**asdict(col.reliability), **col.reliability.rates()},
-        "cost_usd_estimated": budget.spent if cost_fn else None,
+        # Every reply the run used (live or cached), and what this invocation spent.
+        "cost_usd_estimated": col.reliability.cost_usd if cost_fn else None,
+        "cost_usd_live": budget.spent if cost_fn else None,
         "coverage": {f"k={coverage_k}": coverage(game, strat, coverage_k)},
         "filled": {"count": len(strat.filled), "of": len(col.infostates), "keys": strat.filled},
         # Single legal action: not queried, played with certainty.
@@ -247,7 +249,8 @@ def run_play(
         "mode": "play",
         "play": play.as_dict(),
         "reliability": {**asdict(play.reliability), **play.reliability.rates()},
-        "cost_usd_estimated": budget.spent if cost_fn else None,
+        "cost_usd_estimated": play.reliability.cost_usd if cost_fn else None,
+        "cost_usd_live": budget.spent if cost_fn else None,
     }
     if direct is not None:
         result["cross_check"] = cross_check(spec, direct[0], direct[1], opp, play, config)

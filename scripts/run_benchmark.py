@@ -230,7 +230,8 @@ def print_direct(spec, client, result) -> None:
     if result.get("cost_usd_estimated") is not None:
         print(
             f"  tokens in/out {rel['input_tokens']}/{rel['output_tokens']} | "
-            f"estimated cost ${result['cost_usd_estimated']:.4f}"
+            f"estimated cost ${result['cost_usd_estimated']:.4f} "
+            f"(spent in this invocation ${result['cost_usd_live']:.4f})"
         )
     print(f"  equilibrium seat values: {[round(v, 5) for v in result['equilibrium']['values']]}")
 

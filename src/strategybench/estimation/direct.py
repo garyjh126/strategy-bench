@@ -89,7 +89,12 @@ class CallLog:
 
 @dataclass
 class Reliability:
-    """M4 counters."""
+    """M4 counters, plus the calls, tokens and cost behind the run.
+
+    Tokens and cost cover every attempt the run used, whether it was made now or read from the
+    cache, so a run resumed after a cap or rebuilt from the cache reports the same totals. What
+    this invocation spent is ``CallBudget.spent``.
+    """
 
     samples: int = 0
     attempts: int = 0
@@ -101,6 +106,8 @@ class Reliability:
     cache_hits: int = 0
     input_tokens: int = 0
     output_tokens: int = 0
+    #: Estimated USD of every attempt used (0 without a cost function).
+    cost_usd: float = 0.0
 
     def rates(self) -> dict[str, float]:
         a, s = max(self.attempts, 1), max(self.samples, 1)
@@ -228,8 +235,13 @@ class TextQuerier:
         return records, None
 
 
-def tally(rel: Reliability, records: list[dict[str, Any]], action: int | None) -> None:
-    """Add one sample's attempt records to the M4 counters."""
+def tally(
+    rel: Reliability,
+    records: list[dict[str, Any]],
+    action: int | None,
+    cost_fn: Callable[[int, int], float] | None = None,
+) -> None:
+    """Add one sample's attempt records to the counters (``cost_fn``: tokens in, out -> USD)."""
     rel.samples += 1
     for r in records:
         rel.attempts += 1
@@ -237,8 +249,11 @@ def tally(rel: Reliability, records: list[dict[str, Any]], action: int | None) -
             rel.cache_hits += 1
         else:
             rel.live_calls += 1
-            rel.input_tokens += r["input_tokens"] or 0
-            rel.output_tokens += r["output_tokens"] or 0
+        tokens_in, tokens_out = r["input_tokens"] or 0, r["output_tokens"] or 0
+        rel.input_tokens += tokens_in
+        rel.output_tokens += tokens_out
+        if cost_fn is not None:
+            rel.cost_usd += cost_fn(tokens_in, tokens_out)
         if r["status"] == ParseStatus.PARSE_FAILURE.value:
             rel.parse_failures += 1
         elif r["status"] == ParseStatus.ILLEGAL.value:
@@ -282,7 +297,7 @@ def collect_text(
                 records, action = future.result()
                 for r in records:
                     log.write(r)
-                tally(out.reliability, records, action)
+                tally(out.reliability, records, action, querier.budget.cost_fn)
                 if action is not None:
                     counts[records[0]["infostate"]][action] += 1
         except BaseException:

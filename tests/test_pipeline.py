@@ -111,6 +111,43 @@ def test_call_cap_aborts_then_resumes_from_cache(tmp_path, eq):
     assert result["reliability"]["cache_hits"] == 50
 
 
+class _PricedClient(MockTextClient):
+    """A mock that reports token usage like a real provider: 200 tokens in, 2 out per call."""
+
+    def complete(self, prompt, sample_index, attempt):
+        completion = super().complete(prompt, sample_index, attempt)
+        completion.input_tokens, completion.output_tokens = 200, 2
+        return completion
+
+
+def test_reported_cost_and_tokens_cover_cached_replies_too(tmp_path, eq):
+    # A paid run that hits its cap, is resumed, and is later rebuilt from the cache must report
+    # the same total cost and tokens each time; only the spend of each invocation differs.
+    def price(i, o):
+        return (i * 1.00 + o * 5.00) / 1e6  # USD, like models.yaml's per-million prices
+
+    lookup = policy_lookup(SPEC, TEMPLATE, uniform_policy(GAME))
+
+    def client():
+        return _PricedClient("t", lookup, vocabulary=SPEC.vocabulary())
+
+    cache = CallCache(tmp_path / "cache.sqlite")
+    per_call = price(200, 2)
+    cfg = RunConfig(n_samples=5, n_boot=0, max_calls=30)
+    with pytest.raises(BudgetExceeded):
+        run_direct(SPEC, TEMPLATE, client(), cfg, None, cache, eq, cost_fn=price)
+    cfg.max_calls = None
+    resumed = run_direct(SPEC, TEMPLATE, client(), cfg, None, cache, eq, cost_fn=price)
+    rebuilt = run_direct(SPEC, TEMPLATE, client(), cfg, None, cache, eq, cost_fn=price)
+
+    for result in (resumed, rebuilt):
+        assert result["cost_usd_estimated"] == pytest.approx(60 * per_call)
+        assert result["reliability"]["input_tokens"] == 60 * 200
+        assert result["reliability"]["output_tokens"] == 60 * 2
+    assert resumed["cost_usd_live"] == pytest.approx(30 * per_call)
+    assert rebuilt["cost_usd_live"] == 0 and rebuilt["reliability"]["live_calls"] == 0
+
+
 def test_results_directory_is_written(tmp_path, eq):
     run_direct(
         SPEC,
