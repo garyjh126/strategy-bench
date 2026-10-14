@@ -54,7 +54,8 @@ chance included, the same weighting the project uses for coverage. Without a run
 CFR profile, or uniform play if there is no profile. Bars show the run's strategy and ticks show
 the CFR profile. "Distance from CFR" is half the sum of absolute differences between the two
 distributions (0 means identical, 1 means no overlap). Situations with a single legal action
-are hidden unless you ask for them. Filter by seat or by text.
+are hidden unless you ask for them; shown, they say "forced" instead of a sample count, because
+direct mode does not ask the subject there. Filter by seat or by text.
 
 ## Reading the numbers
 

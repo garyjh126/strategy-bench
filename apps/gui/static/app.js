@@ -1058,7 +1058,7 @@
 
   function exploreRow(r, hasRun, cfrReady) {
     const meta = ["reach " + pct(r.reach)];
-    if (hasRun) meta.push("N=" + r.support);
+    if (hasRun) meta.push(r.forced ? "forced" : "N=" + r.support);
     if (r.distance != null) meta.push("distance from CFR " + r.distance.toFixed(2));
     const bars = h("div", { class: "sbars" });
     r.labels.forEach((label) => {
