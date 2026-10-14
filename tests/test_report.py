@@ -162,6 +162,32 @@ def test_subject_sentences():
         subject_sentence(Source(None, filled, plain=True), "", "sampled")
     )
 
+    forced = {"estimated": {"LIAR": 1.0}, "equilibrium": {"LIAR": 1.0}, "support": 0, "filled": False}
+    forced["forced"] = True
+    assert str(subject_sentence(Source(None, forced, plain=True), "", "sampled")) == (
+        "LIAR is the only legal action here, so the subject was not asked."
+    )
+
+
+def test_forced_decisions_are_marked_in_the_derived_files(tmp_path):
+    spec = get_game_spec("liars_dice")
+    template, game = DEFAULT_TEMPLATES["liars_dice"], spec.load()
+    lookup = policy_lookup(spec, template, uniform_policy(game))
+    client = MockTextClient("u", lookup, vocabulary=spec.vocabulary())
+    run_direct(spec, template, client, RunConfig(n_samples=2, n_boot=0), tmp_path)
+    derive(tmp_path, spec, n_hands=20)
+    forced = set(json.loads((tmp_path / "metrics.json").read_text())["forced"]["keys"])
+    assert len(forced) == 96
+
+    breakdown = json.loads((tmp_path / "breakdown.json").read_text())
+    for seat in breakdown["seats"]:
+        assert {r["infostate"] for r in seat["subject"] if r["forced"]} == {
+            r["infostate"] for r in seat["subject"] if r["infostate"] in forced
+        }
+    entries = json.loads((tmp_path / "replay.json").read_text())["infostates"]
+    shown = [e for key, e in entries.items() if key in forced]
+    assert shown and all(e["forced"] and "not asked" in e["subject_note"] for e in shown)
+
 
 def test_responder_sentences():
     row = {

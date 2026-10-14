@@ -42,7 +42,7 @@ from strategybench.games.base import GameSpec
 from strategybench.report.explain import responder_sentence, subject_sentence
 from strategybench.report.numbers import Source, render
 
-DERIVED_VERSION = 3
+DERIVED_VERSION = 4
 REPLAY_HANDS = 100
 #: Key-situation hands per seat, taken from the infostates with the largest contributions.
 KEY_SITUATIONS = 3
@@ -173,6 +173,7 @@ def write_breakdown(run_dir: Path, spec: GameSpec, force: bool = False) -> tuple
                     "weighted_distance": r.reach * r.distance,
                     "support": row["support"],
                     "filled": row["filled"],
+                    "forced": row.get("forced", False),
                 }
             )
         seats.append(
@@ -273,6 +274,7 @@ class _ReplayBuilder:
             "equilibrium": row["equilibrium"],
             "support": row["support"],
             "filled": row["filled"],
+            "forced": row.get("forced", False),
         }
         e["text"] = {
             "estimated": {lab: render(p, "pct0") for lab, p in row["estimated"].items()},

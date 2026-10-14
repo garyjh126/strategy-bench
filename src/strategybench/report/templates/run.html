@@ -16,7 +16,7 @@
   <tr{% if row.row.filled %} class="filled"{% endif %}>
     <th scope="row" title="{{ row.row.situation }}">{{ row.row.short }}{% if row.row.filled %} <span class="chip warn">filled</span>{% endif %}</th>
     <td class="r">{{ run.breakdown.num(row.ptr ~ "/reach", "pct1") }}</td>
-    <td class="r">{% if run.rec.subject_kind == "sampled" %}{{ run.breakdown.num(row.ptr ~ "/support", "int") }}{% else %}probabilities{% endif %}</td>
+    <td class="r">{% if row.row.forced %}<span class="muted" title="Only one legal action: the subject was not asked">forced</span>{% elif run.rec.subject_kind == "sampled" %}{{ run.breakdown.num(row.ptr ~ "/support", "int") }}{% else %}probabilities{% endif %}</td>
     <td class="wide">{{ row.bars }}</td>
     <td class="r">{{ run.breakdown.num(row.ptr ~ "/distance", "pct0") }}</td>
   </tr>

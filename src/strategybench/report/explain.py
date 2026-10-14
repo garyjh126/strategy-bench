@@ -2,7 +2,7 @@
 
 Each function reads its numbers through a ``Source`` at a JSON pointer ``ptr`` to a row
 with the fields written by ``derive`` (subject rows: ``estimated``, ``equilibrium``,
-``support``, ``filled``; responder rows: ``reach``, ``values``, ``best_response``,
+``support``, ``filled``, ``forced``; responder rows: ``reach``, ``values``, ``best_response``,
 ``eq_mix_value``, ``edge``, ``contribution``, ``share``). On a page every number is a
 traceable span; with a plain source the result is plain text.
 """
@@ -23,6 +23,9 @@ def _largest_gap(estimated: dict[str, float], equilibrium: dict[str, float]) -> 
 
 def subject_sentence(src: Source, ptr: str, kind: str) -> Markup:
     """How the subject's action frequencies at one infostate compare with the equilibrium."""
+    if src.has(f"{ptr}/forced") and src.get(f"{ptr}/forced"):
+        (label,) = src.get(f"{ptr}/estimated")
+        return Markup("{} is the only legal action here, so the subject was not asked.").format(label)
     if src.get(f"{ptr}/filled"):
         return Markup(
             "No valid answer was collected here, so this decision is filled with a uniform strategy "
