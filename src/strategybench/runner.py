@@ -148,6 +148,8 @@ def run_direct(
         "cost_usd_estimated": budget.spent if cost_fn else None,
         "coverage": {f"k={coverage_k}": coverage(game, strat, coverage_k)},
         "filled": {"count": len(strat.filled), "of": len(col.infostates), "keys": strat.filled},
+        # Single legal action: not queried, played with certainty.
+        "forced": {"count": len(strat.forced), "keys": strat.forced},
         "run_date": datetime.now(UTC).date().isoformat(),
     }
 
@@ -175,6 +177,7 @@ def run_direct(
                     "situation": spec.render_infostate(info.state),
                     "support": strat.support[info.key],
                     "filled": info.key in strat.filled,
+                    "forced": info.forced,
                     "estimated": {labels[a]: float(est[a]) for a in info.legal_actions},
                     "equilibrium": {labels[a]: float(ref[a]) for a in info.legal_actions},
                 }

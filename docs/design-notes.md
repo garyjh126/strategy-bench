@@ -12,7 +12,7 @@ Decisions that are not obvious from the code, and a log of changes to `estimatio
 | 3 | (none) | n/a | `analysis/breakdown.py` added (per-infostate decomposition of M2); no existing `estimation/` or `analysis/` code changed. `GameSpec` gained four **optional** members with defaults (`title`, `summary`, `short_label`, `describe_chance`), used only by reports, so a new game still needs only its own spec. |
 | 4 | Liar's Dice | **None.** New files only: `games/liars_dice.py`, `prompts/liars_dice.py`, registry entries in `games/__init__.py` and `prompts/__init__.py`, tests. `git diff --stat c2fbbac -- src/strategybench/estimation src/strategybench/analysis` is empty. | None in `estimation/` or `analysis/`. Report wording: `GameSpec` gained two more **optional** attributes whose defaults keep Kuhn and Leduc unchanged (`episode`, default "hand", "round" for Liar's Dice; `reference_names`, the scripted references' names in the game's terms). Site-wide text no longer says "poker", and `replay.json` records the episode word (`DERIVED_VERSION` 3). `scripts/game_size.py` added for sizing games. |
 
-**Design flaw found in Phase 4 (not fixed): direct mode queries forced decisions.**
+**Design flaw found in Phase 4, fixed 2026-10-14: direct mode queried forced decisions.**
 `collect_text` samples every infostate, including those with a single legal action. Kuhn and
 Leduc have none, but half of Liar's Dice's 192 infostates are forced (after 2x3 only LIAR is
 legal), so a real-model run makes twice the calls it needs: 38,400 instead of 19,200 at N = 200.
@@ -20,7 +20,10 @@ Results are unaffected, because the estimated strategy at a forced infostate is 
 the replies (the uniform fill gives the same), so only M4 counts them. Skipping them is a small,
 game-independent change to `estimation/direct.py` and the dry-run count. It is deferred so that
 Phase 4's gate tests the game alone, and because it changes what M4 measures; it needs the
-owner's decision.
+owner's decision. The owner approved it, and since 2026-10-14 both direct-mode collectors skip
+forced infostates (`InfoState.forced`), report them under `forced` in `metrics.json` and
+`strategy.json`, and count them as covered. A Liar's Dice run now makes 19,200 calls at
+N = 200; the dry-run estimates below predate the change and are halved by it.
 
 ## Decisions
 

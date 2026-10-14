@@ -1,8 +1,8 @@
 """Measure the size of OpenSpiel games before adding one: infostates, forced decisions, solve time.
 
 For each load string, prints the decision histories and decision infostates (per seat), how
-many infostates have a single legal action (forced; direct mode still queries them), the
-direct-mode call count at N samples per infostate, and the time and result of OpenSpiel's C++
+many infostates have a single legal action (forced; direct mode does not query them), the
+direct-mode call count at N samples per queried infostate, and the time and result of OpenSpiel's C++
 CFR+ (seat values and exploitability of the average policy). Makes no subject calls.
 
 Examples:
@@ -45,7 +45,8 @@ def main() -> None:
         print(f"  decision infostates:      {len(infos):,} ({seats})")
         print(f"  forced (1 legal action):  {forced:,} ({forced / len(infos):.1%})")
         print(f"  legal actions:            mean {sum(widths) / len(widths):.2f}, max {max(widths)}")
-        print(f"  direct-mode calls, N={n}: {len(infos) * n:,} ({forced * n:,} at forced infostates)")
+        queried = len(infos) - forced
+        print(f"  direct-mode calls, N={n}: {queried * n:,} (forced infostates are not queried)")
         if args.iterations > 0:
             solver = pyspiel.CFRPlusSolver(game)
             start = time.perf_counter()

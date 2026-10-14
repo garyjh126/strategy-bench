@@ -10,6 +10,7 @@ from strategybench.adapters.parser import ParseStatus
 from strategybench.analysis.metrics import compute_metrics, solve_equilibrium
 from strategybench.baselines.scripted import first_action_policy, last_action_policy, uniform_policy
 from strategybench.estimation.infostates import enumerate_infostates
+from strategybench.estimation.strategy import reach_probabilities
 from strategybench.games import get_game_spec
 from strategybench.prompts import DEFAULT_TEMPLATES, TEMPLATES
 from strategybench.runner import RunConfig, run_direct
@@ -189,7 +190,12 @@ def test_deterministic_agents_match_direct_computation(eq, make):
     direct = compute_metrics(GAME, policy, eq)
     assert result["metrics"]["exploitability"] == pytest.approx(direct.exploitability, abs=1e-12)
     assert result["metrics"]["h2h_loss"] == pytest.approx(direct.h2h_loss, abs=1e-12)
-    assert result["coverage"]["k=5"] == 0.0  # only 2 samples each
+    # Only 2 samples each, so only the forced infostates (LIAR is the only legal action, nothing
+    # to estimate) count as covered at k = 5.
+    reach = reach_probabilities(GAME, policy)
+    forced = sum(r for key, r in reach.items() if key in result["forced"]["keys"])
+    assert result["coverage"]["k=5"] == pytest.approx(forced / sum(reach.values()), abs=1e-12)
+    assert result["coverage"]["k=5"] > 0
     assert result["filled"]["count"] == 0
 
 
@@ -198,7 +204,7 @@ def test_uniform_via_distribution_client_matches_openspiel(eq):
     result = run_direct(SPEC, TEMPLATE, client, RunConfig(), equilibrium=eq)
     expected = exploitability.exploitability(GAME, uniform_policy(GAME))
     assert result["metrics"]["exploitability"] == pytest.approx(expected, abs=1e-9)
-    assert client.calls == 192
+    assert client.calls == 192 - 96  # forced infostates are not queried
 
 
 def test_equilibrium_via_distribution_client_is_unexploitable(eq):

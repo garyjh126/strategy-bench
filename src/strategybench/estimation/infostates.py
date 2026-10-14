@@ -17,6 +17,11 @@ class InfoState:
     #: One concrete history in this infostate, used only for rendering the prompt.
     state: pyspiel.State = field(compare=False, hash=False, repr=False)
 
+    @property
+    def forced(self) -> bool:
+        """A single legal action: nothing to ask the subject, nothing to estimate."""
+        return len(self.legal_actions) == 1
+
 
 def enumerate_infostates(game: pyspiel.Game) -> list[InfoState]:
     states = get_all_states.get_all_states(

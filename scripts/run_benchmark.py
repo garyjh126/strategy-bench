@@ -87,11 +87,12 @@ def main() -> int:
     eq = solve_equilibrium(spec.load_string, 2000, args.eq_cache)
 
     if args.dry_run:
-        n_info, lo, hi = dry_run_calls(spec, args.samples, args.retries)
+        n_info, n_forced, lo, hi = dry_run_calls(spec, args.samples, args.retries)
         if args.mode == "play":
             lo = hi = 0
         else:
-            print(f"{spec.name}: {n_info} infostates x {args.samples} samples")
+            skipped = f" ({n_forced} forced infostates are not queried)" if n_forced else ""
+            print(f"{spec.name}: {n_info} infostates x {args.samples} samples{skipped}")
         if args.mode != "direct":
             game = spec.load()
             per_hand = expected_subject_decisions(

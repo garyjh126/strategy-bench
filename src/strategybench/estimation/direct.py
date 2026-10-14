@@ -4,6 +4,9 @@ For a text client each infostate is sampled ``n_samples`` times (fresh context e
 A sample whose reply fails to parse, or names an illegal action, is retried up to
 ``max_retries`` times with the same prompt; every attempt is counted and logged, and a
 sample that never yields a legal action is recorded as failed (never substituted).
+
+Forced infostates (a single legal action) are never queried: the action is played with
+certainty and the strategy marks them as forced (see ``estimation/strategy.py``).
 """
 
 from __future__ import annotations
@@ -124,15 +127,16 @@ def _now() -> str:
     return datetime.now(UTC).isoformat()
 
 
-def dry_run_calls(spec: GameSpec, n_samples: int, max_retries: int) -> tuple[int, int, int]:
-    """(infostates, minimum calls, worst-case calls including every retry)."""
-    n_info = len(enumerate_infostates(spec.load()))
-    return n_info, n_info * n_samples, n_info * n_samples * (max_retries + 1)
+def dry_run_calls(spec: GameSpec, n_samples: int, max_retries: int) -> tuple[int, int, int, int]:
+    """(queried infostates, forced infostates, minimum calls, worst-case calls with every retry)."""
+    infos = enumerate_infostates(spec.load())
+    queried = sum(not i.forced for i in infos)
+    return queried, len(infos) - queried, queried * n_samples, queried * n_samples * (max_retries + 1)
 
 
 def mean_prompt_tokens(spec: GameSpec, template: PromptTemplate, chars_per_token: float = 4.0) -> float:
     """Rough input-token estimate per call (characters / 4), for dry-run cost estimates only."""
-    infos = enumerate_infostates(spec.load())
+    infos = [i for i in enumerate_infostates(spec.load()) if not i.forced]
     chars = [len(p.system) + len(p.user) for p in (template.render(spec, i.state) for i in infos)]
     return sum(chars) / len(chars) / chars_per_token
 
@@ -264,6 +268,8 @@ def collect_text(
     # Everything that touches OpenSpiel states is computed up front, on this thread.
     jobs = []
     for info in infostates:
+        if info.forced:
+            continue
         prompt = template.render(spec, info.state)
         labels = spec.action_labels(info.state)
         jobs.extend((prompt, labels, info.key, info.player, i) for i in range(n_samples))
@@ -303,6 +309,8 @@ def collect_distribution(
     rel = out.reliability
 
     for info in infostates:
+        if info.forced:
+            continue
         prompt = template.render(spec, info.state)
         key = cache_key(client.provider, client.model_id, client.params, prompt.hash, 0, 0)
         record = cache.get(key) if cache else None

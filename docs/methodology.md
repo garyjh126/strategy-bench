@@ -47,10 +47,9 @@ This is not the common six-sided game with 1s wild; the prompt states OpenSpiel'
 checked against the installed OpenSpiel source and by tests that score challenges.
 
 Half of its 192 infostates are **forced**: after the highest bid, 2x3, only LIAR is legal. Direct
-mode queries them like any other decision, which doubles the number of calls. The estimated
-strategy there is LIAR whatever the replies, so M1 to M3 do not depend on them; M4 counts them.
-Three sides was chosen to keep real-model runs affordable: 192 infostates (38,400 calls at
-N = 200), against 1,024 with four sides (204,800 calls) and 24,576 with six
+mode does not query forced decisions in any game (see "Querying the subject"), so a run asks about
+96 infostates (19,200 calls at N = 200). Three sides was chosen to keep real-model runs
+affordable: four sides has 1,024 infostates (512 forced) and six has 24,576 (12,288 forced)
 (`scripts/game_size.py`).
 
 ## Querying the subject
@@ -77,6 +76,13 @@ independently, with a fresh context each time.
   are queried once per infostate and the returned probabilities are used directly as σ̂. These
   have no sampling error. Their probabilities may be intended as confidences rather than as a
   mixed strategy, so results report which reading was used.
+
+**Forced decisions are not queried.** An infostate with a single legal action has nothing to
+estimate, so the subject is not asked: the action is played with certainty, the infostate is
+reported as forced (never as filled), and it counts as covered. M1 to M3 are unchanged by this,
+because the action there is certain either way; M4 only counts decisions that were asked. Kuhn
+and Leduc have no forced decisions; half of Liar's Dice's infostates are forced. Play mode
+still asks the subject at forced decisions.
 
 **Fill rule.** An infostate with fewer than `min_samples` valid samples (default 1) is played
 uniformly at random over its legal actions. The number of filled infostates is always
