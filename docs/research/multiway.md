@@ -834,7 +834,7 @@ sub-family (Section 2.4).
 ## Appendix B. Reproducing
 
 ```bash
-uv run pytest research/multiway                           # solver checks (not part of CI)
+uv run pytest research/multiway                           # solver checks (also in the default run and CI)
 uv run python research/multiway/run_kuhn3.py              # about 14 minutes; --part family|solvers|mccfr
 uv run python research/multiway/seat_metric.py            # seconds
 uv run python research/multiway/run_leduc3.py             # about 7 minutes

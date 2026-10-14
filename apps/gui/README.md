@@ -137,8 +137,8 @@ tabs cannot both act on the same decision.
 uv run pytest apps/gui/tests
 ```
 
-They run in a few seconds, never touch the real `runs/` directory, and are not part of the
-default `uv run pytest`, which collects `tests/` only. They cover game sizes against exact counts
+They run in a few seconds, never touch the real `runs/` directory, and are also part of the
+default `uv run pytest` (and so of CI). They cover game sizes against exact counts
 (including Ganzfried's 288 decision nodes for three-player Kuhn), hidden information,
 move validation, totals and export, run and profile fallbacks, best-response values against
 values worked out by hand, explorer reach and paging, background solving with its cache and
