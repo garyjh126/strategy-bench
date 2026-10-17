@@ -5,6 +5,9 @@ A sample whose reply fails to parse, or names an illegal action, is retried up t
 ``max_retries`` times with the same prompt; every attempt is counted and logged, and a
 sample that never yields a legal action is recorded as failed (never substituted).
 
+A distribution client is called ``n_samples`` times per infostate and its strategy there is the
+average of the returned probabilities; an invalid reply is counted as a failure, never retried.
+
 Forced infostates (a single legal action) are never queried: the action is played with
 certainty and the strategy marks them as forced (see ``estimation/strategy.py``).
 """
@@ -26,6 +29,7 @@ from strategybench.adapters.base import DistributionClient, Prompt, TextClient
 from strategybench.adapters.cache import CallCache, cache_key
 from strategybench.adapters.parser import ParseStatus, parse_label
 from strategybench.estimation.infostates import InfoState, enumerate_infostates
+from strategybench.estimation.strategy import mean_probabilities
 from strategybench.games.base import GameSpec
 from strategybench.prompts.base import PromptTemplate
 
@@ -124,7 +128,8 @@ class Collection:
     infostates: list[InfoState]
     #: Text clients: valid sample counts per infostate key and action.
     counts: dict[str, dict[int, int]] = field(default_factory=dict)
-    #: Distribution clients: returned probabilities per infostate key and action.
+    #: Distribution clients: each valid reply per infostate key (sample order), and their average.
+    distributions: dict[str, list[dict[int, float]]] = field(default_factory=dict)
     probabilities: dict[str, dict[int, float]] = field(default_factory=dict)
     reliability: Reliability = field(default_factory=Reliability)
     kind: str = "sampled"
@@ -308,32 +313,34 @@ def collect_text(
     return out
 
 
-def collect_distribution(
-    spec: GameSpec,
-    template: PromptTemplate,
-    client: DistributionClient,
-    cache: CallCache | None = None,
-    log: CallLog | None = None,
-    budget: CallBudget | None = None,
-) -> Collection:
-    """One call per infostate; the returned probabilities are the strategy (no sampling error)."""
-    log = log or CallLog(None)
-    budget = budget or CallBudget()
-    infostates = enumerate_infostates(spec.load())
-    out = Collection(infostates=infostates, kind="distribution")
-    rel = out.reliability
+class DistributionQuerier:
+    """Queries a distribution client for one sample (cache lookup or live call) and checks the
+    reply. Some typed-choice models (Jev) return different probabilities on repeated calls, so
+    each sample index is a separate cached call. Thread-safe; shared by ``direct`` and ``play``.
+    """
 
-    for info in infostates:
-        if info.forced:
-            continue
-        prompt = template.render(spec, info.state)
-        key = cache_key(client.provider, client.model_id, client.params, prompt.hash, 0, 0)
-        record = cache.get(key) if cache else None
+    def __init__(
+        self, client: DistributionClient, cache: CallCache | None = None, budget: CallBudget | None = None
+    ) -> None:
+        self.client = client
+        self.cache = cache
+        self.budget = budget or CallBudget()
+        self._cache_lock = threading.Lock()
+
+    def sample(
+        self, prompt: Prompt, labels: dict[int, str], infostate: str, player: int, sample_index: int
+    ) -> tuple[dict[str, Any], dict[int, float] | None]:
+        """(log record, probability per legal action or None if the reply is invalid)."""
+        client = self.client
+        key = cache_key(client.provider, client.model_id, client.params, prompt.hash, sample_index, 0)
+        with self._cache_lock:
+            record = self.cache.get(key) if self.cache else None
         from_cache = record is not None
         if record is None:
-            budget.charge()
+            self.budget.charge()
             start = time.perf_counter()
             reply = client.distribution(prompt)
+            self.budget.record(reply.input_tokens, reply.output_tokens)
             record = {
                 "dist": reply.probs,
                 "input_tokens": reply.input_tokens,
@@ -342,50 +349,100 @@ def collect_distribution(
                 "latency_s": time.perf_counter() - start,
                 "timestamp": _now(),
             }
-            budget.record(reply.input_tokens, reply.output_tokens)
-            if cache:
-                cache.put(key, record)
-            rel.live_calls += 1
-        else:
-            rel.cache_hits += 1
-        rel.samples += 1
-        rel.attempts += 1
-        tokens_in, tokens_out = record.get("input_tokens") or 0, record.get("output_tokens") or 0
-        rel.input_tokens += tokens_in
-        rel.output_tokens += tokens_out
-        if budget.cost_fn is not None:
-            rel.cost_usd += budget.cost_fn(tokens_in, tokens_out)
+            if self.cache:
+                with self._cache_lock:
+                    self.cache.put(key, record)
 
         dist = record["dist"]
-        labels = spec.action_labels(info.state)
         valid = (
             set(dist) == set(labels.values())
             and all(p >= 0 for p in dist.values())
             and abs(sum(dist.values()) - 1.0) < 1e-6
         )
-        if valid:
-            out.probabilities[info.key] = {a: float(dist[lab]) for a, lab in labels.items()}
-        else:
-            rel.parse_failures += 1
-            rel.samples_failed += 1
-        log.write(
-            {
-                "provider": client.provider,
-                "model_id": client.model_id,
-                "params": client.params,
-                "prompt_version": prompt.version,
-                "prompt_hash": prompt.hash,
-                "infostate": info.key,
-                "player": info.player,
-                "user_prompt": prompt.user,
-                "distribution": dist,
-                "status": "ok" if valid else "invalid_distribution",
-                "input_tokens": record.get("input_tokens"),
-                "output_tokens": record.get("output_tokens"),
-                "extra": record.get("extra", {}),
-                "latency_s": record["latency_s"],
-                "timestamp": record["timestamp"],
-                "from_cache": from_cache,
-            }
-        )
+        log_record = {
+            "provider": client.provider,
+            "model_id": client.model_id,
+            "params": client.params,
+            "prompt_version": prompt.version,
+            "prompt_hash": prompt.hash,
+            "infostate": infostate,
+            "player": player,
+            "user_prompt": prompt.user,
+            "sample_index": sample_index,
+            "distribution": dist,
+            "status": "ok" if valid else "invalid_distribution",
+            "input_tokens": record.get("input_tokens"),
+            "output_tokens": record.get("output_tokens"),
+            "extra": record.get("extra", {}),
+            "latency_s": record["latency_s"],
+            "timestamp": record["timestamp"],
+            "from_cache": from_cache,
+        }
+        probs = {a: float(dist[lab]) for a, lab in labels.items()} if valid else None
+        return log_record, probs
+
+
+def tally_distribution(
+    rel: Reliability, record: dict[str, Any], valid: bool, cost_fn: Callable[[int, int], float] | None
+) -> None:
+    rel.samples += 1
+    rel.attempts += 1
+    if record["from_cache"]:
+        rel.cache_hits += 1
+    else:
+        rel.live_calls += 1
+    tokens_in, tokens_out = record["input_tokens"] or 0, record["output_tokens"] or 0
+    rel.input_tokens += tokens_in
+    rel.output_tokens += tokens_out
+    if cost_fn is not None:
+        rel.cost_usd += cost_fn(tokens_in, tokens_out)
+    if not valid:
+        rel.parse_failures += 1
+        rel.samples_failed += 1
+
+
+def collect_distribution(
+    spec: GameSpec,
+    template: PromptTemplate,
+    client: DistributionClient,
+    n_samples: int = 1,
+    cache: CallCache | None = None,
+    log: CallLog | None = None,
+    budget: CallBudget | None = None,
+    concurrency: int = 1,
+) -> Collection:
+    """``n_samples`` calls per infostate; the strategy is the average of the valid replies.
+
+    With one call (a client whose answer never changes) the strategy has no sampling error.
+    """
+    log = log or CallLog(None)
+    infostates = enumerate_infostates(spec.load())
+    out = Collection(infostates=infostates, kind="distribution")
+    querier = DistributionQuerier(client, cache, budget)
+
+    jobs = []
+    for info in infostates:
+        if info.forced:
+            continue
+        prompt = template.render(spec, info.state)
+        labels = spec.action_labels(info.state)
+        jobs.extend((prompt, labels, info.key, info.player, i) for i in range(n_samples))
+
+    samples: dict[str, list[tuple[int, dict[int, float]]]] = defaultdict(list)
+    with ThreadPoolExecutor(max_workers=max(1, concurrency)) as pool:
+        futures = [pool.submit(querier.sample, *job) for job in jobs]
+        try:
+            for future in as_completed(futures):
+                record, probs = future.result()
+                log.write(record)
+                tally_distribution(out.reliability, record, probs is not None, querier.budget.cost_fn)
+                if probs is not None:
+                    samples[record["infostate"]].append((record["sample_index"], probs))
+        except BaseException:
+            pool.shutdown(wait=True, cancel_futures=True)
+            raise
+
+    # Sample order, so bootstrap draws do not depend on thread scheduling.
+    out.distributions = {key: [p for _, p in sorted(s, key=lambda x: x[0])] for key, s in samples.items()}
+    out.probabilities = mean_probabilities(out.distributions)
     return out

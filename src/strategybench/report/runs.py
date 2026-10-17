@@ -79,6 +79,11 @@ class RunRecord:
         return self.provider == "mock"
 
     @property
+    def is_exact(self) -> bool:
+        """Probabilities read from one call per infostate (older runs record no call count)."""
+        return self.subject_kind == "distribution" and (self.n_samples or 1) == 1
+
+    @property
     def identity(self) -> tuple[str, ...]:
         return (
             self.game,
@@ -100,7 +105,12 @@ class RunRecord:
     @property
     def description(self) -> str:
         """Secondary line under the subject's name."""
-        how = "exact probabilities" if self.subject_kind == "distribution" else "sampled"
+        if self.is_exact:
+            how = "exact probabilities"
+        elif self.subject_kind == "distribution":
+            how = f"probabilities averaged over {self.n_samples} calls"
+        else:
+            how = "sampled"
         if not self.is_reference:
             return f"{self.provider} · {how}"
         parts = ["scripted reference", how]

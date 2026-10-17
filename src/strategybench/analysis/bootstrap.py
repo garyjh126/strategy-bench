@@ -28,7 +28,13 @@ import pyspiel
 
 from strategybench.analysis.metrics import Equilibrium, Metrics, compute_metrics
 from strategybench.estimation.infostates import InfoState
-from strategybench.estimation.strategy import resample_counts, strategy_from_counts
+from strategybench.estimation.strategy import (
+    mean_probabilities,
+    resample_counts,
+    resample_distributions,
+    strategy_from_counts,
+    strategy_from_probabilities,
+)
 
 #: Metric keys used for intervals and corrections (seat-specific values carry the seat index).
 METRIC_KEYS = ("exploitability", "br_gain_0", "br_gain_1", "h2h_loss_0", "h2h_loss_1")
@@ -98,7 +104,32 @@ def bootstrap_metrics(
     for _ in range(n_boot):
         strat = strategy_from_counts(game, infostates, resample_counts(counts, rng), min_samples)
         reps.append(metric_values(compute_metrics(game, strat.policy, eq, unit_size)))
+    return _summarise(point, reps, level)
 
+
+def bootstrap_distribution_metrics(
+    game: pyspiel.Game,
+    infostates: list[InfoState],
+    distributions: dict[str, list[dict[int, float]]],
+    eq: Equilibrium,
+    n_boot: int,
+    rng: np.random.Generator,
+    unit_size: float = 1.0,
+    level: float = 0.95,
+) -> BootstrapResult:
+    """As ``bootstrap_metrics``, for a distribution subject: each replicate resamples every
+    infostate's returned distributions (with replacement) and averages them."""
+
+    def metrics(d: dict[str, list[dict[int, float]]]) -> dict[str, float]:
+        strat = strategy_from_probabilities(game, infostates, mean_probabilities(d))
+        return metric_values(compute_metrics(game, strat.policy, eq, unit_size))
+
+    point = metrics(distributions)
+    reps = [metrics(resample_distributions(distributions, rng)) for _ in range(n_boot)]
+    return _summarise(point, reps, level)
+
+
+def _summarise(point: dict[str, float], reps: list[dict[str, float]], level: float) -> BootstrapResult:
     result = BootstrapResult({}, {}, {}, {})
     for key in METRIC_KEYS:
         values = np.array([r[key] for r in reps])

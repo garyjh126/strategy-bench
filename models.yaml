@@ -42,10 +42,11 @@ models:
     provider: typesafe
     # Pinned version: the jev-latest alias moves when a new release ships (docs.typesafe.ai/models).
     model: jev-1.13.0
-    # Typed "choice" model: one call per infostate returns a probability for each legal action.
-    # The API takes no sampling parameters.
+    # Typed "choice" model: each call returns a probability for each legal action. The API takes no
+    # sampling parameters, but repeated calls differ by up to ~0.09 (checked 2026-10-17), so runs
+    # average --samples calls per infostate.
     params: {}
     price_per_mtok: {input: 0.042, output: 0.0}
     price_source: "TypeSafe models page (input only, output free), checked 2026-10-17"
     est_output_tokens: 0
-    concurrency: 1
+    concurrency: 4

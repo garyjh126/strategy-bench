@@ -51,7 +51,9 @@ def main() -> int:
     who.add_argument("--model", help="real subject: a name from models.yaml")
     ap.add_argument("--models-file", default="models.yaml")
     ap.add_argument("--client", choices=["text", "distribution"], default="text")
-    ap.add_argument("--samples", type=int, default=50, help="samples per infostate (text clients)")
+    ap.add_argument(
+        "--samples", type=int, default=50, help="samples (text) or calls averaged (real distribution model)"
+    )
     ap.add_argument("--retries", type=int, default=2)
     ap.add_argument("--bootstrap", type=int, default=200)
     ap.add_argument("--seed", type=int, default=0)
@@ -85,17 +87,20 @@ def main() -> int:
         args.agent = "uniform"
 
     eq = solve_equilibrium(spec.load_string, 2000, args.eq_cache)
+    # A real distribution model may answer differently each time, so it is asked --samples times
+    # per infostate and averaged; a mock one never changes, so one call is exact.
+    n_calls = args.samples if model_spec is not None and model_spec.is_distribution else 1
 
     if args.dry_run:
-        # A distribution subject is asked once per infostate and its answer is never parsed or retried.
-        one_call = model_spec.is_distribution if model_spec else args.client == "distribution"
-        samples, retries = (1, 0) if one_call else (args.samples, args.retries)
+        # A distribution subject's replies are never parsed or retried.
+        is_dist = model_spec.is_distribution if model_spec else args.client == "distribution"
+        samples, retries = (n_calls, 0) if is_dist else (args.samples, args.retries)
         n_info, n_forced, lo, hi = dry_run_calls(spec, samples, retries)
         if args.mode == "play":
             lo = hi = 0
         else:
             skipped = f" ({n_forced} forced infostates are not queried)" if n_forced else ""
-            per = "1 call (a probability per action)" if one_call else f"{samples} samples"
+            per = f"{samples} calls (each a probability per action)" if is_dist else f"{samples} samples"
             print(f"{spec.name}: {n_info} infostates x {per}{skipped}")
         if args.mode != "direct":
             game = spec.load()
@@ -160,6 +165,7 @@ def main() -> int:
 
     config = RunConfig(
         n_samples=args.samples,
+        n_calls=n_calls,
         max_retries=args.retries,
         n_boot=args.bootstrap,
         seed=args.seed,

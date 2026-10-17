@@ -7,7 +7,7 @@
 {% macro m1_cell(run) %}
 <span class="big">{{ run.est("exploitability") }}</span>
 {% if run.ci("exploitability") %}<span class="sub">{{ run.ci_html("exploitability") }}{% if run.ci_method != "basic" %} percentile{% endif %}</span>
-{% elif run.rec.subject_kind == "distribution" %}<span class="sub">exact</span>
+{% elif run.rec.is_exact %}<span class="sub">exact</span>
 {% else %}<span class="sub">no interval</span>{% endif %}
 {% endmacro %}
 
@@ -20,7 +20,7 @@
 {% endmacro %}
 
 {% macro n_cell(run) %}
-{% if run.rec.subject_kind == "distribution" %}exact{% else %}{{ run.metrics.num("/n_samples", "int") }}{% endif %}
+{% if run.rec.is_exact %}exact{% else %}{{ run.metrics.num("/n_samples", "int") }}{% endif %}
 {% endmacro %}
 
 {% macro temp_cell(run) %}

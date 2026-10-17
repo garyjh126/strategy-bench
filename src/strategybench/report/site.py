@@ -280,7 +280,7 @@ def _game_views(views: list[RunView]) -> tuple[list[GameView], list[str]]:
             plug_in = f", plug-in {raw}" if ci else ""
             name = v.rec.display_name
             if names.count(name) > 1:  # e.g. the equilibrium read exactly and sampled
-                name += " (exact)" if v.rec.subject_kind == "distribution" else f" (N = {v.rec.n_samples})"
+                name += " (exact)" if v.rec.is_exact else f" (N = {v.rec.n_samples})"
             dot_rows.append(
                 DotRow(
                     name=name,

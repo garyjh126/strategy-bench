@@ -8,13 +8,14 @@ and the call cache.
 Each subject decision is a fresh query with its own sample key (``play:<seed>:<hand>:<n>``),
 independent of the direct-mode samples. If every attempt fails, the subject's action is drawn
 uniformly from the legal actions and flagged as a fallback; fallbacks are counted and
-reported, never hidden.
+reported, never hidden. A distribution subject plays the average of its direct-mode replies.
 """
 
 from __future__ import annotations
 
 import math
 import threading
+from collections import defaultdict
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass, field
 from typing import Any
@@ -23,8 +24,16 @@ import numpy as np
 from open_spiel.python import policy as policy_lib
 
 from strategybench.adapters.base import DistributionClient, Prompt, TextClient
-from strategybench.adapters.cache import CallCache, cache_key
-from strategybench.estimation.direct import CallBudget, CallLog, Reliability, TextQuerier, tally
+from strategybench.adapters.cache import CallCache
+from strategybench.estimation.direct import (
+    CallBudget,
+    CallLog,
+    DistributionQuerier,
+    Reliability,
+    TextQuerier,
+    tally,
+)
+from strategybench.estimation.strategy import mean_probabilities
 from strategybench.games.base import GameSpec
 from strategybench.prompts.base import PromptTemplate
 
@@ -62,37 +71,32 @@ class PlayResult:
 
 
 class _DistributionQuerier:
-    """One cached call per distinct prompt (a distribution client's answer is deterministic)."""
+    """A distribution subject plays the average of its ``n_samples`` replies at each infostate,
+    from the same cached calls direct mode makes, so both modes measure the same strategy."""
 
-    def __init__(self, client: DistributionClient, cache: CallCache | None, budget: CallBudget) -> None:
-        self.client, self.cache, self.budget = client, cache, budget
-        self._memo: dict[str, dict[str, Any]] = {}
+    def __init__(
+        self, client: DistributionClient, cache: CallCache | None, budget: CallBudget, n_samples: int
+    ) -> None:
+        self._querier = DistributionQuerier(client, cache, budget)
+        self.n_samples = n_samples
+        self._memo: dict[str, dict[int, float] | None] = {}
+        self._locks: dict[str, threading.Lock] = defaultdict(threading.Lock)
         self._lock = threading.Lock()
 
-    def probabilities(self, prompt: Prompt, labels: dict[int, str]) -> dict[int, float] | None:
-        c = self.client
-        key = cache_key(c.provider, c.model_id, c.params, prompt.hash, 0, 0)
+    def probabilities(
+        self, prompt: Prompt, labels: dict[int, str], infostate: str, player: int
+    ) -> dict[int, float] | None:
         with self._lock:
-            record = self._memo.get(key) or (self.cache.get(key) if self.cache else None)
-            if record is None:
-                self.budget.charge()
-                reply = c.distribution(prompt)
-                self.budget.record(reply.input_tokens, reply.output_tokens)
-                record = {
-                    "dist": reply.probs,
-                    "input_tokens": reply.input_tokens,
-                    "output_tokens": reply.output_tokens,
-                    "extra": reply.extra,
-                    "latency_s": 0.0,
-                    "timestamp": "",
-                }
-                if self.cache:
-                    self.cache.put(key, record)
-            self._memo[key] = record
-        dist = record["dist"]
-        if set(dist) != set(labels.values()) or abs(sum(dist.values()) - 1.0) > 1e-6:
-            return None
-        return {a: float(dist[lab]) for a, lab in labels.items()}
+            prompt_lock = self._locks[prompt.hash]
+        with prompt_lock:
+            if prompt.hash not in self._memo:
+                replies = [
+                    self._querier.sample(prompt, labels, infostate, player, i)[1]
+                    for i in range(self.n_samples)
+                ]
+                valid = [p for p in replies if p is not None]
+                self._memo[prompt.hash] = mean_probabilities({infostate: valid}).get(infostate)
+            return self._memo[prompt.hash]
 
 
 def expected_subject_decisions(game: Any, subject: policy_lib.Policy, opponent: policy_lib.Policy) -> float:
@@ -136,12 +140,14 @@ def play_match(
     hand_log: CallLog | None = None,
     budget: CallBudget | None = None,
     concurrency: int = 1,
+    n_samples: int = 1,
 ) -> PlayResult:
+    """``n_samples``: calls averaged per infostate for a distribution subject (text: unused)."""
     game = spec.load()
     log, hand_log, budget = log or CallLog(None), hand_log or CallLog(None), budget or CallBudget()
     is_text = isinstance(client, TextClient)
     text_q = TextQuerier(client, spec.vocabulary(), max_retries, cache, budget) if is_text else None
-    dist_q = None if is_text else _DistributionQuerier(client, cache, budget)
+    dist_q = None if is_text else _DistributionQuerier(client, cache, budget, n_samples)
 
     def play_hand(hand: int):
         rng = np.random.default_rng([seed, hand])
@@ -165,7 +171,7 @@ def play_match(
                         )
                         attempts.append((records, action))
                     else:
-                        probs = dist_q.probabilities(prompt, labels)
+                        probs = dist_q.probabilities(prompt, labels, infostate, seat)
                         action = _draw(rng, probs) if probs else None
                     if action is None:
                         action, fallback = int(rng.choice(state.legal_actions())), True

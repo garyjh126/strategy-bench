@@ -24,7 +24,7 @@ import numpy as np
 
 from strategybench.adapters.base import DistributionClient, TextClient
 from strategybench.adapters.cache import CallCache
-from strategybench.analysis.bootstrap import bootstrap_metrics
+from strategybench.analysis.bootstrap import bootstrap_distribution_metrics, bootstrap_metrics
 from strategybench.analysis.metrics import (
     Equilibrium,
     compute_metrics,
@@ -53,7 +53,10 @@ from strategybench.prompts.base import PromptTemplate
 
 @dataclass
 class RunConfig:
+    #: Samples per infostate for a text subject.
     n_samples: int = 50
+    #: Calls averaged per infostate for a distribution subject (1 for one whose answer never changes).
+    n_calls: int = 1
     max_retries: int = 2
     n_boot: int = 200
     seed: int = 0
@@ -105,8 +108,11 @@ def run_direct(
             )
             strat = strategy_from_counts(game, col.infostates, col.counts, config.min_samples)
         else:
-            col = collect_distribution(spec, template, client, cache, log, budget)
-            strat = strategy_from_probabilities(game, col.infostates, col.probabilities)
+            col = collect_distribution(
+                spec, template, client, config.n_calls, cache, log, budget, config.concurrency
+            )
+            calls = {key: len(d) for key, d in col.distributions.items()}
+            strat = strategy_from_probabilities(game, col.infostates, col.probabilities, calls)
     finally:
         log.close()
 
@@ -116,6 +122,11 @@ def run_direct(
         rng = np.random.default_rng(config.seed)
         boot = bootstrap_metrics(
             game, col.infostates, col.counts, eq, config.n_boot, rng, spec.unit_size, config.min_samples
+        )
+    elif col.kind == "distribution" and config.n_calls > 1 and config.n_boot > 0:
+        rng = np.random.default_rng(config.seed)
+        boot = bootstrap_distribution_metrics(
+            game, col.infostates, col.distributions, eq, config.n_boot, rng, spec.unit_size
         )
 
     coverage_k = config.coverage_k if col.kind == "sampled" else 1
@@ -127,7 +138,8 @@ def run_direct(
         "prompt_version": template.version,
         "mode": "direct",
         "subject_kind": col.kind,
-        "n_samples": config.n_samples if col.kind == "sampled" else None,
+        # Samples (text) or calls averaged (distribution) per infostate.
+        "n_samples": config.n_samples if col.kind == "sampled" else config.n_calls,
         "payoff_unit": spec.payoff_unit,
         "metrics": metrics.as_dict(),
         # Bootstrap results are in native units. ci95 holds the basic (reflected) intervals,
@@ -238,6 +250,7 @@ def run_play(
             hand_log,
             budget,
             config.concurrency,
+            config.n_calls,
         )
     finally:
         log.close()

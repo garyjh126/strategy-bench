@@ -7,7 +7,7 @@
   <thead><tr>
     <th scope="col">Situation</th>
     <th scope="col" class="r">Reach</th>
-    <th scope="col" class="r">{% if run.rec.subject_kind == "sampled" %}Valid samples{% else %}Source{% endif %}</th>
+    <th scope="col" class="r">{% if not run.rec.is_exact %}Valid samples{% else %}Source{% endif %}</th>
     <th scope="col" class="wide">Action frequencies</th>
     <th scope="col" class="r" title="Total variation distance between the subject's and the equilibrium's action distributions.">Distance</th>
   </tr></thead>
@@ -16,7 +16,7 @@
   <tr{% if row.row.filled %} class="filled"{% endif %}>
     <th scope="row" title="{{ row.row.situation }}">{{ row.row.short }}{% if row.row.filled %} <span class="chip warn">filled</span>{% endif %}</th>
     <td class="r">{{ run.breakdown.num(row.ptr ~ "/reach", "pct1") }}</td>
-    <td class="r">{% if row.row.forced %}<span class="muted" title="Only one legal action: the subject was not asked">forced</span>{% elif run.rec.subject_kind == "sampled" %}{{ run.breakdown.num(row.ptr ~ "/support", "int") }}{% else %}probabilities{% endif %}</td>
+    <td class="r">{% if row.row.forced %}<span class="muted" title="Only one legal action: the subject was not asked">forced</span>{% elif not run.rec.is_exact %}{{ run.breakdown.num(row.ptr ~ "/support", "int") }}{% else %}probabilities{% endif %}</td>
     <td class="wide">{{ row.bars }}</td>
     <td class="r">{{ run.breakdown.num(row.ptr ~ "/distance", "pct0") }}</td>
   </tr>
@@ -46,7 +46,7 @@
       <div class="label">Exploitability (M1)</div>
       <div class="value">{{ run.est("exploitability") }}</div>
       <div class="sub">{{ run.unit }}s per {{ run.episode }}{% if run.ci("exploitability") %} · 95% interval {{ run.ci_html("exploitability") }}{% endif %}</div>
-      {% if run.corrected %}<div class="sub">bias-corrected; plug-in {{ run.plug_in("exploitability") }}</div>{% elif run.rec.subject_kind == "distribution" %}<div class="sub">exact (probabilities read directly)</div>{% endif %}
+      {% if run.corrected %}<div class="sub">bias-corrected; plug-in {{ run.plug_in("exploitability") }}</div>{% elif run.rec.is_exact %}<div class="sub">exact (probabilities read directly)</div>{% endif %}
     </div>
     {% for seat in [0, 1] %}
     <div class="tile">

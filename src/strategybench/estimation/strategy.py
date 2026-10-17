@@ -55,8 +55,12 @@ def strategy_from_counts(
 
 
 def strategy_from_probabilities(
-    game: pyspiel.Game, infostates: list[InfoState], probabilities: dict[str, dict[int, float]]
+    game: pyspiel.Game,
+    infostates: list[InfoState],
+    probabilities: dict[str, dict[int, float]],
+    calls: dict[str, int] | None = None,
 ) -> EstimatedStrategy:
+    """``calls``: valid calls averaged into each infostate's probabilities (default 1)."""
     policy = policy_lib.TabularPolicy(game)
     support, filled, forced = {}, [], []
     for info in infostates:
@@ -72,7 +76,7 @@ def strategy_from_probabilities(
             support[info.key] = 0
             row[list(info.legal_actions)] = 1.0 / len(info.legal_actions)
         else:
-            support[info.key] = 1
+            support[info.key] = (calls or {}).get(info.key, 1)
             for action, p in probs.items():
                 row[action] = p
     return EstimatedStrategy(policy, support, filled, forced)
@@ -127,3 +131,23 @@ def resample_counts(counts: dict[str, dict[int, int]], rng: np.random.Generator)
         draws = rng.multinomial(n, np.array([c[a] for a in actions]) / n)
         out[key] = {a: int(d) for a, d in zip(actions, draws, strict=True) if d}
     return out
+
+
+def mean_probabilities(samples: dict[str, list[dict[int, float]]]) -> dict[str, dict[int, float]]:
+    """Average each infostate's returned distributions (infostates with none are left out)."""
+    return {
+        key: {a: float(np.mean([d[a] for d in dists])) for a in dists[0]}
+        for key, dists in samples.items()
+        if dists
+    }
+
+
+def resample_distributions(
+    samples: dict[str, list[dict[int, float]]], rng: np.random.Generator
+) -> dict[str, list[dict[int, float]]]:
+    """One bootstrap draw: resample each infostate's returned distributions with replacement."""
+    return {
+        key: [dists[i] for i in rng.integers(len(dists), size=len(dists))]
+        for key, dists in samples.items()
+        if dists
+    }
