@@ -7,10 +7,20 @@ each information state, and a classical best response (via [OpenSpiel](https://g
 is computed against it. The headline output is an exploitability score per model per game, with bootstrap
 confidence intervals.
 
-> **Status:** Phase 4. Kuhn poker, Leduc poker and Liar's Dice run end to end (`direct` and `play`
-> modes), clients for Claude, Gemini and DeepSeek are in place, and a static site (leaderboard,
-> run pages, match replays, methodology) is built from the results. No LLM results are published
-> yet; the site currently shows scripted reference subjects.
+> **Status:** Kuhn poker, Leduc poker and Liar's Dice run end to end (`direct` and `play`
+> modes), with clients for Claude, Gemini, DeepSeek and TypeSafe's Jev. The first real-model
+> results are published: Claude Haiku 4.5 on Kuhn, and Jev on Kuhn and Leduc.
+
+## Results
+
+The leaderboard, run pages, match replays and methodology are at
+**https://garyjh126.github.io/strategy-bench/**. When the site is built, every number on it is
+checked against the result file it comes from.
+
+`results/` holds the published real-model runs with their raw call logs (`calls.jsonl`: every
+prompt and reply, with token counts and timestamps), so the numbers can be recomputed. The
+scripted reference subjects on the leaderboard are not committed because their logs are large;
+`scripts/run_references.py` regenerates them for free.
 
 ## Setup
 
@@ -86,6 +96,8 @@ uv run python scripts/run_references.py   # scripted reference subjects for ever
 uv run python scripts/build_site.py       # writes site/; open site/index.html in a browser
 ```
 
+To reproduce the published site, copy the run directories from `results/` into `runs/` first.
+
 The build writes `breakdown.json` (where a best responder gains) and `replay.json` (hands for the
 replay view) into each run directory, renders the pages, and then checks that every number on
 every page matches the result file it names. It fails if any number does not.
@@ -114,6 +126,7 @@ scripts/       entry-point scripts
 tests/         pytest suite
 docs/          methodology and design notes
 runs/          generated run logs and results (not committed)
+results/       published real-model runs, raw call logs included
 apps/gui/      local web app: play the games against bots, browse a run's strategy (calls no model)
 research/      exploratory work outside the benchmark (multiway/: three-player Kuhn and Leduc)
 ```
