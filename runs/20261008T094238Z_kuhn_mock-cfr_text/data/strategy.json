@@ -1,0 +1,182 @@
+[
+  {
+    "infostate": "0",
+    "player": 0,
+    "situation": "You are Player 1 (you act first).\nYour card: Jack.\nActions so far: none.",
+    "support": 200,
+    "filled": false,
+    "estimated": {
+      "CHECK": 0.77,
+      "BET": 0.23
+    },
+    "equilibrium": {
+      "CHECK": 0.7772668085709556,
+      "BET": 0.22273319142904435
+    }
+  },
+  {
+    "infostate": "0pb",
+    "player": 0,
+    "situation": "You are Player 1 (you act first).\nYour card: Jack.\nActions so far: Player 1 checked, Player 2 bet.",
+    "support": 200,
+    "filled": false,
+    "estimated": {
+      "FOLD": 1.0,
+      "CALL": 0.0
+    },
+    "equilibrium": {
+      "FOLD": 0.9999998392604318,
+      "CALL": 1.6073956826239253e-07
+    }
+  },
+  {
+    "infostate": "1",
+    "player": 0,
+    "situation": "You are Player 1 (you act first).\nYour card: Queen.\nActions so far: none.",
+    "support": 200,
+    "filled": false,
+    "estimated": {
+      "CHECK": 1.0,
+      "BET": 0.0
+    },
+    "equilibrium": {
+      "CHECK": 0.9999943810133937,
+      "BET": 5.618986606298832e-06
+    }
+  },
+  {
+    "infostate": "1pb",
+    "player": 0,
+    "situation": "You are Player 1 (you act first).\nYour card: Queen.\nActions so far: Player 1 checked, Player 2 bet.",
+    "support": 200,
+    "filled": false,
+    "estimated": {
+      "FOLD": 0.45,
+      "CALL": 0.55
+    },
+    "equilibrium": {
+      "FOLD": 0.4439027039280385,
+      "CALL": 0.5560972960719616
+    }
+  },
+  {
+    "infostate": "2",
+    "player": 0,
+    "situation": "You are Player 1 (you act first).\nYour card: King.\nActions so far: none.",
+    "support": 200,
+    "filled": false,
+    "estimated": {
+      "CHECK": 0.35,
+      "BET": 0.65
+    },
+    "equilibrium": {
+      "CHECK": 0.33188780758547143,
+      "BET": 0.6681121924145286
+    }
+  },
+  {
+    "infostate": "2pb",
+    "player": 0,
+    "situation": "You are Player 1 (you act first).\nYour card: King.\nActions so far: Player 1 checked, Player 2 bet.",
+    "support": 200,
+    "filled": false,
+    "estimated": {
+      "FOLD": 0.0,
+      "CALL": 1.0
+    },
+    "equilibrium": {
+      "FOLD": 3.7644507685690654e-07,
+      "CALL": 0.9999996235549231
+    }
+  },
+  {
+    "infostate": "0b",
+    "player": 1,
+    "situation": "You are Player 2 (you act second).\nYour card: Jack.\nActions so far: Player 1 bet.",
+    "support": 200,
+    "filled": false,
+    "estimated": {
+      "FOLD": 1.0,
+      "CALL": 0.0
+    },
+    "equilibrium": {
+      "FOLD": 0.9999997501249376,
+      "CALL": 2.498750624687656e-07
+    }
+  },
+  {
+    "infostate": "0p",
+    "player": 1,
+    "situation": "You are Player 2 (you act second).\nYour card: Jack.\nActions so far: Player 1 checked.",
+    "support": 200,
+    "filled": false,
+    "estimated": {
+      "CHECK": 0.675,
+      "BET": 0.325
+    },
+    "equilibrium": {
+      "CHECK": 0.6665073136784122,
+      "BET": 0.33349268632158774
+    }
+  },
+  {
+    "infostate": "1b",
+    "player": 1,
+    "situation": "You are Player 2 (you act second).\nYour card: Queen.\nActions so far: Player 1 bet.",
+    "support": 200,
+    "filled": false,
+    "estimated": {
+      "FOLD": 0.64,
+      "CALL": 0.36
+    },
+    "equilibrium": {
+      "FOLD": 0.6664240081257605,
+      "CALL": 0.33357599187423953
+    }
+  },
+  {
+    "infostate": "1p",
+    "player": 1,
+    "situation": "You are Player 2 (you act second).\nYour card: Queen.\nActions so far: Player 1 checked.",
+    "support": 200,
+    "filled": false,
+    "estimated": {
+      "CHECK": 1.0,
+      "BET": 0.0
+    },
+    "equilibrium": {
+      "CHECK": 0.9999975012493754,
+      "BET": 2.4987506246876562e-06
+    }
+  },
+  {
+    "infostate": "2b",
+    "player": 1,
+    "situation": "You are Player 2 (you act second).\nYour card: King.\nActions so far: Player 1 bet.",
+    "support": 200,
+    "filled": false,
+    "estimated": {
+      "FOLD": 0.0,
+      "CALL": 1.0
+    },
+    "equilibrium": {
+      "FOLD": 2.498750624687656e-07,
+      "CALL": 0.9999997501249376
+    }
+  },
+  {
+    "infostate": "2p",
+    "player": 1,
+    "situation": "You are Player 2 (you act second).\nYour card: King.\nActions so far: Player 1 checked.",
+    "support": 200,
+    "filled": false,
+    "estimated": {
+      "CHECK": 0.0,
+      "BET": 1.0
+    },
+    "equilibrium": {
+      "CHECK": 7.496251874062968e-07,
+      "BET": 0.9999992503748126
+    }
+  }
+]

@@ -1,0 +1,4340 @@
+{
+ "version": 4,
+ "derived_from": {
+  "strategy.json": "9b724125c7c94f35e9d82904b8ec18a2a3510690ac872830e4b7157ce3f0f380",
+  "metrics.json": "080e2803aaaa110161abdb11953c792199df9f39dbe5695626fe67a6d6b39e03",
+  "manifest.json": "14c828edd49048f916c78007c56270ca73a92349a5d38b9a7ba24a23e0fe9080",
+  "breakdown.json": "0c22121e4d718ddbdaed699cfc5caf7233bc1b13c4fc7a254257dbcbfa66ae5e",
+  "calls.jsonl": "d2d6fe99ec1f41f9247d62377624bc49993e904118fc22c788cffa68a193e347"
+ },
+ "params": {
+  "hands": 100,
+  "key_situations": 3
+ },
+ "game": "kuhn",
+ "payoff_unit": "ante",
+ "episode": "hand",
+ "subject_kind": "sampled",
+ "source": "simulated",
+ "opponent": "equilibrium",
+ "hands_total": 100,
+ "infostates": {
+  "0": {
+   "player": 0,
+   "short": "Jack \u00b7 first to act",
+   "situation": "You are Player 1 (you act first).\nYour card: Jack.\nActions so far: none.",
+   "labels": [
+    "CHECK",
+    "BET"
+   ],
+   "estimated": {
+    "CHECK": 0.0,
+    "BET": 1.0
+   },
+   "equilibrium": {
+    "CHECK": 0.7772668085709556,
+    "BET": 0.22273319142904435
+   },
+   "support": 200,
+   "filled": false,
+   "forced": false,
+   "text": {
+    "estimated": {
+     "CHECK": "0%",
+     "BET": "100%"
+    },
+    "equilibrium": {
+     "CHECK": "78%",
+     "BET": "22%"
+    }
+   },
+   "subject_note": "The subject plays CHECK 0% of the time here (from 200 valid samples); the equilibrium plays it 78%.",
+   "replies": {
+    "attempts": 200,
+    "failures": 0,
+    "examples": []
+   },
+   "responder": {
+    "reach": 0.3333333333333333,
+    "best_response": "CHECK",
+    "values": {
+     "CHECK": -1.0,
+     "BET": -2.0
+    },
+    "eq_mix_value": -1.2227331914290445,
+    "edge": 0.22273319142904446,
+    "contribution": 0.07424439714301481,
+    "share": 0.19091412029836397,
+    "text": {
+     "values": {
+      "CHECK": "\u22121.000",
+      "BET": "\u22122.000"
+     },
+     "eq_mix_value": "\u22121.223",
+     "reach": "33.3%",
+     "contribution": "0.074",
+     "share": "19.1%"
+    }
+   },
+   "responder_note": "A best responder plays CHECK here, earning \u22121.000 ante per visit against \u22121.223 for the equilibrium mix. The situation arises in 33.3% of hands with the subject as Player 2, adding 0.074 ante per hand (19.1% of the best responder's gain)."
+  },
+  "1b": {
+   "player": 1,
+   "short": "Queen \u00b7 Player 1 bet",
+   "situation": "You are Player 2 (you act second).\nYour card: Queen.\nActions so far: Player 1 bet.",
+   "labels": [
+    "FOLD",
+    "CALL"
+   ],
+   "estimated": {
+    "FOLD": 0.0,
+    "CALL": 1.0
+   },
+   "equilibrium": {
+    "FOLD": 0.6664240081257605,
+    "CALL": 0.33357599187423953
+   },
+   "support": 200,
+   "filled": false,
+   "forced": false,
+   "text": {
+    "estimated": {
+     "FOLD": "0%",
+     "CALL": "100%"
+    },
+    "equilibrium": {
+     "FOLD": "67%",
+     "CALL": "33%"
+    }
+   },
+   "subject_note": "The subject plays FOLD 0% of the time here (from 200 valid samples); the equilibrium plays it 67%.",
+   "replies": {
+    "attempts": 200,
+    "failures": 0,
+    "examples": []
+   },
+   "responder": {
+    "reach": 0.3333333333333333,
+    "best_response": "CALL",
+    "values": {
+     "FOLD": -1.0,
+     "CALL": 0.0
+    },
+    "eq_mix_value": -0.6664240081257605,
+    "edge": 0.6664240081257605,
+    "contribution": 0.22214133604192016,
+    "share": 0.799709066514957,
+    "text": {
+     "values": {
+      "FOLD": "\u22121.000",
+      "CALL": "0.000"
+     },
+     "eq_mix_value": "\u22120.666",
+     "reach": "33.3%",
+     "contribution": "0.222",
+     "share": "80.0%"
+    }
+   },
+   "responder_note": "A best responder plays CALL here, earning 0.000 ante per visit against \u22120.666 for the equilibrium mix. The situation arises in 33.3% of hands with the subject as Player 1, adding 0.222 ante per hand (80.0% of the best responder's gain)."
+  },
+  "1": {
+   "player": 0,
+   "short": "Queen \u00b7 first to act",
+   "situation": "You are Player 1 (you act first).\nYour card: Queen.\nActions so far: none.",
+   "labels": [
+    "CHECK",
+    "BET"
+   ],
+   "estimated": {
+    "CHECK": 0.0,
+    "BET": 1.0
+   },
+   "equilibrium": {
+    "CHECK": 0.9999943810133937,
+    "BET": 5.618986606298832e-06
+   },
+   "support": 200,
+   "filled": false,
+   "forced": false,
+   "text": {
+    "estimated": {
+     "CHECK": "0%",
+     "BET": "100%"
+    },
+    "equilibrium": {
+     "CHECK": "100%",
+     "BET": "0%"
+    }
+   },
+   "subject_note": "The subject plays CHECK 0% of the time here (from 200 valid samples); the equilibrium plays it 100%.",
+   "replies": {
+    "attempts": 200,
+    "failures": 0,
+    "examples": []
+   },
+   "responder": {
+    "reach": 0.3333333333333333,
+    "best_response": "CHECK",
+    "values": {
+     "CHECK": 0.0,
+     "BET": 0.0
+    },
+    "eq_mix_value": 0.0,
+    "edge": 0.0,
+    "contribution": 0.0,
+    "share": 0.0,
+    "text": {
+     "values": {
+      "CHECK": "0.000",
+      "BET": "0.000"
+     },
+     "eq_mix_value": "0.000",
+     "reach": "33.3%",
+     "contribution": "0.000",
+     "share": "0.0%"
+    }
+   },
+   "responder_note": "The equilibrium mix is already a best response here, so adapting gains nothing."
+  },
+  "0p": {
+   "player": 1,
+   "short": "Jack \u00b7 Player 1 checked",
+   "situation": "You are Player 2 (you act second).\nYour card: Jack.\nActions so far: Player 1 checked.",
+   "labels": [
+    "CHECK",
+    "BET"
+   ],
+   "estimated": {
+    "CHECK": 0.0,
+    "BET": 1.0
+   },
+   "equilibrium": {
+    "CHECK": 0.6665073136784122,
+    "BET": 0.33349268632158774
+   },
+   "support": 200,
+   "filled": false,
+   "forced": false,
+   "text": {
+    "estimated": {
+     "CHECK": "0%",
+     "BET": "100%"
+    },
+    "equilibrium": {
+     "CHECK": "67%",
+     "BET": "33%"
+    }
+   },
+   "subject_note": "The subject plays BET 100% of the time here (from 200 valid samples); the equilibrium plays it 33%.",
+   "replies": {
+    "attempts": 200,
+    "failures": 0,
+    "examples": []
+   },
+   "responder": {
+    "reach": 0.0,
+    "best_response": "CHECK",
+    "values": {
+     "CHECK": null,
+     "BET": null
+    },
+    "eq_mix_value": null,
+    "edge": null,
+    "contribution": 0.0,
+    "share": 0.0,
+    "text": {
+     "values": {
+      "CHECK": "\u2014",
+      "BET": "\u2014"
+     },
+     "eq_mix_value": "\u2014",
+     "reach": "0.0%",
+     "contribution": "0.000",
+     "share": "0.0%"
+    }
+   },
+   "responder_note": "With the opponent at equilibrium this situation never arises against this subject, so it adds nothing to the best responder's gain."
+  },
+  "1pb": {
+   "player": 0,
+   "short": "Queen \u00b7 Player 1 checked, Player 2 bet",
+   "situation": "You are Player 1 (you act first).\nYour card: Queen.\nActions so far: Player 1 checked, Player 2 bet.",
+   "labels": [
+    "FOLD",
+    "CALL"
+   ],
+   "estimated": {
+    "FOLD": 0.0,
+    "CALL": 1.0
+   },
+   "equilibrium": {
+    "FOLD": 0.4439027039280385,
+    "CALL": 0.5560972960719616
+   },
+   "support": 200,
+   "filled": false,
+   "forced": false,
+   "text": {
+    "estimated": {
+     "FOLD": "0%",
+     "CALL": "100%"
+    },
+    "equilibrium": {
+     "FOLD": "44%",
+     "CALL": "56%"
+    }
+   },
+   "subject_note": "The subject plays FOLD 0% of the time here (from 200 valid samples); the equilibrium plays it 44%.",
+   "replies": {
+    "attempts": 200,
+    "failures": 0,
+    "examples": []
+   },
+   "responder": {
+    "reach": 0.33333146033779787,
+    "best_response": "CALL",
+    "values": {
+     "FOLD": -1.0,
+     "CALL": 0.0
+    },
+    "eq_mix_value": -0.4439027039280385,
+    "edge": 0.4439027039280385,
+    "contribution": 0.1479667365482302,
+    "share": 0.3804858067216849,
+    "text": {
+     "values": {
+      "FOLD": "\u22121.000",
+      "CALL": "0.000"
+     },
+     "eq_mix_value": "\u22120.444",
+     "reach": "33.3%",
+     "contribution": "0.148",
+     "share": "38.0%"
+    }
+   },
+   "responder_note": "A best responder plays CALL here, earning 0.000 ante per visit against \u22120.444 for the equilibrium mix. The situation arises in 33.3% of hands with the subject as Player 2, adding 0.148 ante per hand (38.0% of the best responder's gain)."
+  },
+  "1p": {
+   "player": 1,
+   "short": "Queen \u00b7 Player 1 checked",
+   "situation": "You are Player 2 (you act second).\nYour card: Queen.\nActions so far: Player 1 checked.",
+   "labels": [
+    "CHECK",
+    "BET"
+   ],
+   "estimated": {
+    "CHECK": 0.0,
+    "BET": 1.0
+   },
+   "equilibrium": {
+    "CHECK": 0.9999975012493754,
+    "BET": 2.4987506246876562e-06
+   },
+   "support": 200,
+   "filled": false,
+   "forced": false,
+   "text": {
+    "estimated": {
+     "CHECK": "0%",
+     "BET": "100%"
+    },
+    "equilibrium": {
+     "CHECK": "100%",
+     "BET": "0%"
+    }
+   },
+   "subject_note": "The subject plays CHECK 0% of the time here (from 200 valid samples); the equilibrium plays it 100%.",
+   "replies": {
+    "attempts": 200,
+    "failures": 0,
+    "examples": []
+   },
+   "responder": {
+    "reach": 0.0,
+    "best_response": "CHECK",
+    "values": {
+     "CHECK": null,
+     "BET": null
+    },
+    "eq_mix_value": null,
+    "edge": null,
+    "contribution": 0.0,
+    "share": 0.0,
+    "text": {
+     "values": {
+      "CHECK": "\u2014",
+      "BET": "\u2014"
+     },
+     "eq_mix_value": "\u2014",
+     "reach": "0.0%",
+     "contribution": "0.000",
+     "share": "0.0%"
+    }
+   },
+   "responder_note": "With the opponent at equilibrium this situation never arises against this subject, so it adds nothing to the best responder's gain."
+  },
+  "0pb": {
+   "player": 0,
+   "short": "Jack \u00b7 Player 1 checked, Player 2 bet",
+   "situation": "You are Player 1 (you act first).\nYour card: Jack.\nActions so far: Player 1 checked, Player 2 bet.",
+   "labels": [
+    "FOLD",
+    "CALL"
+   ],
+   "estimated": {
+    "FOLD": 0.0,
+    "CALL": 1.0
+   },
+   "equilibrium": {
+    "FOLD": 0.9999998392604318,
+    "CALL": 1.6073956826239253e-07
+   },
+   "support": 200,
+   "filled": false,
+   "forced": false,
+   "text": {
+    "estimated": {
+     "FOLD": "0%",
+     "CALL": "100%"
+    },
+    "equilibrium": {
+     "FOLD": "100%",
+     "CALL": "0%"
+    }
+   },
+   "subject_note": "The subject plays FOLD 0% of the time here (from 200 valid samples); the equilibrium plays it 100%.",
+   "replies": {
+    "attempts": 200,
+    "failures": 0,
+    "examples": []
+   },
+   "responder": {
+    "reach": 0.25908893619031853,
+    "best_response": "FOLD",
+    "values": {
+     "FOLD": -1.0,
+     "CALL": -2.0
+    },
+    "eq_mix_value": -1.0000001607395683,
+    "edge": 1.6073956832229896e-07,
+    "contribution": 4.164584376031546e-08,
+    "share": 1.0708928796698803e-07,
+    "text": {
+     "values": {
+      "FOLD": "\u22121.000",
+      "CALL": "\u22122.000"
+     },
+     "eq_mix_value": "\u22121.000",
+     "reach": "25.9%",
+     "contribution": "0.000",
+     "share": "0.0%"
+    }
+   },
+   "responder_note": "A best responder plays FOLD here, earning \u22121.000 ante per visit against \u22121.000 for the equilibrium mix. The situation arises in 25.9% of hands with the subject as Player 2, so it adds less than 0.001 ante per hand."
+  },
+  "0b": {
+   "player": 1,
+   "short": "Jack \u00b7 Player 1 bet",
+   "situation": "You are Player 2 (you act second).\nYour card: Jack.\nActions so far: Player 1 bet.",
+   "labels": [
+    "FOLD",
+    "CALL"
+   ],
+   "estimated": {
+    "FOLD": 0.0,
+    "CALL": 1.0
+   },
+   "equilibrium": {
+    "FOLD": 0.9999997501249376,
+    "CALL": 2.498750624687656e-07
+   },
+   "support": 200,
+   "filled": false,
+   "forced": false,
+   "text": {
+    "estimated": {
+     "FOLD": "0%",
+     "CALL": "100%"
+    },
+    "equilibrium": {
+     "FOLD": "100%",
+     "CALL": "0%"
+    }
+   },
+   "subject_note": "The subject plays FOLD 0% of the time here (from 200 valid samples); the equilibrium plays it 100%.",
+   "replies": {
+    "attempts": 200,
+    "failures": 0,
+    "examples": []
+   },
+   "responder": {
+    "reach": 0.3333333333333333,
+    "best_response": "FOLD",
+    "values": {
+     "FOLD": -1.0,
+     "CALL": -2.0
+    },
+    "eq_mix_value": -1.0000002498750624,
+    "edge": 2.4987506241913593e-07,
+    "contribution": 8.32916874730453e-08,
+    "share": 2.998501711764029e-07,
+    "text": {
+     "values": {
+      "FOLD": "\u22121.000",
+      "CALL": "\u22122.000"
+     },
+     "eq_mix_value": "\u22121.000",
+     "reach": "33.3%",
+     "contribution": "0.000",
+     "share": "0.0%"
+    }
+   },
+   "responder_note": "A best responder plays FOLD here, earning \u22121.000 ante per visit against \u22121.000 for the equilibrium mix. The situation arises in 33.3% of hands with the subject as Player 1, so it adds less than 0.001 ante per hand."
+  },
+  "2": {
+   "player": 0,
+   "short": "King \u00b7 first to act",
+   "situation": "You are Player 1 (you act first).\nYour card: King.\nActions so far: none.",
+   "labels": [
+    "CHECK",
+    "BET"
+   ],
+   "estimated": {
+    "CHECK": 0.0,
+    "BET": 1.0
+   },
+   "equilibrium": {
+    "CHECK": 0.33188780758547143,
+    "BET": 0.6681121924145286
+   },
+   "support": 200,
+   "filled": false,
+   "forced": false,
+   "text": {
+    "estimated": {
+     "CHECK": "0%",
+     "BET": "100%"
+    },
+    "equilibrium": {
+     "CHECK": "33%",
+     "BET": "67%"
+    }
+   },
+   "subject_note": "The subject plays CHECK 0% of the time here (from 200 valid samples); the equilibrium plays it 33%.",
+   "replies": {
+    "attempts": 200,
+    "failures": 0,
+    "examples": []
+   },
+   "responder": {
+    "reach": 0.3333333333333333,
+    "best_response": "CHECK",
+    "values": {
+     "CHECK": 2.0,
+     "BET": 2.0
+    },
+    "eq_mix_value": 2.0,
+    "edge": 0.0,
+    "contribution": 0.0,
+    "share": 0.0,
+    "text": {
+     "values": {
+      "CHECK": "+2.000",
+      "BET": "+2.000"
+     },
+     "eq_mix_value": "+2.000",
+     "reach": "33.3%",
+     "contribution": "0.000",
+     "share": "0.0%"
+    }
+   },
+   "responder_note": "The equilibrium mix is already a best response here, so adapting gains nothing."
+  },
+  "2pb": {
+   "player": 0,
+   "short": "King \u00b7 Player 1 checked, Player 2 bet",
+   "situation": "You are Player 1 (you act first).\nYour card: King.\nActions so far: Player 1 checked, Player 2 bet.",
+   "labels": [
+    "FOLD",
+    "CALL"
+   ],
+   "estimated": {
+    "FOLD": 0.0,
+    "CALL": 1.0
+   },
+   "equilibrium": {
+    "FOLD": 3.7644507685690654e-07,
+    "CALL": 0.9999996235549231
+   },
+   "support": 200,
+   "filled": false,
+   "forced": false,
+   "text": {
+    "estimated": {
+     "FOLD": "0%",
+     "CALL": "100%"
+    },
+    "equilibrium": {
+     "FOLD": "0%",
+     "CALL": "100%"
+    }
+   },
+   "subject_note": "Close to equilibrium: the largest gap is CALL at 100% against 100% for the equilibrium (from 200 valid samples).",
+   "replies": {
+    "attempts": 200,
+    "failures": 0,
+    "examples": []
+   },
+   "responder": {
+    "reach": 0.11062926919515714,
+    "best_response": "CALL",
+    "values": {
+     "FOLD": -1.0,
+     "CALL": 2.0
+    },
+    "eq_mix_value": 1.9999988706647693,
+    "edge": 1.1293352306651627e-06,
+    "contribution": 1.2493753124483116e-07,
+    "share": 3.212678638080964e-07,
+    "text": {
+     "values": {
+      "FOLD": "\u22121.000",
+      "CALL": "+2.000"
+     },
+     "eq_mix_value": "+2.000",
+     "reach": "11.1%",
+     "contribution": "0.000",
+     "share": "0.0%"
+    }
+   },
+   "responder_note": "A best responder plays CALL here, earning +2.000 ante per visit against +2.000 for the equilibrium mix. The situation arises in 11.1% of hands with the subject as Player 2, so it adds less than 0.001 ante per hand."
+  },
+  "2p": {
+   "player": 1,
+   "short": "King \u00b7 Player 1 checked",
+   "situation": "You are Player 2 (you act second).\nYour card: King.\nActions so far: Player 1 checked.",
+   "labels": [
+    "CHECK",
+    "BET"
+   ],
+   "estimated": {
+    "CHECK": 0.0,
+    "BET": 1.0
+   },
+   "equilibrium": {
+    "CHECK": 7.496251874062968e-07,
+    "BET": 0.9999992503748126
+   },
+   "support": 200,
+   "filled": false,
+   "forced": false,
+   "text": {
+    "estimated": {
+     "CHECK": "0%",
+     "BET": "100%"
+    },
+    "equilibrium": {
+     "CHECK": "0%",
+     "BET": "100%"
+    }
+   },
+   "subject_note": "Close to equilibrium: the largest gap is CHECK at 0% against 0% for the equilibrium (from 200 valid samples).",
+   "replies": {
+    "attempts": 200,
+    "failures": 0,
+    "examples": []
+   },
+   "responder": {
+    "reach": 0.0,
+    "best_response": "CHECK",
+    "values": {
+     "CHECK": null,
+     "BET": null
+    },
+    "eq_mix_value": null,
+    "edge": null,
+    "contribution": 0.0,
+    "share": 0.0,
+    "text": {
+     "values": {
+      "CHECK": "\u2014",
+      "BET": "\u2014"
+     },
+     "eq_mix_value": "\u2014",
+     "reach": "0.0%",
+     "contribution": "0.000",
+     "share": "0.0%"
+    }
+   },
+   "responder_note": "With the opponent at equilibrium this situation never arises against this subject, so it adds nothing to the best responder's gain."
+  },
+  "2b": {
+   "player": 1,
+   "short": "King \u00b7 Player 1 bet",
+   "situation": "You are Player 2 (you act second).\nYour card: King.\nActions so far: Player 1 bet.",
+   "labels": [
+    "FOLD",
+    "CALL"
+   ],
+   "estimated": {
+    "FOLD": 0.0,
+    "CALL": 1.0
+   },
+   "equilibrium": {
+    "FOLD": 2.498750624687656e-07,
+    "CALL": 0.9999997501249376
+   },
+   "support": 200,
+   "filled": false,
+   "forced": false,
+   "text": {
+    "estimated": {
+     "FOLD": "0%",
+     "CALL": "100%"
+    },
+    "equilibrium": {
+     "FOLD": "0%",
+     "CALL": "100%"
+    }
+   },
+   "subject_note": "Close to equilibrium: the largest gap is FOLD at 0% against 0% for the equilibrium (from 200 valid samples).",
+   "replies": {
+    "attempts": 200,
+    "failures": 0,
+    "examples": []
+   },
+   "responder": {
+    "reach": 0.3333333333333333,
+    "best_response": "CALL",
+    "values": {
+     "FOLD": -1.0,
+     "CALL": 2.0
+    },
+    "eq_mix_value": 1.9999992503748127,
+    "edge": 7.496251872574078e-07,
+    "contribution": 2.4987506241913593e-07,
+    "share": 8.995505135292087e-07,
+    "text": {
+     "values": {
+      "FOLD": "\u22121.000",
+      "CALL": "+2.000"
+     },
+     "eq_mix_value": "+2.000",
+     "reach": "33.3%",
+     "contribution": "0.000",
+     "share": "0.0%"
+    }
+   },
+   "responder_note": "A best responder plays CALL here, earning +2.000 ante per visit against +2.000 for the equilibrium mix. The situation arises in 33.3% of hands with the subject as Player 1, so it adds less than 0.001 ante per hand."
+  }
+ },
+ "hands": [
+  {
+   "subject_seat": 0,
+   "subject_payoff": -2.0,
+   "payoff_text": "\u22122.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Jack"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Queen"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "0",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "1b",
+     "action": "CALL"
+    }
+   ],
+   "id": "key-p1-1",
+   "group": "key",
+   "title": "Biggest gain 1 against the subject as Player 1",
+   "focus": "1b"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": -2.0,
+   "payoff_text": "\u22122.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Queen"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Jack"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1",
+     "action": "CHECK"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "0p",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1pb",
+     "action": "CALL"
+    }
+   ],
+   "id": "key-p2-1",
+   "group": "key",
+   "title": "Biggest gain 1 against the subject as Player 2",
+   "focus": "1pb"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Jack"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Queen"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "0",
+     "action": "CHECK"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "1p",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "0pb",
+     "action": "FOLD"
+    }
+   ],
+   "id": "key-p2-2",
+   "group": "key",
+   "title": "Biggest gain 2 against the subject as Player 2",
+   "focus": "0"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Queen"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Jack"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "1",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "0b",
+     "action": "FOLD"
+    }
+   ],
+   "id": "sim-1",
+   "group": "simulated",
+   "title": "Simulated hand 1"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": -2.0,
+   "payoff_text": "\u22122.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the King"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Queen"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "2",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "1b",
+     "action": "CALL"
+    }
+   ],
+   "id": "sim-2",
+   "group": "simulated",
+   "title": "Simulated hand 2"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Jack"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Queen"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "0",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "1b",
+     "action": "FOLD"
+    }
+   ],
+   "id": "sim-3",
+   "group": "simulated",
+   "title": "Simulated hand 3"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": -2.0,
+   "payoff_text": "\u22122.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the King"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Queen"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "2",
+     "action": "CHECK"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "1p",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "2pb",
+     "action": "CALL"
+    }
+   ],
+   "id": "sim-4",
+   "group": "simulated",
+   "title": "Simulated hand 4"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the King"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Jack"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "2",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "0b",
+     "action": "FOLD"
+    }
+   ],
+   "id": "sim-5",
+   "group": "simulated",
+   "title": "Simulated hand 5"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Queen"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the King"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1",
+     "action": "CHECK"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "2p",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1pb",
+     "action": "FOLD"
+    }
+   ],
+   "id": "sim-6",
+   "group": "simulated",
+   "title": "Simulated hand 6"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Queen"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Jack"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "1",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "0b",
+     "action": "FOLD"
+    }
+   ],
+   "id": "sim-7",
+   "group": "simulated",
+   "title": "Simulated hand 7"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": 2.0,
+   "payoff_text": "+2.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Jack"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the King"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "0",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "2b",
+     "action": "CALL"
+    }
+   ],
+   "id": "sim-8",
+   "group": "simulated",
+   "title": "Simulated hand 8"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the King"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Queen"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "2",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "1b",
+     "action": "FOLD"
+    }
+   ],
+   "id": "sim-9",
+   "group": "simulated",
+   "title": "Simulated hand 9"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": 2.0,
+   "payoff_text": "+2.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Queen"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the King"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1",
+     "action": "CHECK"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "2p",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1pb",
+     "action": "CALL"
+    }
+   ],
+   "id": "sim-10",
+   "group": "simulated",
+   "title": "Simulated hand 10"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Queen"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Jack"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "1",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "0b",
+     "action": "FOLD"
+    }
+   ],
+   "id": "sim-11",
+   "group": "simulated",
+   "title": "Simulated hand 11"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": -2.0,
+   "payoff_text": "\u22122.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Queen"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Jack"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1",
+     "action": "CHECK"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "0p",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1pb",
+     "action": "CALL"
+    }
+   ],
+   "id": "sim-12",
+   "group": "simulated",
+   "title": "Simulated hand 12"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": -2.0,
+   "payoff_text": "\u22122.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Queen"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the King"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "1",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "2b",
+     "action": "CALL"
+    }
+   ],
+   "id": "sim-13",
+   "group": "simulated",
+   "title": "Simulated hand 13"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": -2.0,
+   "payoff_text": "\u22122.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Queen"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Jack"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1",
+     "action": "CHECK"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "0p",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1pb",
+     "action": "CALL"
+    }
+   ],
+   "id": "sim-14",
+   "group": "simulated",
+   "title": "Simulated hand 14"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Queen"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Jack"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "1",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "0b",
+     "action": "FOLD"
+    }
+   ],
+   "id": "sim-15",
+   "group": "simulated",
+   "title": "Simulated hand 15"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": -2.0,
+   "payoff_text": "\u22122.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Queen"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Jack"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1",
+     "action": "CHECK"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "0p",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1pb",
+     "action": "CALL"
+    }
+   ],
+   "id": "sim-16",
+   "group": "simulated",
+   "title": "Simulated hand 16"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": 2.0,
+   "payoff_text": "+2.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the King"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Queen"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "2",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "1b",
+     "action": "CALL"
+    }
+   ],
+   "id": "sim-17",
+   "group": "simulated",
+   "title": "Simulated hand 17"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": 2.0,
+   "payoff_text": "+2.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Queen"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the King"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1",
+     "action": "CHECK"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "2p",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1pb",
+     "action": "CALL"
+    }
+   ],
+   "id": "sim-18",
+   "group": "simulated",
+   "title": "Simulated hand 18"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the King"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Jack"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "2",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "0b",
+     "action": "FOLD"
+    }
+   ],
+   "id": "sim-19",
+   "group": "simulated",
+   "title": "Simulated hand 19"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Jack"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the King"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "0",
+     "action": "CHECK"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "2p",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "0pb",
+     "action": "FOLD"
+    }
+   ],
+   "id": "sim-20",
+   "group": "simulated",
+   "title": "Simulated hand 20"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the King"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Jack"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "2",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "0b",
+     "action": "FOLD"
+    }
+   ],
+   "id": "sim-21",
+   "group": "simulated",
+   "title": "Simulated hand 21"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": 2.0,
+   "payoff_text": "+2.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Queen"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the King"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1",
+     "action": "CHECK"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "2p",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1pb",
+     "action": "CALL"
+    }
+   ],
+   "id": "sim-22",
+   "group": "simulated",
+   "title": "Simulated hand 22"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Queen"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Jack"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "1",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "0b",
+     "action": "FOLD"
+    }
+   ],
+   "id": "sim-23",
+   "group": "simulated",
+   "title": "Simulated hand 23"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": -2.0,
+   "payoff_text": "\u22122.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Queen"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Jack"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1",
+     "action": "CHECK"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "0p",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1pb",
+     "action": "CALL"
+    }
+   ],
+   "id": "sim-24",
+   "group": "simulated",
+   "title": "Simulated hand 24"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Queen"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Jack"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "1",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "0b",
+     "action": "FOLD"
+    }
+   ],
+   "id": "sim-25",
+   "group": "simulated",
+   "title": "Simulated hand 25"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Queen"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Jack"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1",
+     "action": "CHECK"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "0p",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1pb",
+     "action": "FOLD"
+    }
+   ],
+   "id": "sim-26",
+   "group": "simulated",
+   "title": "Simulated hand 26"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the King"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Queen"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "2",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "1b",
+     "action": "FOLD"
+    }
+   ],
+   "id": "sim-27",
+   "group": "simulated",
+   "title": "Simulated hand 27"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": -2.0,
+   "payoff_text": "\u22122.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the King"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Queen"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "2",
+     "action": "CHECK"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "1p",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "2pb",
+     "action": "CALL"
+    }
+   ],
+   "id": "sim-28",
+   "group": "simulated",
+   "title": "Simulated hand 28"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": 2.0,
+   "payoff_text": "+2.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the King"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Queen"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "2",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "1b",
+     "action": "CALL"
+    }
+   ],
+   "id": "sim-29",
+   "group": "simulated",
+   "title": "Simulated hand 29"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Jack"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Queen"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "0",
+     "action": "CHECK"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "1p",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "0pb",
+     "action": "FOLD"
+    }
+   ],
+   "id": "sim-30",
+   "group": "simulated",
+   "title": "Simulated hand 30"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": -2.0,
+   "payoff_text": "\u22122.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Jack"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the King"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "0",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "2b",
+     "action": "CALL"
+    }
+   ],
+   "id": "sim-31",
+   "group": "simulated",
+   "title": "Simulated hand 31"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Jack"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Queen"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "0",
+     "action": "CHECK"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "1p",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "0pb",
+     "action": "FOLD"
+    }
+   ],
+   "id": "sim-32",
+   "group": "simulated",
+   "title": "Simulated hand 32"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": -2.0,
+   "payoff_text": "\u22122.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Jack"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the King"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "0",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "2b",
+     "action": "CALL"
+    }
+   ],
+   "id": "sim-33",
+   "group": "simulated",
+   "title": "Simulated hand 33"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": 2.0,
+   "payoff_text": "+2.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Queen"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the King"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1",
+     "action": "CHECK"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "2p",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1pb",
+     "action": "CALL"
+    }
+   ],
+   "id": "sim-34",
+   "group": "simulated",
+   "title": "Simulated hand 34"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Queen"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Jack"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "1",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "0b",
+     "action": "FOLD"
+    }
+   ],
+   "id": "sim-35",
+   "group": "simulated",
+   "title": "Simulated hand 35"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Jack"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the King"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "0",
+     "action": "CHECK"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "2p",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "0pb",
+     "action": "FOLD"
+    }
+   ],
+   "id": "sim-36",
+   "group": "simulated",
+   "title": "Simulated hand 36"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": -2.0,
+   "payoff_text": "\u22122.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Queen"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the King"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "1",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "2b",
+     "action": "CALL"
+    }
+   ],
+   "id": "sim-37",
+   "group": "simulated",
+   "title": "Simulated hand 37"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": -2.0,
+   "payoff_text": "\u22122.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Queen"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Jack"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1",
+     "action": "CHECK"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "0p",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1pb",
+     "action": "CALL"
+    }
+   ],
+   "id": "sim-38",
+   "group": "simulated",
+   "title": "Simulated hand 38"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": -2.0,
+   "payoff_text": "\u22122.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Jack"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Queen"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "0",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "1b",
+     "action": "CALL"
+    }
+   ],
+   "id": "sim-39",
+   "group": "simulated",
+   "title": "Simulated hand 39"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": -2.0,
+   "payoff_text": "\u22122.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the King"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Jack"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "2",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "0b",
+     "action": "CALL"
+    }
+   ],
+   "id": "sim-40",
+   "group": "simulated",
+   "title": "Simulated hand 40"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": -2.0,
+   "payoff_text": "\u22122.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Queen"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the King"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "1",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "2b",
+     "action": "CALL"
+    }
+   ],
+   "id": "sim-41",
+   "group": "simulated",
+   "title": "Simulated hand 41"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Jack"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the King"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "0",
+     "action": "CHECK"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "2p",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "0pb",
+     "action": "FOLD"
+    }
+   ],
+   "id": "sim-42",
+   "group": "simulated",
+   "title": "Simulated hand 42"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the King"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Jack"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "2",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "0b",
+     "action": "FOLD"
+    }
+   ],
+   "id": "sim-43",
+   "group": "simulated",
+   "title": "Simulated hand 43"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Queen"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the King"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1",
+     "action": "CHECK"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "2p",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1pb",
+     "action": "FOLD"
+    }
+   ],
+   "id": "sim-44",
+   "group": "simulated",
+   "title": "Simulated hand 44"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the King"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Queen"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "2",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "1b",
+     "action": "FOLD"
+    }
+   ],
+   "id": "sim-45",
+   "group": "simulated",
+   "title": "Simulated hand 45"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Jack"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Queen"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "0",
+     "action": "CHECK"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "1p",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "0pb",
+     "action": "FOLD"
+    }
+   ],
+   "id": "sim-46",
+   "group": "simulated",
+   "title": "Simulated hand 46"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the King"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Queen"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "2",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "1b",
+     "action": "FOLD"
+    }
+   ],
+   "id": "sim-47",
+   "group": "simulated",
+   "title": "Simulated hand 47"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Queen"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Jack"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1",
+     "action": "CHECK"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "0p",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1pb",
+     "action": "FOLD"
+    }
+   ],
+   "id": "sim-48",
+   "group": "simulated",
+   "title": "Simulated hand 48"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the King"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Jack"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "2",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "0b",
+     "action": "FOLD"
+    }
+   ],
+   "id": "sim-49",
+   "group": "simulated",
+   "title": "Simulated hand 49"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": 2.0,
+   "payoff_text": "+2.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Queen"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the King"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1",
+     "action": "CHECK"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "2p",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1pb",
+     "action": "CALL"
+    }
+   ],
+   "id": "sim-50",
+   "group": "simulated",
+   "title": "Simulated hand 50"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the King"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Queen"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "2",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "1b",
+     "action": "FOLD"
+    }
+   ],
+   "id": "sim-51",
+   "group": "simulated",
+   "title": "Simulated hand 51"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": 2.0,
+   "payoff_text": "+2.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Queen"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the King"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1",
+     "action": "CHECK"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "2p",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1pb",
+     "action": "CALL"
+    }
+   ],
+   "id": "sim-52",
+   "group": "simulated",
+   "title": "Simulated hand 52"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Queen"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Jack"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "1",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "0b",
+     "action": "FOLD"
+    }
+   ],
+   "id": "sim-53",
+   "group": "simulated",
+   "title": "Simulated hand 53"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": 2.0,
+   "payoff_text": "+2.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Jack"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Queen"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "0",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "1b",
+     "action": "CALL"
+    }
+   ],
+   "id": "sim-54",
+   "group": "simulated",
+   "title": "Simulated hand 54"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the King"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Jack"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "2",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "0b",
+     "action": "FOLD"
+    }
+   ],
+   "id": "sim-55",
+   "group": "simulated",
+   "title": "Simulated hand 55"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Queen"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Jack"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1",
+     "action": "CHECK"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "0p",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1pb",
+     "action": "FOLD"
+    }
+   ],
+   "id": "sim-56",
+   "group": "simulated",
+   "title": "Simulated hand 56"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": -2.0,
+   "payoff_text": "\u22122.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Queen"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the King"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "1",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "2b",
+     "action": "CALL"
+    }
+   ],
+   "id": "sim-57",
+   "group": "simulated",
+   "title": "Simulated hand 57"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": 2.0,
+   "payoff_text": "+2.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Queen"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the King"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1",
+     "action": "CHECK"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "2p",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1pb",
+     "action": "CALL"
+    }
+   ],
+   "id": "sim-58",
+   "group": "simulated",
+   "title": "Simulated hand 58"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": -2.0,
+   "payoff_text": "\u22122.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Queen"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the King"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "1",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "2b",
+     "action": "CALL"
+    }
+   ],
+   "id": "sim-59",
+   "group": "simulated",
+   "title": "Simulated hand 59"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": 2.0,
+   "payoff_text": "+2.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Jack"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the King"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "0",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "2b",
+     "action": "CALL"
+    }
+   ],
+   "id": "sim-60",
+   "group": "simulated",
+   "title": "Simulated hand 60"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the King"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Queen"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "2",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "1b",
+     "action": "FOLD"
+    }
+   ],
+   "id": "sim-61",
+   "group": "simulated",
+   "title": "Simulated hand 61"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": 2.0,
+   "payoff_text": "+2.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Queen"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the King"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1",
+     "action": "CHECK"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "2p",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1pb",
+     "action": "CALL"
+    }
+   ],
+   "id": "sim-62",
+   "group": "simulated",
+   "title": "Simulated hand 62"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the King"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Jack"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "2",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "0b",
+     "action": "FOLD"
+    }
+   ],
+   "id": "sim-63",
+   "group": "simulated",
+   "title": "Simulated hand 63"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": 2.0,
+   "payoff_text": "+2.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Queen"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the King"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1",
+     "action": "CHECK"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "2p",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1pb",
+     "action": "CALL"
+    }
+   ],
+   "id": "sim-64",
+   "group": "simulated",
+   "title": "Simulated hand 64"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the King"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Jack"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "2",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "0b",
+     "action": "FOLD"
+    }
+   ],
+   "id": "sim-65",
+   "group": "simulated",
+   "title": "Simulated hand 65"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Jack"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Queen"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "0",
+     "action": "CHECK"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "1p",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "0pb",
+     "action": "FOLD"
+    }
+   ],
+   "id": "sim-66",
+   "group": "simulated",
+   "title": "Simulated hand 66"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": -2.0,
+   "payoff_text": "\u22122.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Jack"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the King"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "0",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "2b",
+     "action": "CALL"
+    }
+   ],
+   "id": "sim-67",
+   "group": "simulated",
+   "title": "Simulated hand 67"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": 2.0,
+   "payoff_text": "+2.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Queen"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the King"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1",
+     "action": "CHECK"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "2p",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1pb",
+     "action": "CALL"
+    }
+   ],
+   "id": "sim-68",
+   "group": "simulated",
+   "title": "Simulated hand 68"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": -2.0,
+   "payoff_text": "\u22122.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Jack"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the King"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "0",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "2b",
+     "action": "CALL"
+    }
+   ],
+   "id": "sim-69",
+   "group": "simulated",
+   "title": "Simulated hand 69"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": 2.0,
+   "payoff_text": "+2.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Queen"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the King"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1",
+     "action": "CHECK"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "2p",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1pb",
+     "action": "CALL"
+    }
+   ],
+   "id": "sim-70",
+   "group": "simulated",
+   "title": "Simulated hand 70"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the King"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Jack"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "2",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "0b",
+     "action": "FOLD"
+    }
+   ],
+   "id": "sim-71",
+   "group": "simulated",
+   "title": "Simulated hand 71"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": -2.0,
+   "payoff_text": "\u22122.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the King"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Queen"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "2",
+     "action": "CHECK"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "1p",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "2pb",
+     "action": "CALL"
+    }
+   ],
+   "id": "sim-72",
+   "group": "simulated",
+   "title": "Simulated hand 72"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": -2.0,
+   "payoff_text": "\u22122.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Jack"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the King"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "0",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "2b",
+     "action": "CALL"
+    }
+   ],
+   "id": "sim-73",
+   "group": "simulated",
+   "title": "Simulated hand 73"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Jack"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Queen"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "0",
+     "action": "CHECK"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "1p",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "0pb",
+     "action": "FOLD"
+    }
+   ],
+   "id": "sim-74",
+   "group": "simulated",
+   "title": "Simulated hand 74"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the King"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Jack"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "2",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "0b",
+     "action": "FOLD"
+    }
+   ],
+   "id": "sim-75",
+   "group": "simulated",
+   "title": "Simulated hand 75"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Jack"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the King"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "0",
+     "action": "CHECK"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "2p",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "0pb",
+     "action": "FOLD"
+    }
+   ],
+   "id": "sim-76",
+   "group": "simulated",
+   "title": "Simulated hand 76"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Jack"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Queen"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "0",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "1b",
+     "action": "FOLD"
+    }
+   ],
+   "id": "sim-77",
+   "group": "simulated",
+   "title": "Simulated hand 77"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Jack"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Queen"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "0",
+     "action": "CHECK"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "1p",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "0pb",
+     "action": "FOLD"
+    }
+   ],
+   "id": "sim-78",
+   "group": "simulated",
+   "title": "Simulated hand 78"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": -2.0,
+   "payoff_text": "\u22122.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Jack"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the King"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "0",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "2b",
+     "action": "CALL"
+    }
+   ],
+   "id": "sim-79",
+   "group": "simulated",
+   "title": "Simulated hand 79"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Jack"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the King"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "0",
+     "action": "CHECK"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "2p",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "0pb",
+     "action": "FOLD"
+    }
+   ],
+   "id": "sim-80",
+   "group": "simulated",
+   "title": "Simulated hand 80"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the King"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Jack"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "2",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "0b",
+     "action": "FOLD"
+    }
+   ],
+   "id": "sim-81",
+   "group": "simulated",
+   "title": "Simulated hand 81"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": -2.0,
+   "payoff_text": "\u22122.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the King"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Jack"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "2",
+     "action": "CHECK"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "0p",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "2pb",
+     "action": "CALL"
+    }
+   ],
+   "id": "sim-82",
+   "group": "simulated",
+   "title": "Simulated hand 82"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": -2.0,
+   "payoff_text": "\u22122.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Jack"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Queen"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "0",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "1b",
+     "action": "CALL"
+    }
+   ],
+   "id": "sim-83",
+   "group": "simulated",
+   "title": "Simulated hand 83"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": -2.0,
+   "payoff_text": "\u22122.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Queen"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Jack"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1",
+     "action": "CHECK"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "0p",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1pb",
+     "action": "CALL"
+    }
+   ],
+   "id": "sim-84",
+   "group": "simulated",
+   "title": "Simulated hand 84"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": -2.0,
+   "payoff_text": "\u22122.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Jack"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Queen"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "0",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "1b",
+     "action": "CALL"
+    }
+   ],
+   "id": "sim-85",
+   "group": "simulated",
+   "title": "Simulated hand 85"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": -2.0,
+   "payoff_text": "\u22122.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Queen"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Jack"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1",
+     "action": "CHECK"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "0p",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1pb",
+     "action": "CALL"
+    }
+   ],
+   "id": "sim-86",
+   "group": "simulated",
+   "title": "Simulated hand 86"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": -2.0,
+   "payoff_text": "\u22122.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Jack"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the King"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "0",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "2b",
+     "action": "CALL"
+    }
+   ],
+   "id": "sim-87",
+   "group": "simulated",
+   "title": "Simulated hand 87"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": -2.0,
+   "payoff_text": "\u22122.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Queen"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Jack"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1",
+     "action": "CHECK"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "0p",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1pb",
+     "action": "CALL"
+    }
+   ],
+   "id": "sim-88",
+   "group": "simulated",
+   "title": "Simulated hand 88"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": -2.0,
+   "payoff_text": "\u22122.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Jack"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the King"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "0",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "2b",
+     "action": "CALL"
+    }
+   ],
+   "id": "sim-89",
+   "group": "simulated",
+   "title": "Simulated hand 89"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": -2.0,
+   "payoff_text": "\u22122.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the King"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Jack"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "2",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "0b",
+     "action": "CALL"
+    }
+   ],
+   "id": "sim-90",
+   "group": "simulated",
+   "title": "Simulated hand 90"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Queen"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Jack"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "1",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "0b",
+     "action": "FOLD"
+    }
+   ],
+   "id": "sim-91",
+   "group": "simulated",
+   "title": "Simulated hand 91"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Jack"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Queen"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "0",
+     "action": "CHECK"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "1p",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "0pb",
+     "action": "FOLD"
+    }
+   ],
+   "id": "sim-92",
+   "group": "simulated",
+   "title": "Simulated hand 92"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": -2.0,
+   "payoff_text": "\u22122.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Queen"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the King"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "1",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "2b",
+     "action": "CALL"
+    }
+   ],
+   "id": "sim-93",
+   "group": "simulated",
+   "title": "Simulated hand 93"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": -2.0,
+   "payoff_text": "\u22122.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the King"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Queen"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "2",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "1b",
+     "action": "CALL"
+    }
+   ],
+   "id": "sim-94",
+   "group": "simulated",
+   "title": "Simulated hand 94"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": -2.0,
+   "payoff_text": "\u22122.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Jack"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Queen"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "0",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "1b",
+     "action": "CALL"
+    }
+   ],
+   "id": "sim-95",
+   "group": "simulated",
+   "title": "Simulated hand 95"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": -2.0,
+   "payoff_text": "\u22122.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the King"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Jack"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "2",
+     "action": "CHECK"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "0p",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "2pb",
+     "action": "CALL"
+    }
+   ],
+   "id": "sim-96",
+   "group": "simulated",
+   "title": "Simulated hand 96"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the King"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Jack"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "2",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "0b",
+     "action": "FOLD"
+    }
+   ],
+   "id": "sim-97",
+   "group": "simulated",
+   "title": "Simulated hand 97"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": -2.0,
+   "payoff_text": "\u22122.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the King"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Jack"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "2",
+     "action": "CHECK"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "0p",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "2pb",
+     "action": "CALL"
+    }
+   ],
+   "id": "sim-98",
+   "group": "simulated",
+   "title": "Simulated hand 98"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Jack"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Queen"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "0",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "1b",
+     "action": "FOLD"
+    }
+   ],
+   "id": "sim-99",
+   "group": "simulated",
+   "title": "Simulated hand 99"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": 2.0,
+   "payoff_text": "+2.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 is dealt the Jack"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 is dealt the Queen"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "0",
+     "action": "BET"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "1b",
+     "action": "CALL"
+    }
+   ],
+   "id": "sim-100",
+   "group": "simulated",
+   "title": "Simulated hand 100"
+  }
+ ]
+}

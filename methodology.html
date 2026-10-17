@@ -1,0 +1,501 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Methodology · StrategyBench</title>
+<meta name="description" content="StrategyBench measures how exploitable AI agents are in small card and dice games, with exact best responses and bootstrap confidence intervals.">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem("sb-theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
+</head>
+<body class="page-methodology">
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap header-row">
+    <a class="brand" href="index.html">StrategyBench</a>
+    <nav aria-label="Site">
+      <a href="index.html">Leaderboard</a>
+      <a href="methodology.html" aria-current="page">Methodology</a>
+    </nav>
+    <button class="theme-toggle" type="button" aria-label="Switch colour theme" title="Switch colour theme">
+      <svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><circle cx="10" cy="10" r="7.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M10 2.5a7.5 7.5 0 0 1 0 15z" fill="currentColor"/></svg>
+    </button>
+  </div>
+</header>
+<main id="main" class="wrap">
+<article class="prose">
+<h1 id="methodology">Methodology</h1>
+<p><em>Draft. Covers what is implemented so far: Kuhn poker, Leduc poker and Liar's Dice, <code>direct</code> and
+<code>play</code> modes, and the reporting site.</em></p>
+<h2 id="what-is-measured">What is measured</h2>
+<p>StrategyBench measures how much value a best-responding opponent could extract from an AI
+subject's behaviour in a small two-player zero-sum card or dice game, compared with equilibrium
+play.</p>
+<p>Results describe <strong>the model plus this prompt plus these sampling settings on this game</strong>.
+They are not a measure of general game-playing or reasoning ability.</p>
+<h2 id="setup">Setup</h2>
+<ul>
+<li>Games are OpenSpiel games. Seat 0 is "Player 1" in prompts.</li>
+<li>An <strong>information state</strong> (infostate) is what the acting player knows: their private card(s) or
+  die and the public action history.</li>
+<li>A <strong>behavioural strategy</strong> gives a probability distribution over legal actions at each
+  infostate.</li>
+<li>The equilibrium reference is the average policy of OpenSpiel's C++ CFR+ after 2,000
+  iterations, saved to disk so every run of a game is scored against the same reference.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Game</th>
+<th>Decision infostates</th>
+<th>Player 1 value</th>
+<th>Reference exploitability</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Kuhn poker (<code>kuhn_poker</code>)</td>
+<td>12</td>
+<td>−0.05556 (theory −1/18)</td>
+<td>4.4e-5</td>
+</tr>
+<tr>
+<td>Leduc poker (<code>leduc_poker(suit_isomorphism=True)</code>)</td>
+<td>288</td>
+<td>−0.0856</td>
+<td>8.5e-5</td>
+</tr>
+<tr>
+<td>Liar's Dice (<code>liars_dice(numdice=1,dice_sides=3)</code>)</td>
+<td>192 (96 forced)</td>
+<td>+0.1111</td>
+<td>1.2e-6</td>
+</tr>
+</tbody>
+</table>
+<p>(Values printed by <code>scripts/run_benchmark.py</code> as "equilibrium seat values"; the reference
+exploitability is <code>equilibrium.exploitability</code> in every run's <code>metrics.json</code>. Infostate counts are
+also printed by <code>scripts/game_size.py</code>.)</p>
+<p><strong>Leduc uses OpenSpiel's suit-isomorphic variant.</strong> The prompt only ever names ranks (suits do
+not matter in Leduc), so two infostates that differ only by suit would get identical prompts. The
+suit-isomorphic game deals ranks with the correct probabilities, so its infostates are exactly
+what the subject can distinguish: 288 instead of 936, with the same game value.</p>
+<p><strong>Liar's Dice is OpenSpiel's version with one three-sided die per player.</strong> Each player rolls a
+die showing 1, 2 or 3 and sees only their own. Player 1 must open with a bid; then the players
+alternate, each either bidding higher or calling LIAR. A bid QxF claims that at least Q of the
+two dice show face F. The highest face, 3, is wild: it counts towards a bid on 1 or 2, and a bid
+on 3 counts only 3s. Bids rank by quantity, then face (1x1 &lt; 1x2 &lt; 1x3 &lt; 2x1 &lt; 2x2 &lt; 2x3). When
+LIAR is called the bidder wins if the bid is true and the caller wins otherwise, for 1 point.
+This is not the common six-sided game with 1s wild; the prompt states OpenSpiel's rules in full,
+checked against the installed OpenSpiel source and by tests that score challenges.</p>
+<p>Half of its 192 infostates are <strong>forced</strong>: after the highest bid, 2x3, only LIAR is legal. Direct
+mode does not query forced decisions in any game (see "Querying the subject"), so a run asks about
+96 infostates (19,200 calls at N = 200). Three sides was chosen to keep real-model runs
+affordable: four sides has 1,024 infostates (512 forced) and six has 24,576 (12,288 forced)
+(<code>scripts/game_size.py</code>).</p>
+<h2 id="querying-the-subject">Querying the subject</h2>
+<p>The system prompt states the rules (versioned, e.g. <code>kuhn-v1</code>). The user message describes
+the seat, the private card or die, the action history so far and an enumerated list of legal
+action labels, and asks for exactly one label. Both seats use the same template.</p>
+<p><strong>Parsing is strict.</strong> After removing surrounding whitespace, quotes, backticks, asterisks and
+one trailing period, and ignoring case, the reply must equal exactly one legal label. A reply
+that names a real game action which is not legal at that point is counted as <em>illegal</em>; anything
+else is a <em>parse failure</em>. A failed attempt is retried with the same prompt up to 2 times (by
+default). Every attempt is counted. A sample that never yields a legal action is recorded as
+failed; no action is ever substituted.</p>
+<h2 id="estimating-the-strategy-direct-mode">Estimating the strategy (<code>direct</code> mode)</h2>
+<p>Every decision infostate is enumerated with OpenSpiel and the subject is queried there
+independently, with a fresh context each time.</p>
+<ul>
+<li><strong>Text subjects</strong> are sampled N times per infostate. The estimated strategy σ̂ at an
+  infostate is the empirical frequency of the valid sampled actions.</li>
+<li><strong>Distribution subjects</strong> (models that return a probability per offered option in one call)
+  are queried K times per infostate and σ̂ there is the average of the returned
+  probabilities. A subject whose answer never changes (the scripted references) is queried once
+  and has no sampling error. Jev's answers vary between calls (by up to about 0.09), so it is
+  queried K = 20 times and bootstrapped over its replies, like a text subject over its samples.
+  A reply is valid when it names exactly the legal options with non-negative probabilities
+  summing to 1 within 0.015; Jev rounds to two decimals, so three options can sum to 0.99, and
+  such replies are rescaled to sum to 1 and counted (<code>rescaled</code> in the reliability block).
+  Their probabilities may be intended as confidences rather than as a mixed strategy, so
+  results report which reading was used.</li>
+</ul>
+<p><strong>Forced decisions are not queried.</strong> An infostate with a single legal action has nothing to
+estimate, so the subject is not asked: the action is played with certainty, the infostate is
+reported as forced (never as filled), and it counts as covered. M1 to M3 are unchanged by this,
+because the action there is certain either way; M4 only counts decisions that were asked. Kuhn
+and Leduc have no forced decisions; half of Liar's Dice's infostates are forced. Play mode
+still asks the subject at forced decisions.</p>
+<p><strong>Fill rule.</strong> An infostate with fewer than <code>min_samples</code> valid samples (default 1) is played
+uniformly at random over its legal actions. The number of filled infostates is always
+reported.</p>
+<h2 id="validating-by-play-play-mode">Validating by play (<code>play</code> mode)</h2>
+<p>The subject plays complete hands against a fixed opponent (the equilibrium, or uniform random).
+Seats alternate every hand. Chance and the opponent are sampled from a per-hand random generator
+seeded by the run seed, so a match is reproducible. Each subject decision is a fresh query with
+its own sample key, independent of the direct-mode samples. If every attempt at a decision fails,
+the subject's action is drawn uniformly from the legal actions and the decision is counted as a
+fallback; the number of fallbacks is reported.</p>
+<p><strong>Cross-check.</strong> After a direct run, the exact expected payoff of the estimated strategy σ̂
+against the opponent, per seat, is compared with the play-mode mean. They are reported as
+agreeing when the difference is within 1.96 combined standard errors (the play-mode standard
+error, plus the bootstrap standard error of the exact value). This checks that σ̂ predicts how the
+subject actually plays.</p>
+<p>Example (mock subject playing 80% equilibrium and 20% uniform, with 5% unparseable replies,
+200 samples per infostate, 20,000 hands against the equilibrium, Leduc):</p>
+<table>
+<thead>
+<tr>
+<th>Seat</th>
+<th>Exact (from σ̂)</th>
+<th>Simulated</th>
+<th>z</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Player 1</td>
+<td>−0.2126</td>
+<td>−0.2179</td>
+<td>−0.14</td>
+</tr>
+<tr>
+<td>Player 2</td>
+<td>−0.0246</td>
+<td>−0.0267</td>
+<td>−0.06</td>
+</tr>
+</tbody>
+</table>
+<p>(Produced by <code>scripts/run_benchmark.py --game leduc --agent cfr-noisy --samples 200 --mode both
+--hands 20000 --garbage-rate 0.05 --format-noise</code>.) With 10,000 hands per seat the 95% interval is
+about ±0.075 chips per hand, so play mode is far more expensive per unit of precision than direct
+mode, and is used as a check rather than as the headline measurement.</p>
+<h2 id="metrics">Metrics</h2>
+<p>All values are expected payoffs per hand (per round in Liar's Dice), reported in native units and
+normalised by the game's unit (1 ante in Kuhn and Leduc, 1 point in Liar's Dice, so the two
+coincide).</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>M1 exploitability</strong></td>
+<td>OpenSpiel <code>exploitability(game, σ̂)</code> = NashConv(σ̂) / 2. In a two-player zero-sum game this is the average, over the two seats, of what a best responder gains against σ̂ beyond the equilibrium value.</td>
+</tr>
+<tr>
+<td><strong>M2 best-response gain, seat i</strong></td>
+<td>With the subject in seat i: value of a best response in the other seat against σ̂, minus that seat's equilibrium value. M1 is the mean of the two M2 values (checked by a test).</td>
+</tr>
+<tr>
+<td><strong>M3 head-to-head loss, seat i</strong></td>
+<td>Equilibrium value of seat i minus the subject's exact expected payoff in seat i against the equilibrium strategy.</td>
+</tr>
+<tr>
+<td><strong>M4 reliability</strong></td>
+<td>Parse-failure rate and illegal-action rate (per attempt), retry rate and sample-failure rate (per sample), and <strong>coverage</strong>: the reach-weighted fraction of infostates with at least k valid samples (default k = 5), with reach measured under σ̂.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>M3 is weaker than M1.</strong> Against an equilibrium opponent, any strategy that only uses actions
+in the equilibrium's support earns exactly the equilibrium value. In Kuhn poker a subject that
+plays the right actions with the wrong frequencies therefore has M3 ≈ 0 while still being
+exploitable (M1 &gt; 0). M1 is the headline metric for this reason.</p>
+<h2 id="where-a-best-responder-gains">Where a best responder gains</h2>
+<p>Each run page splits the best-response gain M2 into the situations where it is earned. Fix the
+subject's estimated strategy σ̂ in seat <em>i</em> and let the other seat <em>j</em> switch from its
+equilibrium strategy σ* to a best response BR against σ̂. Then, exactly,</p>
+<pre><code>M2_i  =  M3_i  +  Σ over j's infostates I of  contribution(I)
+
+contribution(I)  =  reach*(I) · [ q(I, BR(I)) − Σ_a σ*(I, a) · q(I, a) ]
+</code></pre>
+<ul>
+<li><code>reach*(I)</code> is the probability that <em>I</em> is reached when seat <em>j</em> plays the equilibrium
+  against σ̂ (chance × σ̂ × σ*).</li>
+<li><code>q(I, a)</code> is the expected payoff to seat <em>j</em> of taking action <em>a</em> at <em>I</em>, given that <em>I</em> was
+  reached, when <em>j</em> best-responds from then on. It is computed from OpenSpiel's
+  <code>BestResponsePolicy</code>, whose counterfactual values are divided by the infostate's
+  counterfactual reach.</li>
+<li>The bracket is the <strong>per-visit edge</strong> of the best response over the equilibrium mix. It is
+  never negative, because the best response maximises <code>q(I, ·)</code>.</li>
+</ul>
+<p>So M3 is what the equilibrium wins without adapting, and each contribution is how often a
+situation arises times how much more adapting earns there. The identity is a telescoping
+(performance-difference) argument over seat <em>j</em>'s decisions; the tests check it to 1e-9 on
+Kuhn and Leduc for several strategies, and against hand-computed Kuhn values (for an
+always-check/fold Player 1, Player 2's situations "Jack after a check" and "Queen after a
+check" contribute 4/9 and 1/3).</p>
+<p>The page shows the situations with the largest contributions, with a templated sentence for
+each, and the subject's own action frequencies at every infostate against the equilibrium,
+ordered by reach (opponent at equilibrium) times total variation distance from the equilibrium.</p>
+<h2 id="prompt-sensitivity">Prompt sensitivity</h2>
+<p>Two optional variants measure how much results depend on wording (<code>--prompt</code>):</p>
+<ul>
+<li><code>&lt;game&gt;-v1-para</code>: the same rules, reworded and reordered.</li>
+<li><code>&lt;version&gt;+shuffled</code>: the legal actions listed in a shuffled order, fixed per infostate.</li>
+</ul>
+<p>The spread of a model's metrics across these variants is reported alongside its main result.</p>
+<h2 id="uncertainty">Uncertainty</h2>
+<p>Each bootstrap replicate (200 by default) resamples the valid samples at every infostate with
+replacement, keeping that infostate's sample size, and recomputes every metric.</p>
+<p><strong>Plug-in bias.</strong> Exploitability and the best-response gains are maxima over opponent
+strategies. For any fixed opponent strategy the subject's estimated payoff is unbiased, but the
+best responder picks its strategy using the same noisy estimate, so sampling noise is exploited
+and never cancels out: the exploitability of the estimated strategy (the <em>plug-in</em> estimate) is
+biased upwards. The bias is largest near equilibrium, where the best responder is indifferent
+almost everywhere, and the bootstrap replicates are biased upwards again, so a percentile
+interval (the 2.5% and 97.5% quantiles of the replicates) sits above the truth.</p>
+<p><strong>What runs report.</strong> For every metric (M1, and M2 and M3 per seat):</p>
+<ul>
+<li>the bias-corrected estimate <code>max(0, 2·x − mean of replicates)</code>, where <code>x</code> is the plug-in value;</li>
+<li>the basic bootstrap interval <code>[2·x − q97.5, 2·x − q2.5]</code>, clipped at 0, which is centred on
+  the bias-corrected estimate.</li>
+</ul>
+<p>The site shows these, with the plug-in value beside them. <code>metrics.json</code> also keeps the
+percentile intervals (<code>ci95_percentile</code>) and the bootstrap bias. Exact subjects (distribution
+clients queried once) have no sampling error and are shown exactly.</p>
+<p><strong>Coverage, measured by simulation.</strong> For scripted strategies with a known exploitability,
+<code>scripts/ci_coverage.py</code> draws independent datasets of N = 200 samples per infostate, builds
+both intervals for each, and counts how often they contain the true value:</p>
+<table>
+<thead>
+<tr>
+<th>Game</th>
+<th>Strategy</th>
+<th>True M1</th>
+<th>Mean plug-in (sd)</th>
+<th>Mean bias-corrected</th>
+<th>Percentile coverage</th>
+<th>Basic coverage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Kuhn</td>
+<td>uniform</td>
+<td>0.458</td>
+<td>0.462 (0.023)</td>
+<td>0.461</td>
+<td>94%</td>
+<td>94%</td>
+</tr>
+<tr>
+<td>Kuhn</td>
+<td>equilibrium</td>
+<td>0.000</td>
+<td>0.014 (0.006)</td>
+<td>0.008</td>
+<td>0%</td>
+<td>88%</td>
+</tr>
+<tr>
+<td>Kuhn</td>
+<td>80% equilibrium, 20% uniform</td>
+<td>0.066</td>
+<td>0.070 (0.011)</td>
+<td>0.067</td>
+<td>94%</td>
+<td>94%</td>
+</tr>
+<tr>
+<td>Leduc</td>
+<td>uniform</td>
+<td>2.374</td>
+<td>2.381 (0.034)</td>
+<td>2.368</td>
+<td>85%</td>
+<td>88%</td>
+</tr>
+<tr>
+<td>Leduc</td>
+<td>equilibrium</td>
+<td>0.000</td>
+<td>0.104 (0.021)</td>
+<td>0.062</td>
+<td>0%</td>
+<td>30%</td>
+</tr>
+<tr>
+<td>Leduc</td>
+<td>80% equilibrium, 20% uniform</td>
+<td>0.638</td>
+<td>0.649 (0.039)</td>
+<td>0.630</td>
+<td>92%</td>
+<td>83%</td>
+</tr>
+</tbody>
+</table>
+<p>(Kuhn: 200 datasets with 200 replicates each, <code>scripts/ci_coverage.py --game kuhn</code>. Leduc: 60
+datasets with 100 replicates each, <code>scripts/ci_coverage.py --game leduc --datasets 60
+--bootstrap 100</code>; with 60 datasets each coverage figure is uncertain by about ±4 points.)</p>
+<p>What this shows:</p>
+<ul>
+<li>The bias-corrected estimate is closer to the truth than the plug-in estimate in every case,
+  but near equilibrium only part of the bias is removed (Leduc: 0.062 against a true 0.000).</li>
+<li>Percentile intervals never covered an equilibrium subject's true value in either game. Basic
+  intervals did so 88% of the time in Kuhn but only 30% in Leduc.</li>
+<li>Away from equilibrium both intervals are close to nominal in Kuhn and somewhat below it in
+  Leduc; for Leduc's 80/20 mix the basic interval did worse than the percentile one.</li>
+</ul>
+<p>So the reported intervals are <strong>approximate</strong>: reasonable for clearly exploitable subjects,
+optimistic for subjects close to equilibrium, especially in the larger game. A maximum is not
+differentiable at an equilibrium, which is a known limit of the bootstrap. More samples per
+infostate is the reliable remedy. A cross-fitted estimate (best response chosen on half the
+samples, evaluated on the other half), which is biased downwards and so brackets the truth with
+the plug-in value, is a candidate for a later version.</p>
+<p><strong>Example</strong> (equilibrium subject in Kuhn, true exploitability about 0):</p>
+<table>
+<thead>
+<tr>
+<th>N per infostate</th>
+<th>Plug-in</th>
+<th>Bias-corrected</th>
+<th>Basic 95% interval</th>
+<th>Percentile 95% interval</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>50</td>
+<td>0.030</td>
+<td>0.014</td>
+<td>[0.000, 0.038]</td>
+<td>[0.022, 0.073]</td>
+</tr>
+<tr>
+<td>200</td>
+<td>0.006</td>
+<td>0.000</td>
+<td>[0.000, 0.006]</td>
+<td>[0.005, 0.028]</td>
+</tr>
+<tr>
+<td>1000</td>
+<td>0.006</td>
+<td>0.003</td>
+<td>[0.000, 0.008]</td>
+<td>[0.003, 0.016]</td>
+</tr>
+</tbody>
+</table>
+<p>(Produced by <code>scripts/run_benchmark.py --agent cfr --samples N --out runs/studies</code>.)</p>
+<h2 id="validation">Validation</h2>
+<p>The pipeline is checked against known values (see <code>tests/</code>):</p>
+<ul>
+<li>Kuhn equilibrium value −1/18 for Player 1.</li>
+<li>Always-pass: exploitability 1, M2 = 17/18 and 19/18, M3 (seat 1) = 1/6.</li>
+<li>Always-bet: exploitability 1/3, M3 (seat 1) = 1/18.</li>
+<li>Uniform random: exploitability 11/24, both by direct computation and through the full text
+  pipeline.</li>
+<li>An equilibrium-playing subject through the pipeline: &lt; 1e-3 when probabilities are read
+  directly, &lt; 0.01 when sampled 5,000 times per infostate.</li>
+<li>Mock subjects with injected malformed and illegal output: measured failure rates match the
+  injected rates.</li>
+<li>Rerunning from the cache reproduces every result with zero calls.</li>
+<li>Leduc: deterministic subjects through the full pipeline match OpenSpiel's direct computation
+  exactly; uniform and equilibrium subjects read as distributions match OpenSpiel to 1e-9 and
+  &lt; 1e-3 respectively.</li>
+<li>Liar's Dice: challenges are scored as the rules text says (wild 3s, bids on 3, bidder and caller
+  wins); every history in an infostate renders the same prompt, so the opponent's die is never
+  shown; deterministic subjects through the full pipeline match OpenSpiel's direct computation
+  exactly; uniform and equilibrium subjects read as distributions match OpenSpiel to 1e-9 and
+  &lt; 1e-3. Always the lowest legal bid has exploitability 7/9 and always calling LIAR 8/9, both
+  hand-computed (the best responder against the lowest bid bids 2x2, forcing the subject to 2x3,
+  and calls LIAR).</li>
+<li>Play mode: always-pass as Player 1 in Kuhn scores −2/9 against the equilibrium within the
+  simulation's 95% interval; matches are reproducible from the seed.</li>
+<li>Breakdown: M2 = M3 + sum of contributions to 1e-9 on Kuhn and Leduc, and hand-computed
+  per-infostate contributions for always-pass in both Kuhn seats.</li>
+<li>Site: every number on every page is re-read from its result file at build time; tests check
+  that an edited number or an edited published file is caught.</li>
+</ul>
+<h2 id="reproducibility">Reproducibility</h2>
+<p>Every attempt is logged to <code>calls.jsonl</code> with the model, parameters, prompt version and hash, the
+user prompt, raw output, parse result, token counts, latency and timestamp. The system prompt is
+constant within a run and is stored once in <code>manifest.json</code>. Replies are cached on (provider,
+model, parameters, prompt hash, sample index, attempt), so reruns are free and identical.</p>
+<h2 id="reporting">Reporting</h2>
+<p><code>scripts/build_site.py</code> builds the static site from the results directory in one command.</p>
+<p><strong>Which runs are shown.</strong> Every run directory with <code>manifest.json</code> and <code>metrics.json</code> is a
+candidate. Sampled runs with fewer than 30 valid samples requested per infostate are smoke tests
+and are left out. Runs that measure the same thing (game, provider, model, parameters, prompt
+version and estimation kind) are deduplicated, keeping the most recently created. Runs can also
+be excluded by name. The build lists every run it leaves out, with the reason, in its output
+and in <code>build.json</code>.</p>
+<p><strong>Reference subjects.</strong> Rows marked <em>reference</em> are scripted policies, not LLMs, answering
+through the same text interface (<code>scripts/run_references.py</code>): the equilibrium and uniform
+random (each read exactly, and sampled at N = 200 like a model), always the first legal action
+(check or fold in poker; the lowest legal bid in Liar's Dice), always the last legal action (the
+most aggressive action in poker; in Liar's Dice, calling LIAR whenever it is legal, which means
+opening with 2x3), and an 80/20 mix of equilibrium and uniform with 5% malformed replies.
+They anchor the scale and keep the pipeline honest against known values. The exact rows give
+the true values; the sampled rows show what a run of the same size reports for the same
+strategy, sampling noise included. One such draw is visibly unlucky: Kuhn's sampled uniform
+subject lands well above the exact 11/24 because the infostate where Player 2 holds the King and
+faces a bet happened to draw 61% folds. It is shown as drawn.</p>
+<p><strong>Game wording.</strong> Pages use each game's own words, supplied by its <code>GameSpec</code>: rounds instead of
+hands in Liar's Dice, and names for the scripted references in the game's terms.</p>
+<p><strong>Prompt variants</strong> (<code>-para</code>, <code>+shuffled</code>) are listed in their own table; the main table shows
+each subject's range of exploitability across the prompts it was run with.</p>
+<p><strong>Replays.</strong> The replay view steps through a hand, showing at each of the subject's decisions
+the situation exactly as the subject was told it, its estimated action frequencies against the
+equilibrium and, for played hands, its raw replies; and at each opponent decision the
+equilibrium mix, the best response and its per-visit edge. Hands come from three sources, always
+labelled:</p>
+<ul>
+<li><em>Biggest gain</em> (constructed): for each seat, the three infostates with the largest
+  contributions. The hand is the history in that infostate where switching to the best response
+  gains most (reach-weighted), followed by the best response and the subject's most likely
+  actions.</li>
+<li><em>Played</em>: the first 100 hands of a play-mode match, with every attempt the subject made.</li>
+<li><em>Simulated</em>, only when no play-mode match exists: 100 hands drawn from σ̂ against the
+  equilibrium. Every query is independent and context-free, so these follow the same
+  distribution as live play, but they were not played live.</li>
+</ul>
+<p><strong>Explanations are templated.</strong> Every sentence on the site is filled in from computed numbers by
+fixed templates in <code>report/explain.py</code>; none is written by a language model.</p>
+<p><strong>Every number traces to a file.</strong> Each number on a results page is rendered from a result file
+published next to the page (<code>runs/&lt;id&gt;/data/*.json</code>), and its HTML element names that file and
+the JSON pointer of the value. At the end of every build, the site is re-read and each number is
+checked against its source; the build fails on any mismatch. <code>build.json</code> records the SHA-256
+of every published file, and the check also confirms each published file is unchanged. Raw call
+logs stay in the run directory. Numbers in this document are produced by the commands cited
+next to them.</p>
+<p><strong>Derived files.</strong> The breakdown and the replay hands are written into the run directory as
+<code>breakdown.json</code> and <code>replay.json</code>, computed only from the run's own result files. Each records
+the SHA-256 of its inputs and is recomputed when they change.</p>
+<h2 id="limitations-so-far">Limitations (so far)</h2>
+<ul>
+<li>Small games. Kuhn poker has 12 infostates, Leduc 288 and Liar's Dice 192 (half of them forced).
+  The poker equilibria are well known and may appear in model training data.</li>
+<li>Liar's Dice is OpenSpiel's variant (three-sided dice, the highest face wild, a single round),
+  not the common game with 1s wild, so a model that falls back on the usual rules plays a
+  different game. The prompt states the rules in full.</li>
+<li>Results depend on the prompt wording and on the sampling settings a provider allows. Some
+  current models do not allow the temperature to be changed.</li>
+<li>The strict parser may count verbose but sensible replies as failures. This is deliberate and
+  is reported through M4.</li>
+<li>All metrics are measured against a CFR+ reference that is close to, but not exactly, an
+  equilibrium (its own exploitability is shown on the leaderboard). Values smaller than that
+  reference exploitability are not meaningful.</li>
+<li>The breakdown attributes the gain to the best responder's decisions, not to the subject's
+  mistakes. A leak at one of the subject's decisions usually shows up as gains at the opponent
+  decisions that follow it, which the replay view puts side by side.</li>
+</ul>
+</article>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <p>Built 2026-10-17 13:32 UTC by strategybench 0.1.0 at commit <code>e490511</code>. Game solving and best responses use <a href="https://github.com/google-deepmind/open_spiel">OpenSpiel</a>.</p>
+    <p>Every number in the results tables and charts is read from a published result file; hover a number to see which file and field. <code>build.json</code> lists each file's SHA-256.</p>
+  </div>
+</footer>
+<div class="tooltip" role="tooltip" hidden></div>
+<script src="assets/site.js"></script>
+</body>
+</html>

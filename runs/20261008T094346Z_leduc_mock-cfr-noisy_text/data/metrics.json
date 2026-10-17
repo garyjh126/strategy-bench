@@ -1,0 +1,141 @@
+{
+  "game": "leduc",
+  "provider": "mock",
+  "model_id": "mock-cfr-noisy",
+  "params": {
+    "seed": 0,
+    "garbage_rate": 0.05,
+    "illegal_rate": 0.0,
+    "format_noise": true
+  },
+  "prompt_version": "leduc-v1",
+  "mode": "direct",
+  "subject_kind": "sampled",
+  "n_samples": 200,
+  "payoff_unit": "ante",
+  "metrics": {
+    "exploitability": 0.6487456239377094,
+    "br_value": [
+      0.5121108112805696,
+      0.7853804365948491
+    ],
+    "br_gain": [
+      0.6997777065641047,
+      0.5977135413113142
+    ],
+    "h2h_value": [
+      -0.21259529025453106,
+      -0.024621470342276186
+    ],
+    "h2h_loss": [
+      0.12699256022378652,
+      0.11022420037302072
+    ],
+    "unit_size": 1.0,
+    "exploitability_norm": 0.6487456239377094,
+    "br_gain_norm": [
+      0.6997777065641047,
+      0.5977135413113142
+    ],
+    "h2h_loss_norm": [
+      0.12699256022378652,
+      0.11022420037302072
+    ]
+  },
+  "ci_method": "basic",
+  "ci95": {
+    "exploitability": [
+      0.5585240688001165,
+      0.711250747813798
+    ],
+    "br_gain_0": [
+      0.5925729399428918,
+      0.7988423427083413
+    ],
+    "br_gain_1": [
+      0.4507847655909415,
+      0.678229941967224
+    ],
+    "h2h_loss_0": [
+      0.11061347898337251,
+      0.13852112764371888
+    ],
+    "h2h_loss_1": [
+      0.09638399416381113,
+      0.12279968052010018
+    ]
+  },
+  "ci95_percentile": {
+    "exploitability": [
+      0.5862405000616208,
+      0.7389671790753023
+    ],
+    "br_gain_0": [
+      0.600713070419868,
+      0.8069824731853175
+    ],
+    "br_gain_1": [
+      0.5171971406554043,
+      0.7446423170316868
+    ],
+    "h2h_loss_0": [
+      0.11546399280385417,
+      0.14337164146420053
+    ],
+    "h2h_loss_1": [
+      0.09764872022594126,
+      0.12406440658223031
+    ]
+  },
+  "bias_corrected": {
+    "exploitability": 0.6345540673105124,
+    "br_gain_0": 0.6951141394360069,
+    "br_gain_1": 0.5739939951850181,
+    "h2h_loss_0": 0.12662239044209017,
+    "h2h_loss_1": 0.11070984798367109
+  },
+  "bias": {
+    "exploitability_bootstrap_bias": 0.014191556627196955,
+    "exploitability_bias_corrected": 0.6345540673105124,
+    "bootstrap_bias": {
+      "exploitability": 0.014191556627196955,
+      "br_gain_0": 0.00466356712809779,
+      "br_gain_1": 0.02371954612629601,
+      "h2h_loss_0": 0.00037016978169635006,
+      "h2h_loss_1": -0.0004856476106503693
+    }
+  },
+  "equilibrium": {
+    "values": [
+      -0.08560273003074453,
+      0.08560273003074453
+    ],
+    "exploitability": 8.519074905299906e-05
+  },
+  "reliability": {
+    "samples": 57600,
+    "attempts": 60599,
+    "parse_failures": 3007,
+    "illegal": 0,
+    "samples_retried": 2855,
+    "samples_failed": 8,
+    "live_calls": 0,
+    "cache_hits": 60599,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "parse_failure_rate": 0.04962128087922243,
+    "illegal_action_rate": 0.0,
+    "retry_rate": 0.04956597222222222,
+    "sample_failure_rate": 0.0001388888888888889
+  },
+  "cost_usd_estimated": null,
+  "coverage": {
+    "k=5": 1.0
+  },
+  "filled": {
+    "count": 0,
+    "of": 288,
+    "keys": []
+  },
+  "run_date": "2026-10-08"
+}

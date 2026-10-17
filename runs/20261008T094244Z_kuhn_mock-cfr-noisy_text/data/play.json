@@ -1,0 +1,74 @@
+{
+  "game": "kuhn",
+  "model_id": "mock-cfr-noisy",
+  "mode": "play",
+  "play": {
+    "opponent": "equilibrium",
+    "n_hands": 20000,
+    "seed": 0,
+    "seat_hands": [
+      10000,
+      10000
+    ],
+    "seat_mean": [
+      -0.067,
+      0.006
+    ],
+    "seat_stderr": [
+      0.013280389183818648,
+      0.013117683002753804
+    ],
+    "seat_ci95": [
+      [
+        -0.09302956280028456,
+        -0.04097043719971545
+      ],
+      [
+        -0.019710658685397453,
+        0.03171065868539746
+      ]
+    ],
+    "subject_decisions": 23424,
+    "fallbacks": 2,
+    "fallback_rate": 8.538251366120219e-05
+  },
+  "reliability": {
+    "samples": 23424,
+    "attempts": 24603,
+    "parse_failures": 1181,
+    "illegal": 0,
+    "samples_retried": 1122,
+    "samples_failed": 2,
+    "live_calls": 0,
+    "cache_hits": 24603,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "parse_failure_rate": 0.04800227614518555,
+    "illegal_action_rate": 0.0,
+    "retry_rate": 0.04789959016393443,
+    "sample_failure_rate": 8.538251366120219e-05
+  },
+  "cost_usd_estimated": null,
+  "cross_check": [
+    {
+      "seat": 0,
+      "exact": -0.073930963141072,
+      "exact_se": 0.0026480230946403587,
+      "simulated": -0.067,
+      "simulated_se": 0.013280389183818648,
+      "difference": 0.006930963141072,
+      "z": 0.5118193505056617,
+      "agree": true
+    },
+    {
+      "seat": 1,
+      "exact": 0.015608528015948364,
+      "exact_se": 0.004321112618583184,
+      "simulated": 0.006,
+      "simulated_se": 0.013117683002753804,
+      "difference": -0.009608528015948364,
+      "z": -0.6957121240525809,
+      "agree": true
+    }
+  ]
+}

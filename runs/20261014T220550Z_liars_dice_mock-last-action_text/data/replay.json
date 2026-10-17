@@ -1,0 +1,4355 @@
+{
+ "version": 4,
+ "derived_from": {
+  "strategy.json": "5f69cf7ae6aaa630971cebdfb70dead97dcd77282c489a36680323da3045ee5c",
+  "metrics.json": "8925743faea564928b61a9294a75297689ad78ac7a17bb1397f8addf739e5739",
+  "manifest.json": "5b6948d7c1b60fa147d2ac8bb6cb6831a8abd559a686d6fbd7ffb3f559817b6e",
+  "breakdown.json": "54e1fb5290c8ecc67fee357b3b9cccfb18a28a48277659989a4309040d91178e",
+  "calls.jsonl": "0352fc100b9fcff1a02cc15cdd4a935a61800624af14d12f9728403ecab61400"
+ },
+ "params": {
+  "hands": 100,
+  "key_situations": 3
+ },
+ "game": "liars_dice",
+ "payoff_unit": "point",
+ "episode": "round",
+ "subject_kind": "sampled",
+ "source": "simulated",
+ "opponent": "equilibrium",
+ "hands_total": 100,
+ "infostates": {
+  "3": {
+   "player": 0,
+   "short": "Die 3 \u00b7 opening bid",
+   "situation": "You are Player 1 (you bid first).\nYour die: 3.\nBids so far: none.",
+   "labels": [
+    "1x1",
+    "1x2",
+    "1x3",
+    "2x1",
+    "2x2",
+    "2x3"
+   ],
+   "estimated": {
+    "1x1": 0.0,
+    "1x2": 0.0,
+    "1x3": 0.0,
+    "2x1": 0.0,
+    "2x2": 0.0,
+    "2x3": 1.0
+   },
+   "equilibrium": {
+    "1x1": 1.3485507472555702e-06,
+    "1x2": 1.7364479276967599e-06,
+    "1x3": 1.343472549569934e-06,
+    "2x1": 0.33176263733113476,
+    "2x2": 0.38191629432490853,
+    "2x3": 0.28631663987273204
+   },
+   "support": 200,
+   "filled": false,
+   "forced": false,
+   "text": {
+    "estimated": {
+     "1x1": "0%",
+     "1x2": "0%",
+     "1x3": "0%",
+     "2x1": "0%",
+     "2x2": "0%",
+     "2x3": "100%"
+    },
+    "equilibrium": {
+     "1x1": "0%",
+     "1x2": "0%",
+     "1x3": "0%",
+     "2x1": "33%",
+     "2x2": "38%",
+     "2x3": "29%"
+    }
+   },
+   "subject_note": "The subject plays 2x3 100% of the time here (from 200 valid samples); the equilibrium plays it 29%.",
+   "replies": {
+    "attempts": 200,
+    "failures": 0,
+    "examples": []
+   },
+   "responder": {
+    "reach": 0.3333333333333333,
+    "best_response": "1x1",
+    "values": {
+     "1x1": 1.0,
+     "1x2": 1.0,
+     "1x3": 1.0,
+     "2x1": 0.3333333333333333,
+     "2x2": 0.3333333333333333,
+     "2x3": -0.3333333333333333
+    },
+    "eq_mix_value": 0.14245852573232826,
+    "edge": 0.8575414742676717,
+    "contribution": 0.2858471580892239,
+    "share": 0.32157766530037835,
+    "text": {
+     "values": {
+      "1x1": "+1.000",
+      "1x2": "+1.000",
+      "1x3": "+1.000",
+      "2x1": "+0.333",
+      "2x2": "+0.333",
+      "2x3": "\u22120.333"
+     },
+     "eq_mix_value": "+0.142",
+     "reach": "33.3%",
+     "contribution": "0.286",
+     "share": "32.2%"
+    }
+   },
+   "responder_note": "A best responder plays 1x1 here, earning +1.000 point per visit against +0.142 for the equilibrium mix. The situation arises in 33.3% of rounds with the subject as Player 2, adding 0.286 point per round (32.2% of the best responder's gain)."
+  },
+  "1 1-1": {
+   "player": 1,
+   "short": "Die 1 \u00b7 P1 1x1",
+   "situation": "You are Player 2 (you bid second).\nYour die: 1.\nBids so far: Player 1 bid 1x1.\nCurrent bid: 1x1 by Player 1 (true if at least one of the two dice shows 1 or 3).",
+   "labels": [
+    "1x2",
+    "1x3",
+    "2x1",
+    "2x2",
+    "2x3",
+    "LIAR"
+   ],
+   "estimated": {
+    "1x2": 0.0,
+    "1x3": 0.0,
+    "2x1": 0.0,
+    "2x2": 0.0,
+    "2x3": 0.0,
+    "LIAR": 1.0
+   },
+   "equilibrium": {
+    "1x2": 0.2159878401977719,
+    "1x3": 0.0031541969473502297,
+    "2x1": 0.7777040675752185,
+    "2x2": 0.0031537286962843776,
+    "2x3": 8.329168748958862e-08,
+    "LIAR": 8.329168748958862e-08
+   },
+   "support": 200,
+   "filled": false,
+   "forced": false,
+   "text": {
+    "estimated": {
+     "1x2": "0%",
+     "1x3": "0%",
+     "2x1": "0%",
+     "2x2": "0%",
+     "2x3": "0%",
+     "LIAR": "100%"
+    },
+    "equilibrium": {
+     "1x2": "22%",
+     "1x3": "0%",
+     "2x1": "78%",
+     "2x2": "0%",
+     "2x3": "0%",
+     "LIAR": "0%"
+    }
+   },
+   "subject_note": "The subject plays LIAR 100% of the time here (from 200 valid samples); the equilibrium plays it 0%.",
+   "replies": {
+    "attempts": 200,
+    "failures": 0,
+    "examples": []
+   },
+   "responder": {
+    "reach": 0.0,
+    "best_response": "1x2",
+    "values": {
+     "1x2": null,
+     "1x3": null,
+     "2x1": null,
+     "2x2": null,
+     "2x3": null,
+     "LIAR": null
+    },
+    "eq_mix_value": null,
+    "edge": null,
+    "contribution": 0.0,
+    "share": 0.0,
+    "text": {
+     "values": {
+      "1x2": "\u2014",
+      "1x3": "\u2014",
+      "2x1": "\u2014",
+      "2x2": "\u2014",
+      "2x3": "\u2014",
+      "LIAR": "\u2014"
+     },
+     "eq_mix_value": "\u2014",
+     "reach": "0.0%",
+     "contribution": "0.000",
+     "share": "0.0%"
+    }
+   },
+   "responder_note": "With the opponent at equilibrium this situation never arises against this subject, so it adds nothing to the best responder's gain."
+  },
+  "2": {
+   "player": 0,
+   "short": "Die 2 \u00b7 opening bid",
+   "situation": "You are Player 1 (you bid first).\nYour die: 2.\nBids so far: none.",
+   "labels": [
+    "1x1",
+    "1x2",
+    "1x3",
+    "2x1",
+    "2x2",
+    "2x3"
+   ],
+   "estimated": {
+    "1x1": 0.0,
+    "1x2": 0.0,
+    "1x3": 0.0,
+    "2x1": 0.0,
+    "2x2": 0.0,
+    "2x3": 1.0
+   },
+   "equilibrium": {
+    "1x1": 1.966696449324132e-06,
+    "1x2": 1.9705840155541636e-06,
+    "1x3": 8.340701835502503e-07,
+    "2x1": 3.45677259135126e-07,
+    "2x2": 0.9999947996804049,
+    "2x3": 8.329168748958854e-08
+   },
+   "support": 200,
+   "filled": false,
+   "forced": false,
+   "text": {
+    "estimated": {
+     "1x1": "0%",
+     "1x2": "0%",
+     "1x3": "0%",
+     "2x1": "0%",
+     "2x2": "0%",
+     "2x3": "100%"
+    },
+    "equilibrium": {
+     "1x1": "0%",
+     "1x2": "0%",
+     "1x3": "0%",
+     "2x1": "0%",
+     "2x2": "100%",
+     "2x3": "0%"
+    }
+   },
+   "subject_note": "The subject plays 2x3 100% of the time here (from 200 valid samples); the equilibrium plays it 0%.",
+   "replies": {
+    "attempts": 200,
+    "failures": 0,
+    "examples": []
+   },
+   "responder": {
+    "reach": 0.3333333333333333,
+    "best_response": "1x2",
+    "values": {
+     "1x1": 0.3333333333333333,
+     "1x2": 1.0,
+     "1x3": -0.3333333333333333,
+     "2x1": -1.0,
+     "2x2": 0.3333333333333333,
+     "2x3": -1.0
+    },
+    "eq_mix_value": 0.3333335190506258,
+    "edge": 0.6666664809493742,
+    "contribution": 0.22222216031645806,
+    "share": 0.24999962906843742,
+    "text": {
+     "values": {
+      "1x1": "+0.333",
+      "1x2": "+1.000",
+      "1x3": "\u22120.333",
+      "2x1": "\u22121.000",
+      "2x2": "+0.333",
+      "2x3": "\u22121.000"
+     },
+     "eq_mix_value": "+0.333",
+     "reach": "33.3%",
+     "contribution": "0.222",
+     "share": "25.0%"
+    }
+   },
+   "responder_note": "A best responder plays 1x2 here, earning +1.000 point per visit against +0.333 for the equilibrium mix. The situation arises in 33.3% of rounds with the subject as Player 2, adding 0.222 point per round (25.0% of the best responder's gain)."
+  },
+  "1 1-2": {
+   "player": 1,
+   "short": "Die 1 \u00b7 P1 1x2",
+   "situation": "You are Player 2 (you bid second).\nYour die: 1.\nBids so far: Player 1 bid 1x2.\nCurrent bid: 1x2 by Player 1 (true if at least one of the two dice shows 2 or 3).",
+   "labels": [
+    "1x3",
+    "2x1",
+    "2x2",
+    "2x3",
+    "LIAR"
+   ],
+   "estimated": {
+    "1x3": 0.0,
+    "2x1": 0.0,
+    "2x2": 0.0,
+    "2x3": 0.0,
+    "LIAR": 1.0
+   },
+   "equilibrium": {
+    "1x3": 0.22768728078723086,
+    "2x1": 0.7702094010676426,
+    "2x2": 0.0013214674623705572,
+    "2x3": 9.995002498750621e-08,
+    "LIAR": 0.0007817507327309588
+   },
+   "support": 200,
+   "filled": false,
+   "forced": false,
+   "text": {
+    "estimated": {
+     "1x3": "0%",
+     "2x1": "0%",
+     "2x2": "0%",
+     "2x3": "0%",
+     "LIAR": "100%"
+    },
+    "equilibrium": {
+     "1x3": "23%",
+     "2x1": "77%",
+     "2x2": "0%",
+     "2x3": "0%",
+     "LIAR": "0%"
+    }
+   },
+   "subject_note": "The subject plays LIAR 100% of the time here (from 200 valid samples); the equilibrium plays it 0%.",
+   "replies": {
+    "attempts": 200,
+    "failures": 0,
+    "examples": []
+   },
+   "responder": {
+    "reach": 0.0,
+    "best_response": "1x3",
+    "values": {
+     "1x3": null,
+     "2x1": null,
+     "2x2": null,
+     "2x3": null,
+     "LIAR": null
+    },
+    "eq_mix_value": null,
+    "edge": null,
+    "contribution": 0.0,
+    "share": 0.0,
+    "text": {
+     "values": {
+      "1x3": "\u2014",
+      "2x1": "\u2014",
+      "2x2": "\u2014",
+      "2x3": "\u2014",
+      "LIAR": "\u2014"
+     },
+     "eq_mix_value": "\u2014",
+     "reach": "0.0%",
+     "contribution": "0.000",
+     "share": "0.0%"
+    }
+   },
+   "responder_note": "With the opponent at equilibrium this situation never arises against this subject, so it adds nothing to the best responder's gain."
+  },
+  "1": {
+   "player": 0,
+   "short": "Die 1 \u00b7 opening bid",
+   "situation": "You are Player 1 (you bid first).\nYour die: 1.\nBids so far: none.",
+   "labels": [
+    "1x1",
+    "1x2",
+    "1x3",
+    "2x1",
+    "2x2",
+    "2x3"
+   ],
+   "estimated": {
+    "1x1": 0.0,
+    "1x2": 0.0,
+    "1x3": 0.0,
+    "2x1": 0.0,
+    "2x2": 0.0,
+    "2x3": 1.0
+   },
+   "equilibrium": {
+    "1x1": 2.5586836909429184e-06,
+    "1x2": 2.341355367361644e-06,
+    "1x3": 7.670628337411416e-07,
+    "2x1": 0.9999941474562377,
+    "2x2": 1.021501827702501e-07,
+    "2x3": 8.329168748958854e-08
+   },
+   "support": 200,
+   "filled": false,
+   "forced": false,
+   "text": {
+    "estimated": {
+     "1x1": "0%",
+     "1x2": "0%",
+     "1x3": "0%",
+     "2x1": "0%",
+     "2x2": "0%",
+     "2x3": "100%"
+    },
+    "equilibrium": {
+     "1x1": "0%",
+     "1x2": "0%",
+     "1x3": "0%",
+     "2x1": "100%",
+     "2x2": "0%",
+     "2x3": "0%"
+    }
+   },
+   "subject_note": "The subject plays 2x3 100% of the time here (from 200 valid samples); the equilibrium plays it 0%.",
+   "replies": {
+    "attempts": 200,
+    "failures": 0,
+    "examples": []
+   },
+   "responder": {
+    "reach": 0.3333333333333333,
+    "best_response": "1x1",
+    "values": {
+     "1x1": 1.0,
+     "1x2": 0.3333333333333333,
+     "1x3": -0.3333333333333333,
+     "2x1": 0.3333333333333333,
+     "2x2": -1.0,
+     "2x3": -1.0
+    },
+    "eq_mix_value": 0.3333342804914111,
+    "edge": 0.6666657195085889,
+    "contribution": 0.22222190650286294,
+    "share": 0.24999934352848704,
+    "text": {
+     "values": {
+      "1x1": "+1.000",
+      "1x2": "+0.333",
+      "1x3": "\u22120.333",
+      "2x1": "+0.333",
+      "2x2": "\u22121.000",
+      "2x3": "\u22121.000"
+     },
+     "eq_mix_value": "+0.333",
+     "reach": "33.3%",
+     "contribution": "0.222",
+     "share": "25.0%"
+    }
+   },
+   "responder_note": "A best responder plays 1x1 here, earning +1.000 point per visit against +0.333 for the equilibrium mix. The situation arises in 33.3% of rounds with the subject as Player 2, adding 0.222 point per round (25.0% of the best responder's gain)."
+  },
+  "2 1-1": {
+   "player": 1,
+   "short": "Die 2 \u00b7 P1 1x1",
+   "situation": "You are Player 2 (you bid second).\nYour die: 2.\nBids so far: Player 1 bid 1x1.\nCurrent bid: 1x1 by Player 1 (true if at least one of the two dice shows 1 or 3).",
+   "labels": [
+    "1x2",
+    "1x3",
+    "2x1",
+    "2x2",
+    "2x3",
+    "LIAR"
+   ],
+   "estimated": {
+    "1x2": 0.0,
+    "1x3": 0.0,
+    "2x1": 0.0,
+    "2x2": 0.0,
+    "2x3": 0.0,
+    "LIAR": 1.0
+   },
+   "equilibrium": {
+    "1x2": 0.22487227860061884,
+    "1x3": 0.11321389674008185,
+    "2x1": 0.0793989206057782,
+    "2x2": 0.5230191943118478,
+    "2x3": 8.329168748958853e-08,
+    "LIAR": 0.05949562644998584
+   },
+   "support": 200,
+   "filled": false,
+   "forced": false,
+   "text": {
+    "estimated": {
+     "1x2": "0%",
+     "1x3": "0%",
+     "2x1": "0%",
+     "2x2": "0%",
+     "2x3": "0%",
+     "LIAR": "100%"
+    },
+    "equilibrium": {
+     "1x2": "22%",
+     "1x3": "11%",
+     "2x1": "8%",
+     "2x2": "52%",
+     "2x3": "0%",
+     "LIAR": "6%"
+    }
+   },
+   "subject_note": "The subject plays LIAR 100% of the time here (from 200 valid samples); the equilibrium plays it 6%.",
+   "replies": {
+    "attempts": 200,
+    "failures": 0,
+    "examples": []
+   },
+   "responder": {
+    "reach": 0.0,
+    "best_response": "1x2",
+    "values": {
+     "1x2": null,
+     "1x3": null,
+     "2x1": null,
+     "2x2": null,
+     "2x3": null,
+     "LIAR": null
+    },
+    "eq_mix_value": null,
+    "edge": null,
+    "contribution": 0.0,
+    "share": 0.0,
+    "text": {
+     "values": {
+      "1x2": "\u2014",
+      "1x3": "\u2014",
+      "2x1": "\u2014",
+      "2x2": "\u2014",
+      "2x3": "\u2014",
+      "LIAR": "\u2014"
+     },
+     "eq_mix_value": "\u2014",
+     "reach": "0.0%",
+     "contribution": "0.000",
+     "share": "0.0%"
+    }
+   },
+   "responder_note": "With the opponent at equilibrium this situation never arises against this subject, so it adds nothing to the best responder's gain."
+  },
+  "1 2-3": {
+   "player": 1,
+   "short": "Die 1 \u00b7 P1 2x3",
+   "situation": "You are Player 2 (you bid second).\nYour die: 1.\nBids so far: Player 1 bid 2x3.\nCurrent bid: 2x3 by Player 1 (true if both dice show 3).",
+   "labels": [
+    "LIAR"
+   ],
+   "estimated": {
+    "LIAR": 1.0
+   },
+   "equilibrium": {
+    "LIAR": 1.0
+   },
+   "support": 0,
+   "filled": false,
+   "forced": true,
+   "text": {
+    "estimated": {
+     "LIAR": "100%"
+    },
+    "equilibrium": {
+     "LIAR": "100%"
+    }
+   },
+   "subject_note": "LIAR is the only legal action here, so the subject was not asked.",
+   "responder": {
+    "reach": 0.3333333333333333,
+    "best_response": "LIAR",
+    "values": {
+     "LIAR": 1.0
+    },
+    "eq_mix_value": 1.0,
+    "edge": 0.0,
+    "contribution": 0.0,
+    "share": 0.0,
+    "text": {
+     "values": {
+      "LIAR": "+1.000"
+     },
+     "eq_mix_value": "+1.000",
+     "reach": "33.3%",
+     "contribution": "0.000",
+     "share": "0.0%"
+    }
+   },
+   "responder_note": "The equilibrium mix is already a best response here, so adapting gains nothing."
+  },
+  "2 2-3": {
+   "player": 1,
+   "short": "Die 2 \u00b7 P1 2x3",
+   "situation": "You are Player 2 (you bid second).\nYour die: 2.\nBids so far: Player 1 bid 2x3.\nCurrent bid: 2x3 by Player 1 (true if both dice show 3).",
+   "labels": [
+    "LIAR"
+   ],
+   "estimated": {
+    "LIAR": 1.0
+   },
+   "equilibrium": {
+    "LIAR": 1.0
+   },
+   "support": 0,
+   "filled": false,
+   "forced": true,
+   "text": {
+    "estimated": {
+     "LIAR": "100%"
+    },
+    "equilibrium": {
+     "LIAR": "100%"
+    }
+   },
+   "subject_note": "LIAR is the only legal action here, so the subject was not asked.",
+   "responder": {
+    "reach": 0.3333333333333333,
+    "best_response": "LIAR",
+    "values": {
+     "LIAR": 1.0
+    },
+    "eq_mix_value": 1.0,
+    "edge": 0.0,
+    "contribution": 0.0,
+    "share": 0.0,
+    "text": {
+     "values": {
+      "LIAR": "+1.000"
+     },
+     "eq_mix_value": "+1.000",
+     "reach": "33.3%",
+     "contribution": "0.000",
+     "share": "0.0%"
+    }
+   },
+   "responder_note": "The equilibrium mix is already a best response here, so adapting gains nothing."
+  },
+  "3 2-1": {
+   "player": 1,
+   "short": "Die 3 \u00b7 P1 2x1",
+   "situation": "You are Player 2 (you bid second).\nYour die: 3.\nBids so far: Player 1 bid 2x1.\nCurrent bid: 2x1 by Player 1 (true if both dice show 1 or 3).",
+   "labels": [
+    "2x2",
+    "2x3",
+    "LIAR"
+   ],
+   "estimated": {
+    "2x2": 0.0,
+    "2x3": 0.0,
+    "LIAR": 1.0
+   },
+   "equilibrium": {
+    "2x2": 0.27893223047091376,
+    "2x3": 0.7210664352961981,
+    "LIAR": 1.3342328880010208e-06
+   },
+   "support": 200,
+   "filled": false,
+   "forced": false,
+   "text": {
+    "estimated": {
+     "2x2": "0%",
+     "2x3": "0%",
+     "LIAR": "100%"
+    },
+    "equilibrium": {
+     "2x2": "28%",
+     "2x3": "72%",
+     "LIAR": "0%"
+    }
+   },
+   "subject_note": "The subject plays LIAR 100% of the time here (from 200 valid samples); the equilibrium plays it 0%.",
+   "replies": {
+    "attempts": 200,
+    "failures": 0,
+    "examples": []
+   },
+   "responder": {
+    "reach": 0.0,
+    "best_response": "2x2",
+    "values": {
+     "2x2": null,
+     "2x3": null,
+     "LIAR": null
+    },
+    "eq_mix_value": null,
+    "edge": null,
+    "contribution": 0.0,
+    "share": 0.0,
+    "text": {
+     "values": {
+      "2x2": "\u2014",
+      "2x3": "\u2014",
+      "LIAR": "\u2014"
+     },
+     "eq_mix_value": "\u2014",
+     "reach": "0.0%",
+     "contribution": "0.000",
+     "share": "0.0%"
+    }
+   },
+   "responder_note": "With the opponent at equilibrium this situation never arises against this subject, so it adds nothing to the best responder's gain."
+  },
+  "2 2-2": {
+   "player": 1,
+   "short": "Die 2 \u00b7 P1 2x2",
+   "situation": "You are Player 2 (you bid second).\nYour die: 2.\nBids so far: Player 1 bid 2x2.\nCurrent bid: 2x2 by Player 1 (true if both dice show 2 or 3).",
+   "labels": [
+    "2x3",
+    "LIAR"
+   ],
+   "estimated": {
+    "2x3": 0.0,
+    "LIAR": 1.0
+   },
+   "equilibrium": {
+    "2x3": 2.498750624687656e-07,
+    "LIAR": 0.9999997501249376
+   },
+   "support": 200,
+   "filled": false,
+   "forced": false,
+   "text": {
+    "estimated": {
+     "2x3": "0%",
+     "LIAR": "100%"
+    },
+    "equilibrium": {
+     "2x3": "0%",
+     "LIAR": "100%"
+    }
+   },
+   "subject_note": "Close to equilibrium: the largest gap is 2x3 at 0% against 0% for the equilibrium (from 200 valid samples).",
+   "replies": {
+    "attempts": 200,
+    "failures": 0,
+    "examples": []
+   },
+   "responder": {
+    "reach": 0.0,
+    "best_response": "2x3",
+    "values": {
+     "2x3": null,
+     "LIAR": null
+    },
+    "eq_mix_value": null,
+    "edge": null,
+    "contribution": 0.0,
+    "share": 0.0,
+    "text": {
+     "values": {
+      "2x3": "\u2014",
+      "LIAR": "\u2014"
+     },
+     "eq_mix_value": "\u2014",
+     "reach": "0.0%",
+     "contribution": "0.000",
+     "share": "0.0%"
+    }
+   },
+   "responder_note": "With the opponent at equilibrium this situation never arises against this subject, so it adds nothing to the best responder's gain."
+  },
+  "3 2-3": {
+   "player": 1,
+   "short": "Die 3 \u00b7 P1 2x3",
+   "situation": "You are Player 2 (you bid second).\nYour die: 3.\nBids so far: Player 1 bid 2x3.\nCurrent bid: 2x3 by Player 1 (true if both dice show 3).",
+   "labels": [
+    "LIAR"
+   ],
+   "estimated": {
+    "LIAR": 1.0
+   },
+   "equilibrium": {
+    "LIAR": 1.0
+   },
+   "support": 0,
+   "filled": false,
+   "forced": true,
+   "text": {
+    "estimated": {
+     "LIAR": "100%"
+    },
+    "equilibrium": {
+     "LIAR": "100%"
+    }
+   },
+   "subject_note": "LIAR is the only legal action here, so the subject was not asked.",
+   "responder": {
+    "reach": 0.3333333333333333,
+    "best_response": "LIAR",
+    "values": {
+     "LIAR": 0.3333333333333333
+    },
+    "eq_mix_value": 0.3333333333333333,
+    "edge": 0.0,
+    "contribution": 0.0,
+    "share": 0.0,
+    "text": {
+     "values": {
+      "LIAR": "+0.333"
+     },
+     "eq_mix_value": "+0.333",
+     "reach": "33.3%",
+     "contribution": "0.000",
+     "share": "0.0%"
+    }
+   },
+   "responder_note": "The equilibrium mix is already a best response here, so adapting gains nothing."
+  },
+  "3 2-2": {
+   "player": 1,
+   "short": "Die 3 \u00b7 P1 2x2",
+   "situation": "You are Player 2 (you bid second).\nYour die: 3.\nBids so far: Player 1 bid 2x2.\nCurrent bid: 2x2 by Player 1 (true if both dice show 2 or 3).",
+   "labels": [
+    "2x3",
+    "LIAR"
+   ],
+   "estimated": {
+    "2x3": 0.0,
+    "LIAR": 1.0
+   },
+   "equilibrium": {
+    "2x3": 0.9999997501249376,
+    "LIAR": 2.498750624687656e-07
+   },
+   "support": 200,
+   "filled": false,
+   "forced": false,
+   "text": {
+    "estimated": {
+     "2x3": "0%",
+     "LIAR": "100%"
+    },
+    "equilibrium": {
+     "2x3": "100%",
+     "LIAR": "0%"
+    }
+   },
+   "subject_note": "The subject plays 2x3 0% of the time here (from 200 valid samples); the equilibrium plays it 100%.",
+   "replies": {
+    "attempts": 200,
+    "failures": 0,
+    "examples": []
+   },
+   "responder": {
+    "reach": 0.0,
+    "best_response": "2x3",
+    "values": {
+     "2x3": null,
+     "LIAR": null
+    },
+    "eq_mix_value": null,
+    "edge": null,
+    "contribution": 0.0,
+    "share": 0.0,
+    "text": {
+     "values": {
+      "2x3": "\u2014",
+      "LIAR": "\u2014"
+     },
+     "eq_mix_value": "\u2014",
+     "reach": "0.0%",
+     "contribution": "0.000",
+     "share": "0.0%"
+    }
+   },
+   "responder_note": "With the opponent at equilibrium this situation never arises against this subject, so it adds nothing to the best responder's gain."
+  },
+  "1 2-2": {
+   "player": 1,
+   "short": "Die 1 \u00b7 P1 2x2",
+   "situation": "You are Player 2 (you bid second).\nYour die: 1.\nBids so far: Player 1 bid 2x2.\nCurrent bid: 2x2 by Player 1 (true if both dice show 2 or 3).",
+   "labels": [
+    "2x3",
+    "LIAR"
+   ],
+   "estimated": {
+    "2x3": 0.0,
+    "LIAR": 1.0
+   },
+   "equilibrium": {
+    "2x3": 2.498750624687656e-07,
+    "LIAR": 0.9999997501249376
+   },
+   "support": 200,
+   "filled": false,
+   "forced": false,
+   "text": {
+    "estimated": {
+     "2x3": "0%",
+     "LIAR": "100%"
+    },
+    "equilibrium": {
+     "2x3": "0%",
+     "LIAR": "100%"
+    }
+   },
+   "subject_note": "Close to equilibrium: the largest gap is 2x3 at 0% against 0% for the equilibrium (from 200 valid samples).",
+   "replies": {
+    "attempts": 200,
+    "failures": 0,
+    "examples": []
+   },
+   "responder": {
+    "reach": 0.0,
+    "best_response": "2x3",
+    "values": {
+     "2x3": null,
+     "LIAR": null
+    },
+    "eq_mix_value": null,
+    "edge": null,
+    "contribution": 0.0,
+    "share": 0.0,
+    "text": {
+     "values": {
+      "2x3": "\u2014",
+      "LIAR": "\u2014"
+     },
+     "eq_mix_value": "\u2014",
+     "reach": "0.0%",
+     "contribution": "0.000",
+     "share": "0.0%"
+    }
+   },
+   "responder_note": "With the opponent at equilibrium this situation never arises against this subject, so it adds nothing to the best responder's gain."
+  },
+  "2 2-1": {
+   "player": 1,
+   "short": "Die 2 \u00b7 P1 2x1",
+   "situation": "You are Player 2 (you bid second).\nYour die: 2.\nBids so far: Player 1 bid 2x1.\nCurrent bid: 2x1 by Player 1 (true if both dice show 1 or 3).",
+   "labels": [
+    "2x2",
+    "2x3",
+    "LIAR"
+   ],
+   "estimated": {
+    "2x2": 0.0,
+    "2x3": 0.0,
+    "LIAR": 1.0
+   },
+   "equilibrium": {
+    "2x2": 1.6658337497917709e-07,
+    "2x3": 1.6658337497917709e-07,
+    "LIAR": 0.99999966683325
+   },
+   "support": 200,
+   "filled": false,
+   "forced": false,
+   "text": {
+    "estimated": {
+     "2x2": "0%",
+     "2x3": "0%",
+     "LIAR": "100%"
+    },
+    "equilibrium": {
+     "2x2": "0%",
+     "2x3": "0%",
+     "LIAR": "100%"
+    }
+   },
+   "subject_note": "Close to equilibrium: the largest gap is LIAR at 100% against 100% for the equilibrium (from 200 valid samples).",
+   "replies": {
+    "attempts": 200,
+    "failures": 0,
+    "examples": []
+   },
+   "responder": {
+    "reach": 0.0,
+    "best_response": "2x2",
+    "values": {
+     "2x2": null,
+     "2x3": null,
+     "LIAR": null
+    },
+    "eq_mix_value": null,
+    "edge": null,
+    "contribution": 0.0,
+    "share": 0.0,
+    "text": {
+     "values": {
+      "2x2": "\u2014",
+      "2x3": "\u2014",
+      "LIAR": "\u2014"
+     },
+     "eq_mix_value": "\u2014",
+     "reach": "0.0%",
+     "contribution": "0.000",
+     "share": "0.0%"
+    }
+   },
+   "responder_note": "With the opponent at equilibrium this situation never arises against this subject, so it adds nothing to the best responder's gain."
+  },
+  "1 2-1": {
+   "player": 1,
+   "short": "Die 1 \u00b7 P1 2x1",
+   "situation": "You are Player 2 (you bid second).\nYour die: 1.\nBids so far: Player 1 bid 2x1.\nCurrent bid: 2x1 by Player 1 (true if both dice show 1 or 3).",
+   "labels": [
+    "2x2",
+    "2x3",
+    "LIAR"
+   ],
+   "estimated": {
+    "2x2": 0.0,
+    "2x3": 0.0,
+    "LIAR": 1.0
+   },
+   "equilibrium": {
+    "2x2": 0.8746242281244121,
+    "2x3": 1.665833749791771e-07,
+    "LIAR": 0.12537560529221292
+   },
+   "support": 200,
+   "filled": false,
+   "forced": false,
+   "text": {
+    "estimated": {
+     "2x2": "0%",
+     "2x3": "0%",
+     "LIAR": "100%"
+    },
+    "equilibrium": {
+     "2x2": "87%",
+     "2x3": "0%",
+     "LIAR": "13%"
+    }
+   },
+   "subject_note": "The subject plays LIAR 100% of the time here (from 200 valid samples); the equilibrium plays it 13%.",
+   "replies": {
+    "attempts": 200,
+    "failures": 0,
+    "examples": []
+   },
+   "responder": {
+    "reach": 0.0,
+    "best_response": "2x2",
+    "values": {
+     "2x2": null,
+     "2x3": null,
+     "LIAR": null
+    },
+    "eq_mix_value": null,
+    "edge": null,
+    "contribution": 0.0,
+    "share": 0.0,
+    "text": {
+     "values": {
+      "2x2": "\u2014",
+      "2x3": "\u2014",
+      "LIAR": "\u2014"
+     },
+     "eq_mix_value": "\u2014",
+     "reach": "0.0%",
+     "contribution": "0.000",
+     "share": "0.0%"
+    }
+   },
+   "responder_note": "With the opponent at equilibrium this situation never arises against this subject, so it adds nothing to the best responder's gain."
+  }
+ },
+ "hands": [
+  {
+   "subject_seat": 1,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 3"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 1"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "3",
+     "action": "1x1"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "1 1-1",
+     "action": "LIAR"
+    }
+   ],
+   "id": "key-p2-1",
+   "group": "key",
+   "title": "Biggest gain 1 against the subject as Player 2",
+   "focus": "3"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 2"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 1"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "2",
+     "action": "1x2"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "1 1-2",
+     "action": "LIAR"
+    }
+   ],
+   "id": "key-p2-2",
+   "group": "key",
+   "title": "Biggest gain 2 against the subject as Player 2",
+   "focus": "2"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 1"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 2"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1",
+     "action": "1x1"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "2 1-1",
+     "action": "LIAR"
+    }
+   ],
+   "id": "key-p2-3",
+   "group": "key",
+   "title": "Biggest gain 3 against the subject as Player 2",
+   "focus": "1"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 2"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 1"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "2",
+     "action": "2x3"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "1 2-3",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-1",
+   "group": "simulated",
+   "title": "Simulated round 1"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 3"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 2"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "3",
+     "action": "2x3"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "2 2-3",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-2",
+   "group": "simulated",
+   "title": "Simulated round 2"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 1"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 2"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "1",
+     "action": "2x3"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "2 2-3",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-3",
+   "group": "simulated",
+   "title": "Simulated round 3"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 3"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 3"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "3",
+     "action": "2x1"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "3 2-1",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-4",
+   "group": "simulated",
+   "title": "Simulated round 4"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 3"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 1"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "3",
+     "action": "2x3"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "1 2-3",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-5",
+   "group": "simulated",
+   "title": "Simulated round 5"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 2"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 2"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "2",
+     "action": "2x2"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "2 2-2",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-6",
+   "group": "simulated",
+   "title": "Simulated round 6"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 2"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 1"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "2",
+     "action": "2x3"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "1 2-3",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-7",
+   "group": "simulated",
+   "title": "Simulated round 7"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 1"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 3"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1",
+     "action": "2x1"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "3 2-1",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-8",
+   "group": "simulated",
+   "title": "Simulated round 8"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 3"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 3"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "3",
+     "action": "2x3"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "3 2-3",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-9",
+   "group": "simulated",
+   "title": "Simulated round 9"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 2"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 3"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "2",
+     "action": "2x2"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "3 2-2",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-10",
+   "group": "simulated",
+   "title": "Simulated round 10"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 2"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 1"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "2",
+     "action": "2x3"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "1 2-3",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-11",
+   "group": "simulated",
+   "title": "Simulated round 11"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 2"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 1"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "2",
+     "action": "2x2"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "1 2-2",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-12",
+   "group": "simulated",
+   "title": "Simulated round 12"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 2"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 2"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "2",
+     "action": "2x3"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "2 2-3",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-13",
+   "group": "simulated",
+   "title": "Simulated round 13"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 2"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 1"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "2",
+     "action": "2x2"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "1 2-2",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-14",
+   "group": "simulated",
+   "title": "Simulated round 14"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 2"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 1"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "2",
+     "action": "2x3"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "1 2-3",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-15",
+   "group": "simulated",
+   "title": "Simulated round 15"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 2"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 1"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "2",
+     "action": "2x2"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "1 2-2",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-16",
+   "group": "simulated",
+   "title": "Simulated round 16"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 3"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 2"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "3",
+     "action": "2x3"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "2 2-3",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-17",
+   "group": "simulated",
+   "title": "Simulated round 17"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 2"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 3"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "2",
+     "action": "2x2"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "3 2-2",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-18",
+   "group": "simulated",
+   "title": "Simulated round 18"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 3"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 1"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "3",
+     "action": "2x3"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "1 2-3",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-19",
+   "group": "simulated",
+   "title": "Simulated round 19"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 1"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 2"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1",
+     "action": "2x1"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "2 2-1",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-20",
+   "group": "simulated",
+   "title": "Simulated round 20"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 3"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 1"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "3",
+     "action": "2x3"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "1 2-3",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-21",
+   "group": "simulated",
+   "title": "Simulated round 21"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 2"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 3"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "2",
+     "action": "2x2"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "3 2-2",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-22",
+   "group": "simulated",
+   "title": "Simulated round 22"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 2"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 1"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "2",
+     "action": "2x3"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "1 2-3",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-23",
+   "group": "simulated",
+   "title": "Simulated round 23"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 2"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 1"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "2",
+     "action": "2x2"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "1 2-2",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-24",
+   "group": "simulated",
+   "title": "Simulated round 24"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 2"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 1"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "2",
+     "action": "2x3"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "1 2-3",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-25",
+   "group": "simulated",
+   "title": "Simulated round 25"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 2"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 2"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "2",
+     "action": "2x2"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "2 2-2",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-26",
+   "group": "simulated",
+   "title": "Simulated round 26"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 3"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 3"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "3",
+     "action": "2x3"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "3 2-3",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-27",
+   "group": "simulated",
+   "title": "Simulated round 27"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 3"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 2"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "3",
+     "action": "2x1"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "2 2-1",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-28",
+   "group": "simulated",
+   "title": "Simulated round 28"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 3"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 3"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "3",
+     "action": "2x3"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "3 2-3",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-29",
+   "group": "simulated",
+   "title": "Simulated round 29"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 1"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 2"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1",
+     "action": "2x1"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "2 2-1",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-30",
+   "group": "simulated",
+   "title": "Simulated round 30"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 1"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 3"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "1",
+     "action": "2x3"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "3 2-3",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-31",
+   "group": "simulated",
+   "title": "Simulated round 31"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 1"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 1"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1",
+     "action": "2x1"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "1 2-1",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-32",
+   "group": "simulated",
+   "title": "Simulated round 32"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 1"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 3"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "1",
+     "action": "2x3"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "3 2-3",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-33",
+   "group": "simulated",
+   "title": "Simulated round 33"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 2"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 2"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "2",
+     "action": "2x2"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "2 2-2",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-34",
+   "group": "simulated",
+   "title": "Simulated round 34"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 2"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 2"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "2",
+     "action": "2x3"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "2 2-3",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-35",
+   "group": "simulated",
+   "title": "Simulated round 35"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 1"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 2"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1",
+     "action": "2x1"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "2 2-1",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-36",
+   "group": "simulated",
+   "title": "Simulated round 36"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 2"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 2"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "2",
+     "action": "2x3"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "2 2-3",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-37",
+   "group": "simulated",
+   "title": "Simulated round 37"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 2"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 1"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "2",
+     "action": "2x2"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "1 2-2",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-38",
+   "group": "simulated",
+   "title": "Simulated round 38"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 1"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 1"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "1",
+     "action": "2x3"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "1 2-3",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-39",
+   "group": "simulated",
+   "title": "Simulated round 39"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 3"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 1"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "3",
+     "action": "2x2"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "1 2-2",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-40",
+   "group": "simulated",
+   "title": "Simulated round 40"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 2"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 2"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "2",
+     "action": "2x3"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "2 2-3",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-41",
+   "group": "simulated",
+   "title": "Simulated round 41"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 1"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 3"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1",
+     "action": "2x1"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "3 2-1",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-42",
+   "group": "simulated",
+   "title": "Simulated round 42"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 3"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 1"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "3",
+     "action": "2x3"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "1 2-3",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-43",
+   "group": "simulated",
+   "title": "Simulated round 43"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 2"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 3"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "2",
+     "action": "2x2"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "3 2-2",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-44",
+   "group": "simulated",
+   "title": "Simulated round 44"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 3"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 3"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "3",
+     "action": "2x3"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "3 2-3",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-45",
+   "group": "simulated",
+   "title": "Simulated round 45"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 1"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 1"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1",
+     "action": "2x1"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "1 2-1",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-46",
+   "group": "simulated",
+   "title": "Simulated round 46"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 3"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 2"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "3",
+     "action": "2x3"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "2 2-3",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-47",
+   "group": "simulated",
+   "title": "Simulated round 47"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 2"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 2"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "2",
+     "action": "2x2"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "2 2-2",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-48",
+   "group": "simulated",
+   "title": "Simulated round 48"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 3"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 2"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "3",
+     "action": "2x3"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "2 2-3",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-49",
+   "group": "simulated",
+   "title": "Simulated round 49"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 2"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 2"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "2",
+     "action": "2x2"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "2 2-2",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-50",
+   "group": "simulated",
+   "title": "Simulated round 50"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 3"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 3"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "3",
+     "action": "2x3"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "3 2-3",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-51",
+   "group": "simulated",
+   "title": "Simulated round 51"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 2"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 3"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "2",
+     "action": "2x2"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "3 2-2",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-52",
+   "group": "simulated",
+   "title": "Simulated round 52"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 2"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 1"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "2",
+     "action": "2x3"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "1 2-3",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-53",
+   "group": "simulated",
+   "title": "Simulated round 53"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 1"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 1"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1",
+     "action": "2x1"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "1 2-1",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-54",
+   "group": "simulated",
+   "title": "Simulated round 54"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 3"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 1"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "3",
+     "action": "2x3"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "1 2-3",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-55",
+   "group": "simulated",
+   "title": "Simulated round 55"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 2"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 1"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "2",
+     "action": "2x2"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "1 2-2",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-56",
+   "group": "simulated",
+   "title": "Simulated round 56"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 2"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 2"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "2",
+     "action": "2x3"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "2 2-3",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-57",
+   "group": "simulated",
+   "title": "Simulated round 57"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 2"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 3"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "2",
+     "action": "2x2"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "3 2-2",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-58",
+   "group": "simulated",
+   "title": "Simulated round 58"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 2"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 2"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "2",
+     "action": "2x3"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "2 2-3",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-59",
+   "group": "simulated",
+   "title": "Simulated round 59"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 1"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 3"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1",
+     "action": "2x1"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "3 2-1",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-60",
+   "group": "simulated",
+   "title": "Simulated round 60"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 3"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 3"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "3",
+     "action": "2x3"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "3 2-3",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-61",
+   "group": "simulated",
+   "title": "Simulated round 61"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 2"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 2"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "2",
+     "action": "2x2"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "2 2-2",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-62",
+   "group": "simulated",
+   "title": "Simulated round 62"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 3"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 1"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "3",
+     "action": "2x3"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "1 2-3",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-63",
+   "group": "simulated",
+   "title": "Simulated round 63"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 2"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 3"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "2",
+     "action": "2x2"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "3 2-2",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-64",
+   "group": "simulated",
+   "title": "Simulated round 64"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 3"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 1"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "3",
+     "action": "2x3"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "1 2-3",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-65",
+   "group": "simulated",
+   "title": "Simulated round 65"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 1"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 1"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1",
+     "action": "2x1"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "1 2-1",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-66",
+   "group": "simulated",
+   "title": "Simulated round 66"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 1"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 2"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "1",
+     "action": "2x3"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "2 2-3",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-67",
+   "group": "simulated",
+   "title": "Simulated round 67"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 2"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 3"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "2",
+     "action": "2x2"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "3 2-2",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-68",
+   "group": "simulated",
+   "title": "Simulated round 68"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 1"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 3"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "1",
+     "action": "2x3"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "3 2-3",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-69",
+   "group": "simulated",
+   "title": "Simulated round 69"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 2"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 3"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "2",
+     "action": "2x2"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "3 2-2",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-70",
+   "group": "simulated",
+   "title": "Simulated round 70"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 3"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 1"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "3",
+     "action": "2x3"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "1 2-3",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-71",
+   "group": "simulated",
+   "title": "Simulated round 71"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 3"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 3"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "3",
+     "action": "2x1"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "3 2-1",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-72",
+   "group": "simulated",
+   "title": "Simulated round 72"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 1"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 3"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "1",
+     "action": "2x3"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "3 2-3",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-73",
+   "group": "simulated",
+   "title": "Simulated round 73"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 1"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 1"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1",
+     "action": "2x1"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "1 2-1",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-74",
+   "group": "simulated",
+   "title": "Simulated round 74"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 3"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 1"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "3",
+     "action": "2x3"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "1 2-3",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-75",
+   "group": "simulated",
+   "title": "Simulated round 75"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 1"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 3"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1",
+     "action": "2x1"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "3 2-1",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-76",
+   "group": "simulated",
+   "title": "Simulated round 76"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 1"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 1"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "1",
+     "action": "2x3"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "1 2-3",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-77",
+   "group": "simulated",
+   "title": "Simulated round 77"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 1"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 1"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1",
+     "action": "2x1"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "1 2-1",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-78",
+   "group": "simulated",
+   "title": "Simulated round 78"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 1"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 3"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "1",
+     "action": "2x3"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "3 2-3",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-79",
+   "group": "simulated",
+   "title": "Simulated round 79"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 1"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 3"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1",
+     "action": "2x1"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "3 2-1",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-80",
+   "group": "simulated",
+   "title": "Simulated round 80"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 3"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 1"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "3",
+     "action": "2x3"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "1 2-3",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-81",
+   "group": "simulated",
+   "title": "Simulated round 81"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 3"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 2"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "3",
+     "action": "2x1"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "2 2-1",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-82",
+   "group": "simulated",
+   "title": "Simulated round 82"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 1"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 1"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "1",
+     "action": "2x3"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "1 2-3",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-83",
+   "group": "simulated",
+   "title": "Simulated round 83"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 2"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 1"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "2",
+     "action": "2x2"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "1 2-2",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-84",
+   "group": "simulated",
+   "title": "Simulated round 84"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 1"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 2"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "1",
+     "action": "2x3"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "2 2-3",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-85",
+   "group": "simulated",
+   "title": "Simulated round 85"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 2"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 1"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "2",
+     "action": "2x2"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "1 2-2",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-86",
+   "group": "simulated",
+   "title": "Simulated round 86"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 1"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 2"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "1",
+     "action": "2x3"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "2 2-3",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-87",
+   "group": "simulated",
+   "title": "Simulated round 87"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 2"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 1"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "2",
+     "action": "2x2"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "1 2-2",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-88",
+   "group": "simulated",
+   "title": "Simulated round 88"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 1"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 3"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "1",
+     "action": "2x3"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "3 2-3",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-89",
+   "group": "simulated",
+   "title": "Simulated round 89"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 3"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 2"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "3",
+     "action": "2x3"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "2 2-3",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-90",
+   "group": "simulated",
+   "title": "Simulated round 90"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 2"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 2"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "2",
+     "action": "2x3"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "2 2-3",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-91",
+   "group": "simulated",
+   "title": "Simulated round 91"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 1"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 1"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1",
+     "action": "2x1"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "1 2-1",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-92",
+   "group": "simulated",
+   "title": "Simulated round 92"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 2"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 2"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "2",
+     "action": "2x3"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "2 2-3",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-93",
+   "group": "simulated",
+   "title": "Simulated round 93"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 3"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 3"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "3",
+     "action": "2x3"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "3 2-3",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-94",
+   "group": "simulated",
+   "title": "Simulated round 94"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 1"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 1"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "1",
+     "action": "2x3"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "1 2-3",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-95",
+   "group": "simulated",
+   "title": "Simulated round 95"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": 1.0,
+   "payoff_text": "+1.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 3"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 2"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "3",
+     "action": "2x1"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "2 2-1",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-96",
+   "group": "simulated",
+   "title": "Simulated round 96"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 3"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 2"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "3",
+     "action": "2x3"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "2 2-3",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-97",
+   "group": "simulated",
+   "title": "Simulated round 97"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 3"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 1"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "3",
+     "action": "2x1"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "1 2-1",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-98",
+   "group": "simulated",
+   "title": "Simulated round 98"
+  },
+  {
+   "subject_seat": 0,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 1"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 1"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "subject",
+     "infostate": "1",
+     "action": "2x3"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "opponent",
+     "infostate": "1 2-3",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-99",
+   "group": "simulated",
+   "title": "Simulated round 99"
+  },
+  {
+   "subject_seat": 1,
+   "subject_payoff": -1.0,
+   "payoff_text": "\u22121.000",
+   "steps": [
+    {
+     "kind": "chance",
+     "text": "Player 1 rolls a 1"
+    },
+    {
+     "kind": "chance",
+     "text": "Player 2 rolls a 1"
+    },
+    {
+     "kind": "decision",
+     "player": 0,
+     "role": "opponent",
+     "infostate": "1",
+     "action": "2x1"
+    },
+    {
+     "kind": "decision",
+     "player": 1,
+     "role": "subject",
+     "infostate": "1 2-1",
+     "action": "LIAR"
+    }
+   ],
+   "id": "sim-100",
+   "group": "simulated",
+   "title": "Simulated round 100"
+  }
+ ]
+}

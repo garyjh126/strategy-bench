@@ -1,0 +1,34 @@
+{
+  "config": {
+    "n_samples": 200,
+    "max_retries": 2,
+    "n_boot": 200,
+    "seed": 0,
+    "min_samples": 1,
+    "coverage_k": 5,
+    "max_calls": null,
+    "max_cost": null,
+    "concurrency": 1,
+    "eq_iterations": 2000,
+    "eq_cache_dir": "runs/equilibria",
+    "extra": {}
+  },
+  "game": "kuhn",
+  "openspiel_game": "kuhn_poker",
+  "prompt_version": "kuhn-v1",
+  "system_prompt": "You are playing Kuhn poker, a two-player card game.\nYour goal is to maximise your expected winnings.\n\nRules:\n- The deck has three cards: Jack, Queen, King (King is highest).\n- Each player antes 1 chip and is dealt one private card. The third card is not used.\n- Player 1 acts first and may CHECK or BET (1 chip).\n- If Player 1 checks, Player 2 may CHECK (go to showdown) or BET (1 chip).\n- A player facing a bet may FOLD (forfeit the pot) or CALL (match the bet and go to showdown).\n- There is at most one bet per hand. At showdown the higher card wins the pot.\n\nYou will be told your seat, your card and the actions so far, then asked for your action.",
+  "provider": "mock",
+  "model_id": "mock-cfr",
+  "params": {
+    "seed": 0,
+    "garbage_rate": 0.0,
+    "illegal_rate": 0.0,
+    "format_noise": false
+  },
+  "versions": {
+    "strategybench": "0.1.0",
+    "open_spiel": "2.0.2",
+    "numpy": "2.5.3"
+  },
+  "created": "2026-10-08T09:42:39.233736+00:00"
+}

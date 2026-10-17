@@ -1,0 +1,78 @@
+{
+  "game": "leduc",
+  "provider": "mock",
+  "model_id": "mock-cfr",
+  "params": {},
+  "prompt_version": "leduc-v1",
+  "mode": "direct",
+  "subject_kind": "distribution",
+  "n_samples": null,
+  "payoff_unit": "ante",
+  "metrics": {
+    "exploitability": 8.519074905299906e-05,
+    "br_value": [
+      -0.08555865835913168,
+      0.08572903985723768
+    ],
+    "br_gain": [
+      0.00012630982649314282,
+      4.40716716128553e-05
+    ],
+    "h2h_value": [
+      -0.08560273003074453,
+      0.08560273003074453
+    ],
+    "h2h_loss": [
+      0.0,
+      0.0
+    ],
+    "unit_size": 1.0,
+    "exploitability_norm": 8.519074905299906e-05,
+    "br_gain_norm": [
+      0.00012630982649314282,
+      4.40716716128553e-05
+    ],
+    "h2h_loss_norm": [
+      0.0,
+      0.0
+    ]
+  },
+  "ci_method": null,
+  "ci95": {},
+  "ci95_percentile": {},
+  "bias_corrected": {},
+  "bias": {},
+  "equilibrium": {
+    "values": [
+      -0.08560273003074453,
+      0.08560273003074453
+    ],
+    "exploitability": 8.519074905299906e-05
+  },
+  "reliability": {
+    "samples": 288,
+    "attempts": 288,
+    "parse_failures": 0,
+    "illegal": 0,
+    "samples_retried": 0,
+    "samples_failed": 0,
+    "live_calls": 0,
+    "cache_hits": 288,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "parse_failure_rate": 0.0,
+    "illegal_action_rate": 0.0,
+    "retry_rate": 0.0,
+    "sample_failure_rate": 0.0
+  },
+  "cost_usd_estimated": null,
+  "coverage": {
+    "k=1": 1.0
+  },
+  "filled": {
+    "count": 0,
+    "of": 288,
+    "keys": []
+  },
+  "run_date": "2026-10-08"
+}

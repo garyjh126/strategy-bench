@@ -1,0 +1,78 @@
+{
+  "game": "kuhn",
+  "provider": "mock",
+  "model_id": "mock-cfr",
+  "params": {},
+  "prompt_version": "kuhn-v1",
+  "mode": "direct",
+  "subject_kind": "distribution",
+  "n_samples": null,
+  "payoff_unit": "ante",
+  "metrics": {
+    "exploitability": 4.3648619373171105e-05,
+    "br_value": [
+      -0.05548838705065384,
+      0.055575684289400185
+    ],
+    "br_gain": [
+      2.0039547228400956e-05,
+      6.725769151794125e-05
+    ],
+    "h2h_value": [
+      -0.055555644742171784,
+      0.055555644742171784
+    ],
+    "h2h_loss": [
+      0.0,
+      0.0
+    ],
+    "unit_size": 1.0,
+    "exploitability_norm": 4.3648619373171105e-05,
+    "br_gain_norm": [
+      2.0039547228400956e-05,
+      6.725769151794125e-05
+    ],
+    "h2h_loss_norm": [
+      0.0,
+      0.0
+    ]
+  },
+  "ci_method": null,
+  "ci95": {},
+  "ci95_percentile": {},
+  "bias_corrected": {},
+  "bias": {},
+  "equilibrium": {
+    "values": [
+      -0.055555644742171784,
+      0.055555644742171784
+    ],
+    "exploitability": 4.3648619373171105e-05
+  },
+  "reliability": {
+    "samples": 12,
+    "attempts": 12,
+    "parse_failures": 0,
+    "illegal": 0,
+    "samples_retried": 0,
+    "samples_failed": 0,
+    "live_calls": 0,
+    "cache_hits": 12,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "parse_failure_rate": 0.0,
+    "illegal_action_rate": 0.0,
+    "retry_rate": 0.0,
+    "sample_failure_rate": 0.0
+  },
+  "cost_usd_estimated": null,
+  "coverage": {
+    "k=1": 1.0
+  },
+  "filled": {
+    "count": 0,
+    "of": 12,
+    "keys": []
+  },
+  "run_date": "2026-10-08"
+}

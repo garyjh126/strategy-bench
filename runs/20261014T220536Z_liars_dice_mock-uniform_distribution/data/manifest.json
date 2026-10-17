@@ -1,0 +1,29 @@
+{
+  "config": {
+    "n_samples": 200,
+    "max_retries": 2,
+    "n_boot": 200,
+    "seed": 0,
+    "min_samples": 1,
+    "coverage_k": 5,
+    "max_calls": null,
+    "max_cost": null,
+    "concurrency": 1,
+    "eq_iterations": 2000,
+    "eq_cache_dir": "runs/equilibria",
+    "extra": {}
+  },
+  "game": "liars_dice",
+  "openspiel_game": "liars_dice(numdice=1,dice_sides=3)",
+  "prompt_version": "liars_dice-v1",
+  "system_prompt": "You are playing Liar's Dice, a two-player bluffing game.\nYour goal is to maximise your expected winnings.\n\nRules:\n- Each player rolls one die with three faces: 1, 2 and 3. You see only your own die.\n- A bid QxF claims that at least Q of the two dice show face F.\n- 3s are wild: a die showing 3 also counts towards a bid on face 1 or face 2. A bid on face 3\n  counts only dice showing 3. For example, 1x2 is true if at least one die shows 2 or 3, and\n  2x3 is true only if both dice show 3.\n- Player 1 makes the first bid. The players then take turns.\n- On your turn, either make a higher bid or call LIAR to challenge the current bid.\n  LIAR cannot be called before the first bid.\n- A higher bid has a higher quantity, or the same quantity and a higher face. From lowest to\n  highest the bids are 1x1, 1x2, 1x3, 2x1, 2x2, 2x3. After 2x3, LIAR is the only option.\n- When LIAR is called, both dice are revealed. If the current bid is true, the player who made it\n  wins; otherwise the player who called LIAR wins.\n- The winner gains 1 point and the loser loses 1 point. The game ends when LIAR is called.\n\nYou will be told your seat, your die and the bids so far, then asked for your action.",
+  "provider": "mock",
+  "model_id": "mock-uniform",
+  "params": {},
+  "versions": {
+    "strategybench": "0.1.0",
+    "open_spiel": "2.0.2",
+    "numpy": "2.5.3"
+  },
+  "created": "2026-10-14T22:05:36.809808+00:00"
+}

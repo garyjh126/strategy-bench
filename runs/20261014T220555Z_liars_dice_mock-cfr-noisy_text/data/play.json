@@ -1,0 +1,76 @@
+{
+  "game": "liars_dice",
+  "model_id": "mock-cfr-noisy",
+  "mode": "play",
+  "play": {
+    "opponent": "equilibrium",
+    "n_hands": 20000,
+    "seed": 0,
+    "seat_hands": [
+      10000,
+      10000
+    ],
+    "seat_mean": [
+      0.0362,
+      -0.1812
+    ],
+    "seat_stderr": [
+      0.009993945361787278,
+      0.009834954429628196
+    ],
+    "seat_ci95": [
+      [
+        0.016611867090896938,
+        0.05578813290910307
+      ],
+      [
+        -0.20047651068207126,
+        -0.16192348931792874
+      ]
+    ],
+    "subject_decisions": 24826,
+    "fallbacks": 4,
+    "fallback_rate": 0.0001611214049786514
+  },
+  "reliability": {
+    "samples": 24826,
+    "attempts": 26161,
+    "parse_failures": 1339,
+    "illegal": 0,
+    "samples_retried": 1270,
+    "samples_failed": 4,
+    "live_calls": 0,
+    "cache_hits": 26161,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cost_usd": 0.0,
+    "parse_failure_rate": 0.05118305875157678,
+    "illegal_action_rate": 0.0,
+    "retry_rate": 0.05115604608072182,
+    "sample_failure_rate": 0.0001611214049786514
+  },
+  "cost_usd_estimated": null,
+  "cost_usd_live": null,
+  "cross_check": [
+    {
+      "seat": 0,
+      "exact": 0.010472335708581373,
+      "exact_se": 0.0098957718919019,
+      "simulated": 0.0362,
+      "simulated_se": 0.009993945361787278,
+      "difference": 0.02572766429141863,
+      "z": 1.829285358666403,
+      "agree": true
+    },
+    {
+      "seat": 1,
+      "exact": -0.19783557783084504,
+      "exact_se": 0.00989235826137076,
+      "simulated": -0.1812,
+      "simulated_se": 0.009834954429628196,
+      "difference": 0.016635577830845044,
+      "z": 1.1925679160289737,
+      "agree": true
+    }
+  ]
+}

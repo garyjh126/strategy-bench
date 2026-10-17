@@ -1,0 +1,143 @@
+{
+  "game": "leduc",
+  "provider": "typesafe",
+  "model_id": "jev-1.13.0",
+  "params": {},
+  "prompt_version": "leduc-v1",
+  "mode": "direct",
+  "subject_kind": "distribution",
+  "n_samples": 20,
+  "payoff_unit": "ante",
+  "metrics": {
+    "exploitability": 1.0929612927417511,
+    "br_value": [
+      0.9361950487156128,
+      1.2497275367678895
+    ],
+    "br_gain": [
+      1.164124806737145,
+      1.0217977787463572
+    ],
+    "h2h_value": [
+      -0.44204393103489875,
+      -0.222822623213143
+    ],
+    "h2h_loss": [
+      0.3564412010041542,
+      0.30842535324388753
+    ],
+    "unit_size": 1.0,
+    "exploitability_norm": 1.0929612927417511,
+    "br_gain_norm": [
+      1.164124806737145,
+      1.0217977787463572
+    ],
+    "h2h_loss_norm": [
+      0.3564412010041542,
+      0.30842535324388753
+    ]
+  },
+  "ci_method": "basic",
+  "ci95": {
+    "exploitability": [
+      1.0862488620840374,
+      1.1007563744956463
+    ],
+    "br_gain_0": [
+      1.1548556969122037,
+      1.1714761163221592
+    ],
+    "br_gain_1": [
+      1.0111863328959583,
+      1.033082814230222
+    ],
+    "h2h_loss_0": [
+      0.3541457840597601,
+      0.35873315669815237
+    ],
+    "h2h_loss_1": [
+      0.3060475362280664,
+      0.3109058182217399
+    ]
+  },
+  "ci95_percentile": {
+    "exploitability": [
+      1.085166210987856,
+      1.099673723399465
+    ],
+    "br_gain_0": [
+      1.1567734971521308,
+      1.1733939165620864
+    ],
+    "br_gain_1": [
+      1.0105127432624925,
+      1.0324092245967562
+    ],
+    "h2h_loss_0": [
+      0.35414924531015607,
+      0.35873661794854833
+    ],
+    "h2h_loss_1": [
+      0.30594488826603516,
+      0.31080317025970866
+    ]
+  },
+  "bias_corrected": {
+    "exploitability": 1.0930671168002712,
+    "br_gain_0": 1.1635193997871653,
+    "br_gain_1": 1.022614833813377,
+    "h2h_loss_0": 0.35632294568924594,
+    "h2h_loss_1": 0.30842636350957353
+  },
+  "bias": {
+    "exploitability_bootstrap_bias": -0.00010582405852010979,
+    "exploitability_bias_corrected": 1.0930671168002712,
+    "bootstrap_bias": {
+      "exploitability": -0.00010582405852010979,
+      "br_gain_0": 0.000605406949979681,
+      "br_gain_1": -0.0008170550670196786,
+      "h2h_loss_0": 0.00011825531490827768,
+      "h2h_loss_1": -1.010265685996714e-06
+    }
+  },
+  "equilibrium": {
+    "values": [
+      -0.08560273003074453,
+      0.08560273003074453
+    ],
+    "exploitability": 8.519074905299906e-05
+  },
+  "reliability": {
+    "samples": 5760,
+    "attempts": 5760,
+    "parse_failures": 0,
+    "illegal": 0,
+    "samples_retried": 0,
+    "samples_failed": 0,
+    "rescaled": 25,
+    "live_calls": 0,
+    "cache_hits": 5760,
+    "input_tokens": 3989760,
+    "output_tokens": 199144,
+    "cost_usd": 0.16756992000000098,
+    "parse_failure_rate": 0.0,
+    "illegal_action_rate": 0.0,
+    "retry_rate": 0.0,
+    "sample_failure_rate": 0.0
+  },
+  "cost_usd_estimated": 0.16756992000000098,
+  "cost_usd_live": 0.0,
+  "coverage": {
+    "k=1": 1.0
+  },
+  "filled": {
+    "count": 0,
+    "of": 288,
+    "keys": []
+  },
+  "forced": {
+    "count": 0,
+    "keys": []
+  },
+  "run_date": "2026-10-17"
+}

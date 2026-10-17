@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>80% equilibrium, 20% uniform on Kuhn poker · StrategyBench</title>
+<meta name="description" content="StrategyBench measures how exploitable AI agents are in small card and dice games, with exact best responses and bootstrap confidence intervals.">
+<link rel="stylesheet" href="../../assets/style.css">
+<script>try{var t=localStorage.getItem("sb-theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
+</head>
+<body class="page-run">
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap header-row">
+    <a class="brand" href="../../index.html">StrategyBench</a>
+    <nav aria-label="Site">
+      <a href="../../index.html">Leaderboard</a>
+      <a href="../../methodology.html">Methodology</a>
+    </nav>
+    <button class="theme-toggle" type="button" aria-label="Switch colour theme" title="Switch colour theme">
+      <svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><circle cx="10" cy="10" r="7.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M10 2.5a7.5 7.5 0 0 1 0 15z" fill="currentColor"/></svg>
+    </button>
+  </div>
+</header>
+<main id="main" class="wrap">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="../../index.html">Leaderboard</a> <span aria-hidden="true">/</span> <a href="../../index.html#kuhn">Kuhn poker</a></nav>
+
+<header class="run-head">
+  <h1>80% equilibrium, 20% uniform <span class="chip">reference</span></h1>
+  <p class="sub">scripted reference · sampled · 5% malformed replies · format noise · Kuhn poker · prompt <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json#/prompt_version" data-fmt="text" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json /prompt_version">kuhn-v1</span> · run <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json#/run_date" data-fmt="text" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json /run_date">2026-10-08</span></p>
+  <div class="notice" role="note">This is a <strong>scripted reference subject</strong>, not an LLM. It answers through the same text interface (prompts, strict parser, retries) so the pipeline can be checked against known values.</div>
+  <p><a class="button" href="replay.html">Replay hands</a></p>
+</header>
+
+<section aria-labelledby="headline">
+  <h2 id="headline" class="visually-hidden">Headline metrics</h2>
+  <div class="tiles">
+    <div class="tile hero">
+      <div class="label">Exploitability (M1)</div>
+      <div class="value"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json#/bias_corrected/exploitability" data-fmt="f3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json /bias_corrected/exploitability">0.079</span></div>
+      <div class="sub">antes per hand · 95% interval [<span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json#/ci95/exploitability/0" data-fmt="f3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json /ci95/exploitability/0">0.046</span>, <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json#/ci95/exploitability/1" data-fmt="f3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json /ci95/exploitability/1">0.107</span>]</div>
+<div class="sub">bias-corrected; plug-in <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json#/metrics/exploitability_norm" data-fmt="f3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json /metrics/exploitability_norm">0.083</span></div>    </div>
+    <div class="tile">
+      <div class="label">Best-response gain as Player 1 (M2)</div>
+      <div class="value"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json#/bias_corrected/br_gain_0" data-fmt="f3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json /bias_corrected/br_gain_0">0.050</span></div>
+<div class="sub">[<span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json#/ci95/br_gain_0/0" data-fmt="f3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json /ci95/br_gain_0/0">0.021</span>, <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json#/ci95/br_gain_0/1" data-fmt="f3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json /ci95/br_gain_0/1">0.074</span>] · plug-in <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json#/metrics/br_gain_norm/0" data-fmt="f3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json /metrics/br_gain_norm/0">0.053</span></div>    </div>
+    <div class="tile">
+      <div class="label">Best-response gain as Player 2 (M2)</div>
+      <div class="value"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json#/bias_corrected/br_gain_1" data-fmt="f3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json /bias_corrected/br_gain_1">0.108</span></div>
+<div class="sub">[<span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json#/ci95/br_gain_1/0" data-fmt="f3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json /ci95/br_gain_1/0">0.054</span>, <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json#/ci95/br_gain_1/1" data-fmt="f3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json /ci95/br_gain_1/1">0.156</span>] · plug-in <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json#/metrics/br_gain_norm/1" data-fmt="f3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json /metrics/br_gain_norm/1">0.113</span></div>    </div>
+    <div class="tile">
+      <div class="label">Loss vs equilibrium as Player 1 (M3)</div>
+      <div class="value"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json#/bias_corrected/h2h_loss_0" data-fmt="f3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json /bias_corrected/h2h_loss_0">0.019</span></div>
+<div class="sub">[<span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json#/ci95/h2h_loss_0/0" data-fmt="f3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json /ci95/h2h_loss_0/0">0.014</span>, <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json#/ci95/h2h_loss_0/1" data-fmt="f3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json /ci95/h2h_loss_0/1">0.023</span>] · plug-in <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json#/metrics/h2h_loss_norm/0" data-fmt="f3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json /metrics/h2h_loss_norm/0">0.018</span></div>    </div>
+    <div class="tile">
+      <div class="label">Loss vs equilibrium as Player 2 (M3)</div>
+      <div class="value"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json#/bias_corrected/h2h_loss_1" data-fmt="f3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json /bias_corrected/h2h_loss_1">0.040</span></div>
+<div class="sub">[<span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json#/ci95/h2h_loss_1/0" data-fmt="f3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json /ci95/h2h_loss_1/0">0.032</span>, <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json#/ci95/h2h_loss_1/1" data-fmt="f3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json /ci95/h2h_loss_1/1">0.049</span>] · plug-in <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json#/metrics/h2h_loss_norm/1" data-fmt="f3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json /metrics/h2h_loss_norm/1">0.040</span></div>    </div>
+    <div class="tile">
+      <div class="label">Parse failures (M4)</div>
+      <div class="value"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json#/reliability/parse_failure_rate" data-fmt="pct1" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json /reliability/parse_failure_rate">4.6%</span></div>
+      <div class="sub">of attempts</div>
+    </div>
+    <div class="tile">
+      <div class="label">Coverage (M4)</div>
+      <div class="value"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json#/coverage/k=5" data-fmt="pct1" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json /coverage/k=5">100.0%</span></div>
+      <div class="sub">reach-weighted, k=5</div>
+    </div>
+  </div>
+</section>
+
+<section aria-labelledby="gains">
+  <h2 id="gains">Where a best responder gains</h2>
+  <p class="lede">The best-response gain in each seat splits exactly into what an equilibrium opponent wins without adapting (M3) plus what adapting adds at each of the opponent's decisions. A decision's contribution is how often it arises (with the opponent at equilibrium) times how much more the best response earns there than the equilibrium mix, with the best response played afterwards.</p>
+<p class="note">This section analyses the estimated strategy itself, so its totals are the plug-in values, before bias correction.</p>  <div class="seat-panel">
+    <h3>Subject as Player 1</h3>
+    <p class="equation">Gain <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/gain" data-fmt="f3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/gain">0.053</span> = without adapting <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/passive" data-fmt="f3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/passive">0.018</span> + adapting <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/active" data-fmt="f3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/active">0.034</span> <span class="muted">antes per hand</span></p>
+    <figure class="chart barlist"><div class="bl-row" tabindex="0" data-tip="Queen · Player 1 bet: best response CALL, adds 0.029 ante per hand"><div class="bl-name">Queen · Player 1 bet</div><div class="bl-track"><i class="grid" style="left:0.000%"></i><i class="grid" style="left:33.333%"></i><i class="grid" style="left:66.667%"></i><i class="grid" style="left:100.000%"></i><span class="bl-bar" style="width:96.261%"></span><span class="bl-val" style="left:96.261%"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/responder/0/contribution" data-fmt="f3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/responder/0/contribution">0.029</span></span></div></div><div class="bl-row" tabindex="0" data-tip="Jack · Player 1 checked: best response BET, adds 0.005 ante per hand"><div class="bl-name">Jack · Player 1 checked</div><div class="bl-track"><i class="grid" style="left:0.000%"></i><i class="grid" style="left:33.333%"></i><i class="grid" style="left:66.667%"></i><i class="grid" style="left:100.000%"></i><span class="bl-bar" style="width:17.524%"></span><span class="bl-val" style="left:17.524%"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/responder/1/contribution" data-fmt="f3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/responder/1/contribution">0.005</span></span></div></div><div class="bl-axis" aria-hidden="true"><div></div><div class="ticks"><span style="left:0.000%">0</span><span style="left:33.333%">0.01</span><span style="left:66.667%">0.02</span><span style="left:100.000%">0.03</span></div></div><figcaption>Contribution of each of Player 2's situations to the best responder's gain, in antes per hand. Hover or focus a bar for details; the table lists every situation.</figcaption></figure>
+    <article class="example">
+      <h4>Queen · Player 1 bet <span class="muted">(Player 2 to act)</span></h4>
+      <p>A best responder plays CALL here, earning <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/responder/0/values/CALL" data-fmt="sf3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/responder/0/values/CALL">−0.711</span> ante per visit against <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/responder/0/eq_mix_value" data-fmt="sf3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/responder/0/eq_mix_value">−0.904</span> for the equilibrium mix. The situation arises in <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/responder/0/reach" data-fmt="pct1" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/responder/0/reach">15.0%</span> of hands with the subject as Player 1, adding <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/responder/0/contribution" data-fmt="f3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/responder/0/contribution">0.029</span> ante per hand (<span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/responder/0/share" data-fmt="pct1" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/responder/0/share">55.0%</span> of the best responder's gain).</p>
+      <a href="replay.html#hand=key-p1-1">Replay an example hand</a>
+    </article>
+    <article class="example">
+      <h4>Jack · Player 1 checked <span class="muted">(Player 2 to act)</span></h4>
+      <p>A best responder plays BET here, earning <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/responder/1/values/BET" data-fmt="sf3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/responder/1/values/BET">−0.963</span> ante per visit against <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/responder/1/eq_mix_value" data-fmt="sf3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/responder/1/eq_mix_value">−0.988</span> for the equilibrium mix. The situation arises in <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/responder/1/reach" data-fmt="pct1" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/responder/1/reach">21.2%</span> of hands with the subject as Player 1, adding <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/responder/1/contribution" data-fmt="f3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/responder/1/contribution">0.005</span> ante per hand (<span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/responder/1/share" data-fmt="pct1" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/responder/1/share">10.0%</span> of the best responder's gain).</p>
+      <a href="replay.html#hand=key-p1-2">Replay an example hand</a>
+    </article>
+    <details>
+      <summary>Every situation for Player 2 (best responder)</summary>
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Best-responder situations, subject as Player 1">
+      <table class="data">
+        <thead><tr>
+          <th scope="col">Situation</th>
+          <th scope="col">Best response</th>
+          <th scope="col" class="r">Per visit: best response</th>
+          <th scope="col" class="r">Per visit: equilibrium mix</th>
+          <th scope="col" class="r">Reach</th>
+          <th scope="col" class="r">Contribution</th>
+          <th scope="col" class="r">Share</th>
+        </tr></thead>
+        <tbody>
+          <tr>
+            <th scope="row" title="You are Player 2 (you act second).
+Your card: Queen.
+Actions so far: Player 1 bet.">Queen · Player 1 bet</th>
+            <td>CALL</td>
+            <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/responder/0/values/CALL" data-fmt="sf3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/responder/0/values/CALL">−0.711</span></td>
+            <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/responder/0/eq_mix_value" data-fmt="sf3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/responder/0/eq_mix_value">−0.904</span></td>
+            <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/responder/0/reach" data-fmt="pct1" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/responder/0/reach">15.0%</span></td>
+            <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/responder/0/contribution" data-fmt="f3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/responder/0/contribution">0.029</span></td>
+            <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/responder/0/share" data-fmt="pct1" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/responder/0/share">55.0%</span></td>
+          </tr>
+          <tr>
+            <th scope="row" title="You are Player 2 (you act second).
+Your card: Jack.
+Actions so far: Player 1 checked.">Jack · Player 1 checked</th>
+            <td>BET</td>
+            <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/responder/1/values/BET" data-fmt="sf3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/responder/1/values/BET">−0.963</span></td>
+            <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/responder/1/eq_mix_value" data-fmt="sf3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/responder/1/eq_mix_value">−0.988</span></td>
+            <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/responder/1/reach" data-fmt="pct1" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/responder/1/reach">21.2%</span></td>
+            <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/responder/1/contribution" data-fmt="f3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/responder/1/contribution">0.005</span></td>
+            <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/responder/1/share" data-fmt="pct1" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/responder/1/share">10.0%</span></td>
+          </tr>
+          <tr>
+            <th scope="row" title="You are Player 2 (you act second).
+Your card: Queen.
+Actions so far: Player 1 checked.">Queen · Player 1 checked</th>
+            <td>CHECK</td>
+            <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/responder/2/values/CHECK" data-fmt="sf3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/responder/2/values/CHECK">+0.291</span></td>
+            <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/responder/2/eq_mix_value" data-fmt="sf3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/responder/2/eq_mix_value">+0.291</span></td>
+            <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/responder/2/reach" data-fmt="pct1" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/responder/2/reach">18.3%</span></td>
+            <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/responder/2/contribution" data-fmt="f3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/responder/2/contribution">0.000</span></td>
+            <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/responder/2/share" data-fmt="pct1" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/responder/2/share">0.0%</span></td>
+          </tr>
+          <tr>
+            <th scope="row" title="You are Player 2 (you act second).
+Your card: King.
+Actions so far: Player 1 checked.">King · Player 1 checked</th>
+            <td>BET</td>
+            <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/responder/3/values/BET" data-fmt="sf3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/responder/3/values/BET">+1.324</span></td>
+            <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/responder/3/eq_mix_value" data-fmt="sf3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/responder/3/eq_mix_value">+1.324</span></td>
+            <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/responder/3/reach" data-fmt="pct1" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/responder/3/reach">26.6%</span></td>
+            <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/responder/3/contribution" data-fmt="f3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/responder/3/contribution">0.000</span></td>
+            <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/responder/3/share" data-fmt="pct1" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/responder/3/share">0.0%</span></td>
+          </tr>
+          <tr>
+            <th scope="row" title="You are Player 2 (you act second).
+Your card: King.
+Actions so far: Player 1 bet.">King · Player 1 bet</th>
+            <td>CALL</td>
+            <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/responder/4/values/CALL" data-fmt="sf3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/responder/4/values/CALL">+2.000</span></td>
+            <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/responder/4/eq_mix_value" data-fmt="sf3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/responder/4/eq_mix_value">+2.000</span></td>
+            <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/responder/4/reach" data-fmt="pct1" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/responder/4/reach">6.7%</span></td>
+            <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/responder/4/contribution" data-fmt="f3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/responder/4/contribution">0.000</span></td>
+            <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/responder/4/share" data-fmt="pct1" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/responder/4/share">0.0%</span></td>
+          </tr>
+          <tr>
+            <th scope="row" title="You are Player 2 (you act second).
+Your card: Jack.
+Actions so far: Player 1 bet.">Jack · Player 1 bet</th>
+            <td>FOLD</td>
+            <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/responder/5/values/FOLD" data-fmt="sf3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/responder/5/values/FOLD">−1.000</span></td>
+            <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/responder/5/eq_mix_value" data-fmt="sf3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/responder/5/eq_mix_value">−1.000</span></td>
+            <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/responder/5/reach" data-fmt="pct1" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/responder/5/reach">12.1%</span></td>
+            <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/responder/5/contribution" data-fmt="f3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/responder/5/contribution">0.000</span></td>
+            <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/responder/5/share" data-fmt="pct1" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/responder/5/share">0.0%</span></td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="note">Per-visit values are the best responder's expected payoff once the situation is reached; a dash means the subject never lets it be reached.</p>
+    </details>
+  </div>
+  <div class="seat-panel">
+    <h3>Subject as Player 2</h3>
+    <p class="equation">Gain <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/gain" data-fmt="f3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/gain">0.113</span> = without adapting <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/passive" data-fmt="f3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/passive">0.040</span> + adapting <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/active" data-fmt="f3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/active">0.073</span> <span class="muted">antes per hand</span></p>
+    <figure class="chart barlist"><div class="bl-row" tabindex="0" data-tip="Jack · first to act: best response BET, adds 0.046 ante per hand"><div class="bl-name">Jack · first to act</div><div class="bl-track"><i class="grid" style="left:0.000%"></i><i class="grid" style="left:20.000%"></i><i class="grid" style="left:40.000%"></i><i class="grid" style="left:60.000%"></i><i class="grid" style="left:80.000%"></i><i class="grid" style="left:100.000%"></i><span class="bl-bar" style="width:91.977%"></span><span class="bl-val" style="left:91.977%"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/responder/0/contribution" data-fmt="f3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/responder/0/contribution">0.046</span></span></div></div><div class="bl-row" tabindex="0" data-tip="Queen · Player 1 checked, Player 2 bet: best response CALL, adds 0.018 ante per hand"><div class="bl-name">Queen · Player 1 checked, Player 2 bet</div><div class="bl-track"><i class="grid" style="left:0.000%"></i><i class="grid" style="left:20.000%"></i><i class="grid" style="left:40.000%"></i><i class="grid" style="left:60.000%"></i><i class="grid" style="left:80.000%"></i><i class="grid" style="left:100.000%"></i><span class="bl-bar" style="width:36.992%"></span><span class="bl-val" style="left:36.992%"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/responder/1/contribution" data-fmt="f3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/responder/1/contribution">0.018</span></span></div></div><div class="bl-row" tabindex="0" data-tip="King · first to act: best response CHECK, adds 0.006 ante per hand"><div class="bl-name">King · first to act</div><div class="bl-track"><i class="grid" style="left:0.000%"></i><i class="grid" style="left:20.000%"></i><i class="grid" style="left:40.000%"></i><i class="grid" style="left:60.000%"></i><i class="grid" style="left:80.000%"></i><i class="grid" style="left:100.000%"></i><span class="bl-bar" style="width:12.249%"></span><span class="bl-val" style="left:12.249%"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/responder/2/contribution" data-fmt="f3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/responder/2/contribution">0.006</span></span></div></div><div class="bl-row" tabindex="0" data-tip="Queen · first to act: best response BET, adds 0.002 ante per hand"><div class="bl-name">Queen · first to act</div><div class="bl-track"><i class="grid" style="left:0.000%"></i><i class="grid" style="left:20.000%"></i><i class="grid" style="left:40.000%"></i><i class="grid" style="left:60.000%"></i><i class="grid" style="left:80.000%"></i><i class="grid" style="left:100.000%"></i><span class="bl-bar" style="width:5.000%"></span><span class="bl-val" style="left:5.000%"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/responder/3/contribution" data-fmt="f3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/responder/3/contribution">0.002</span></span></div></div><div class="bl-axis" aria-hidden="true"><div></div><div class="ticks"><span style="left:0.000%">0</span><span style="left:20.000%">0.01</span><span style="left:40.000%">0.02</span><span style="left:60.000%">0.03</span><span style="left:80.000%">0.04</span><span style="left:100.000%">0.05</span></div></div><figcaption>Contribution of each of Player 1's situations to the best responder's gain, in antes per hand. Hover or focus a bar for details; the table lists every situation.</figcaption></figure>
+    <article class="example">
+      <h4>Jack · first to act <span class="muted">(Player 1 to act)</span></h4>
+      <p>A best responder plays BET here, earning <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/responder/0/values/BET" data-fmt="sf3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/responder/0/values/BET">−0.822</span> ante per visit against <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/responder/0/eq_mix_value" data-fmt="sf3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/responder/0/eq_mix_value">−0.960</span> for the equilibrium mix. The situation arises in <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/responder/0/reach" data-fmt="pct1" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/responder/0/reach">33.3%</span> of hands with the subject as Player 2, adding <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/responder/0/contribution" data-fmt="f3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/responder/0/contribution">0.046</span> ante per hand (<span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/responder/0/share" data-fmt="pct1" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/responder/0/share">40.7%</span> of the best responder's gain).</p>
+      <a href="replay.html#hand=key-p2-1">Replay an example hand</a>
+    </article>
+    <article class="example">
+      <h4>Queen · Player 1 checked, Player 2 bet <span class="muted">(Player 1 to act)</span></h4>
+      <p>A best responder plays CALL here, earning <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/responder/1/values/CALL" data-fmt="sf3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/responder/1/values/CALL">−0.806</span> ante per visit against <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/responder/1/eq_mix_value" data-fmt="sf3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/responder/1/eq_mix_value">−0.892</span> for the equilibrium mix. The situation arises in <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/responder/1/reach" data-fmt="pct1" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/responder/1/reach">21.5%</span> of hands with the subject as Player 2, adding <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/responder/1/contribution" data-fmt="f3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/responder/1/contribution">0.018</span> ante per hand (<span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/responder/1/share" data-fmt="pct1" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/responder/1/share">16.4%</span> of the best responder's gain).</p>
+      <a href="replay.html#hand=key-p2-2">Replay an example hand</a>
+    </article>
+    <article class="example">
+      <h4>King · first to act <span class="muted">(Player 1 to act)</span></h4>
+      <p>A best responder plays CHECK here, earning <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/responder/2/values/CHECK" data-fmt="sf3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/responder/2/values/CHECK">+1.248</span> ante per visit against <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/responder/2/eq_mix_value" data-fmt="sf3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/responder/2/eq_mix_value">+1.229</span> for the equilibrium mix. The situation arises in <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/responder/2/reach" data-fmt="pct1" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/responder/2/reach">33.3%</span> of hands with the subject as Player 2, adding <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/responder/2/contribution" data-fmt="f3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/responder/2/contribution">0.006</span> ante per hand (<span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/responder/2/share" data-fmt="pct1" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/responder/2/share">5.4%</span> of the best responder's gain).</p>
+      <a href="replay.html#hand=key-p2-3">Replay an example hand</a>
+    </article>
+    <details>
+      <summary>Every situation for Player 1 (best responder)</summary>
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Best-responder situations, subject as Player 2">
+      <table class="data">
+        <thead><tr>
+          <th scope="col">Situation</th>
+          <th scope="col">Best response</th>
+          <th scope="col" class="r">Per visit: best response</th>
+          <th scope="col" class="r">Per visit: equilibrium mix</th>
+          <th scope="col" class="r">Reach</th>
+          <th scope="col" class="r">Contribution</th>
+          <th scope="col" class="r">Share</th>
+        </tr></thead>
+        <tbody>
+          <tr>
+            <th scope="row" title="You are Player 1 (you act first).
+Your card: Jack.
+Actions so far: none.">Jack · first to act</th>
+            <td>BET</td>
+            <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/responder/0/values/BET" data-fmt="sf3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/responder/0/values/BET">−0.822</span></td>
+            <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/responder/0/eq_mix_value" data-fmt="sf3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/responder/0/eq_mix_value">−0.960</span></td>
+            <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/responder/0/reach" data-fmt="pct1" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/responder/0/reach">33.3%</span></td>
+            <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/responder/0/contribution" data-fmt="f3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/responder/0/contribution">0.046</span></td>
+            <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/responder/0/share" data-fmt="pct1" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/responder/0/share">40.7%</span></td>
+          </tr>
+          <tr>
+            <th scope="row" title="You are Player 1 (you act first).
+Your card: Queen.
+Actions so far: Player 1 checked, Player 2 bet.">Queen · Player 1 checked, Player 2 bet</th>
+            <td>CALL</td>
+            <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/responder/1/values/CALL" data-fmt="sf3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/responder/1/values/CALL">−0.806</span></td>
+            <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/responder/1/eq_mix_value" data-fmt="sf3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/responder/1/eq_mix_value">−0.892</span></td>
+            <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/responder/1/reach" data-fmt="pct1" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/responder/1/reach">21.5%</span></td>
+            <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/responder/1/contribution" data-fmt="f3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/responder/1/contribution">0.018</span></td>
+            <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/responder/1/share" data-fmt="pct1" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/responder/1/share">16.4%</span></td>
+          </tr>
+          <tr>
+            <th scope="row" title="You are Player 1 (you act first).
+Your card: King.
+Actions so far: none.">King · first to act</th>
+            <td>CHECK</td>
+            <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/responder/2/values/CHECK" data-fmt="sf3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/responder/2/values/CHECK">+1.248</span></td>
+            <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/responder/2/eq_mix_value" data-fmt="sf3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/responder/2/eq_mix_value">+1.229</span></td>
+            <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/responder/2/reach" data-fmt="pct1" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/responder/2/reach">33.3%</span></td>
+            <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/responder/2/contribution" data-fmt="f3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/responder/2/contribution">0.006</span></td>
+            <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/responder/2/share" data-fmt="pct1" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/responder/2/share">5.4%</span></td>
+          </tr>
+          <tr>
+            <th scope="row" title="You are Player 1 (you act first).
+Your card: Queen.
+Actions so far: none.">Queen · first to act</th>
+            <td>BET</td>
+            <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/responder/3/values/BET" data-fmt="sf3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/responder/3/values/BET">−0.252</span></td>
+            <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/responder/3/eq_mix_value" data-fmt="sf3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/responder/3/eq_mix_value">−0.260</span></td>
+            <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/responder/3/reach" data-fmt="pct1" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/responder/3/reach">33.3%</span></td>
+            <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/responder/3/contribution" data-fmt="f3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/responder/3/contribution">0.002</span></td>
+            <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/responder/3/share" data-fmt="pct1" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/responder/3/share">2.2%</span></td>
+          </tr>
+          <tr>
+            <th scope="row" title="You are Player 1 (you act first).
+Your card: King.
+Actions so far: Player 1 checked, Player 2 bet.">King · Player 1 checked, Player 2 bet</th>
+            <td>CALL</td>
+            <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/responder/4/values/CALL" data-fmt="sf3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/responder/4/values/CALL">+2.000</span></td>
+            <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/responder/4/eq_mix_value" data-fmt="sf3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/responder/4/eq_mix_value">+2.000</span></td>
+            <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/responder/4/reach" data-fmt="pct1" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/responder/4/reach">2.7%</span></td>
+            <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/responder/4/contribution" data-fmt="f3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/responder/4/contribution">0.000</span></td>
+            <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/responder/4/share" data-fmt="pct1" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/responder/4/share">0.0%</span></td>
+          </tr>
+          <tr>
+            <th scope="row" title="You are Player 1 (you act first).
+Your card: Jack.
+Actions so far: Player 1 checked, Player 2 bet.">Jack · Player 1 checked, Player 2 bet</th>
+            <td>FOLD</td>
+            <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/responder/5/values/FOLD" data-fmt="sf3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/responder/5/values/FOLD">−1.000</span></td>
+            <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/responder/5/eq_mix_value" data-fmt="sf3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/responder/5/eq_mix_value">−1.000</span></td>
+            <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/responder/5/reach" data-fmt="pct1" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/responder/5/reach">13.1%</span></td>
+            <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/responder/5/contribution" data-fmt="f3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/responder/5/contribution">0.000</span></td>
+            <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/responder/5/share" data-fmt="pct1" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/responder/5/share">0.0%</span></td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="note">Per-visit values are the best responder's expected payoff once the situation is reached; a dash means the subject never lets it be reached.</p>
+    </details>
+  </div>
+</section>
+
+<section aria-labelledby="strategy">
+  <h2 id="strategy">The subject's strategy</h2>
+  <p class="lede">Action frequencies at each of the subject's decisions, against the equilibrium. Rows are ordered by reach (with the opponent at equilibrium) times the distance from equilibrium, so the situations that matter most come first.</p>
+  <div class="legend"><span><i class="key-bar"></i>Subject (estimated)</span><span><i class="key-tick"></i>Equilibrium</span></div>
+  <h3>As Player 1</h3>
+  <div class="table-wrap" tabindex="0" role="region" aria-label="Subject strategy as Player 1">
+<table class="data strategy">
+  <thead><tr>
+    <th scope="col">Situation</th>
+    <th scope="col" class="r">Reach</th>
+    <th scope="col" class="r">Valid samples</th>
+    <th scope="col" class="wide">Action frequencies</th>
+    <th scope="col" class="r" title="Total variation distance between the subject's and the equilibrium's action distributions.">Distance</th>
+  </tr></thead>
+  <tbody>
+  <tr>
+    <th scope="row" title="You are Player 1 (you act first).
+Your card: Queen.
+Actions so far: none.">Queen · first to act</th>
+    <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/subject/0/reach" data-fmt="pct1" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/subject/0/reach">33.3%</span></td>
+    <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/subject/0/support" data-fmt="int" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/subject/0/support">200</span></td>
+    <td class="wide"><div class="sbars"><div class="sb-row" tabindex="0" data-tip="CHECK: subject 88%, equilibrium 100%"><span class="sb-label">CHECK</span><span class="sb-track"><span class="sb-bar" style="width:88.50%"></span><span class="sb-tick" style="left:100.00%"></span></span><span class="sb-nums"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/subject/0/estimated/CHECK" data-fmt="pct0" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/subject/0/estimated/CHECK">88%</span> <span class="muted">eq <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/subject/0/equilibrium/CHECK" data-fmt="pct0" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/subject/0/equilibrium/CHECK">100%</span></span></span></div><div class="sb-row" tabindex="0" data-tip="BET: subject 12%, equilibrium 0%"><span class="sb-label">BET</span><span class="sb-track"><span class="sb-bar" style="width:11.50%"></span><span class="sb-tick" style="left:0.00%"></span></span><span class="sb-nums"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/subject/0/estimated/BET" data-fmt="pct0" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/subject/0/estimated/BET">12%</span> <span class="muted">eq <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/subject/0/equilibrium/BET" data-fmt="pct0" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/subject/0/equilibrium/BET">0%</span></span></span></div></div></td>
+    <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/subject/0/distance" data-fmt="pct0" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/subject/0/distance">11%</span></td>
+  </tr>
+  <tr>
+    <th scope="row" title="You are Player 1 (you act first).
+Your card: Jack.
+Actions so far: none.">Jack · first to act</th>
+    <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/subject/1/reach" data-fmt="pct1" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/subject/1/reach">33.3%</span></td>
+    <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/subject/1/support" data-fmt="int" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/subject/1/support">200</span></td>
+    <td class="wide"><div class="sbars"><div class="sb-row" tabindex="0" data-tip="CHECK: subject 71%, equilibrium 78%"><span class="sb-label">CHECK</span><span class="sb-track"><span class="sb-bar" style="width:71.00%"></span><span class="sb-tick" style="left:77.73%"></span></span><span class="sb-nums"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/subject/1/estimated/CHECK" data-fmt="pct0" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/subject/1/estimated/CHECK">71%</span> <span class="muted">eq <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/subject/1/equilibrium/CHECK" data-fmt="pct0" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/subject/1/equilibrium/CHECK">78%</span></span></span></div><div class="sb-row" tabindex="0" data-tip="BET: subject 29%, equilibrium 22%"><span class="sb-label">BET</span><span class="sb-track"><span class="sb-bar" style="width:29.00%"></span><span class="sb-tick" style="left:22.27%"></span></span><span class="sb-nums"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/subject/1/estimated/BET" data-fmt="pct0" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/subject/1/estimated/BET">29%</span> <span class="muted">eq <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/subject/1/equilibrium/BET" data-fmt="pct0" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/subject/1/equilibrium/BET">22%</span></span></span></div></div></td>
+    <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/subject/1/distance" data-fmt="pct0" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/subject/1/distance">7%</span></td>
+  </tr>
+  <tr>
+    <th scope="row" title="You are Player 1 (you act first).
+Your card: King.
+Actions so far: none.">King · first to act</th>
+    <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/subject/2/reach" data-fmt="pct1" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/subject/2/reach">33.3%</span></td>
+    <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/subject/2/support" data-fmt="int" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/subject/2/support">200</span></td>
+    <td class="wide"><div class="sbars"><div class="sb-row" tabindex="0" data-tip="CHECK: subject 39%, equilibrium 33%"><span class="sb-label">CHECK</span><span class="sb-track"><span class="sb-bar" style="width:39.00%"></span><span class="sb-tick" style="left:33.19%"></span></span><span class="sb-nums"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/subject/2/estimated/CHECK" data-fmt="pct0" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/subject/2/estimated/CHECK">39%</span> <span class="muted">eq <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/subject/2/equilibrium/CHECK" data-fmt="pct0" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/subject/2/equilibrium/CHECK">33%</span></span></span></div><div class="sb-row" tabindex="0" data-tip="BET: subject 61%, equilibrium 67%"><span class="sb-label">BET</span><span class="sb-track"><span class="sb-bar" style="width:61.00%"></span><span class="sb-tick" style="left:66.81%"></span></span><span class="sb-nums"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/subject/2/estimated/BET" data-fmt="pct0" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/subject/2/estimated/BET">61%</span> <span class="muted">eq <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/subject/2/equilibrium/BET" data-fmt="pct0" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/subject/2/equilibrium/BET">67%</span></span></span></div></div></td>
+    <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/subject/2/distance" data-fmt="pct0" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/subject/2/distance">6%</span></td>
+  </tr>
+  <tr>
+    <th scope="row" title="You are Player 1 (you act first).
+Your card: Jack.
+Actions so far: Player 1 checked, Player 2 bet.">Jack · Player 1 checked, Player 2 bet</th>
+    <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/subject/3/reach" data-fmt="pct1" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/subject/3/reach">11.8%</span></td>
+    <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/subject/3/support" data-fmt="int" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/subject/3/support">200</span></td>
+    <td class="wide"><div class="sbars"><div class="sb-row" tabindex="0" data-tip="FOLD: subject 94%, equilibrium 100%"><span class="sb-label">FOLD</span><span class="sb-track"><span class="sb-bar" style="width:94.00%"></span><span class="sb-tick" style="left:100.00%"></span></span><span class="sb-nums"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/subject/3/estimated/FOLD" data-fmt="pct0" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/subject/3/estimated/FOLD">94%</span> <span class="muted">eq <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/subject/3/equilibrium/FOLD" data-fmt="pct0" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/subject/3/equilibrium/FOLD">100%</span></span></span></div><div class="sb-row" tabindex="0" data-tip="CALL: subject 6%, equilibrium 0%"><span class="sb-label">CALL</span><span class="sb-track"><span class="sb-bar" style="width:6.00%"></span><span class="sb-tick" style="left:0.00%"></span></span><span class="sb-nums"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/subject/3/estimated/CALL" data-fmt="pct0" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/subject/3/estimated/CALL">6%</span> <span class="muted">eq <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/subject/3/equilibrium/CALL" data-fmt="pct0" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/subject/3/equilibrium/CALL">0%</span></span></span></div></div></td>
+    <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/subject/3/distance" data-fmt="pct0" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/subject/3/distance">6%</span></td>
+  </tr>
+  <tr>
+    <th scope="row" title="You are Player 1 (you act first).
+Your card: Queen.
+Actions so far: Player 1 checked, Player 2 bet.">Queen · Player 1 checked, Player 2 bet</th>
+    <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/subject/4/reach" data-fmt="pct1" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/subject/4/reach">19.7%</span></td>
+    <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/subject/4/support" data-fmt="int" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/subject/4/support">200</span></td>
+    <td class="wide"><div class="sbars"><div class="sb-row" tabindex="0" data-tip="FOLD: subject 46%, equilibrium 44%"><span class="sb-label">FOLD</span><span class="sb-track"><span class="sb-bar" style="width:46.50%"></span><span class="sb-tick" style="left:44.39%"></span></span><span class="sb-nums"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/subject/4/estimated/FOLD" data-fmt="pct0" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/subject/4/estimated/FOLD">46%</span> <span class="muted">eq <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/subject/4/equilibrium/FOLD" data-fmt="pct0" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/subject/4/equilibrium/FOLD">44%</span></span></span></div><div class="sb-row" tabindex="0" data-tip="CALL: subject 54%, equilibrium 56%"><span class="sb-label">CALL</span><span class="sb-track"><span class="sb-bar" style="width:53.50%"></span><span class="sb-tick" style="left:55.61%"></span></span><span class="sb-nums"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/subject/4/estimated/CALL" data-fmt="pct0" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/subject/4/estimated/CALL">54%</span> <span class="muted">eq <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/subject/4/equilibrium/CALL" data-fmt="pct0" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/subject/4/equilibrium/CALL">56%</span></span></span></div></div></td>
+    <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/subject/4/distance" data-fmt="pct0" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/subject/4/distance">2%</span></td>
+  </tr>
+  <tr>
+    <th scope="row" title="You are Player 1 (you act first).
+Your card: King.
+Actions so far: Player 1 checked, Player 2 bet.">King · Player 1 checked, Player 2 bet</th>
+    <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/subject/5/reach" data-fmt="pct1" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/subject/5/reach">2.2%</span></td>
+    <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/subject/5/support" data-fmt="int" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/subject/5/support">200</span></td>
+    <td class="wide"><div class="sbars"><div class="sb-row" tabindex="0" data-tip="FOLD: subject 8%, equilibrium 0%"><span class="sb-label">FOLD</span><span class="sb-track"><span class="sb-bar" style="width:7.50%"></span><span class="sb-tick" style="left:0.00%"></span></span><span class="sb-nums"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/subject/5/estimated/FOLD" data-fmt="pct0" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/subject/5/estimated/FOLD">8%</span> <span class="muted">eq <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/subject/5/equilibrium/FOLD" data-fmt="pct0" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/subject/5/equilibrium/FOLD">0%</span></span></span></div><div class="sb-row" tabindex="0" data-tip="CALL: subject 92%, equilibrium 100%"><span class="sb-label">CALL</span><span class="sb-track"><span class="sb-bar" style="width:92.50%"></span><span class="sb-tick" style="left:100.00%"></span></span><span class="sb-nums"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/subject/5/estimated/CALL" data-fmt="pct0" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/subject/5/estimated/CALL">92%</span> <span class="muted">eq <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/subject/5/equilibrium/CALL" data-fmt="pct0" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/subject/5/equilibrium/CALL">100%</span></span></span></div></div></td>
+    <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/0/subject/5/distance" data-fmt="pct0" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/0/subject/5/distance">7%</span></td>
+  </tr>
+  </tbody>
+</table>
+</div>
+
+  <h3>As Player 2</h3>
+  <div class="table-wrap" tabindex="0" role="region" aria-label="Subject strategy as Player 2">
+<table class="data strategy">
+  <thead><tr>
+    <th scope="col">Situation</th>
+    <th scope="col" class="r">Reach</th>
+    <th scope="col" class="r">Valid samples</th>
+    <th scope="col" class="wide">Action frequencies</th>
+    <th scope="col" class="r" title="Total variation distance between the subject's and the equilibrium's action distributions.">Distance</th>
+  </tr></thead>
+  <tbody>
+  <tr>
+    <th scope="row" title="You are Player 2 (you act second).
+Your card: King.
+Actions so far: Player 1 checked.">King · Player 1 checked</th>
+    <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/subject/0/reach" data-fmt="pct1" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/subject/0/reach">29.6%</span></td>
+    <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/subject/0/support" data-fmt="int" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/subject/0/support">200</span></td>
+    <td class="wide"><div class="sbars"><div class="sb-row" tabindex="0" data-tip="CHECK: subject 10%, equilibrium 0%"><span class="sb-label">CHECK</span><span class="sb-track"><span class="sb-bar" style="width:9.50%"></span><span class="sb-tick" style="left:0.00%"></span></span><span class="sb-nums"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/subject/0/estimated/CHECK" data-fmt="pct0" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/subject/0/estimated/CHECK">10%</span> <span class="muted">eq <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/subject/0/equilibrium/CHECK" data-fmt="pct0" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/subject/0/equilibrium/CHECK">0%</span></span></span></div><div class="sb-row" tabindex="0" data-tip="BET: subject 90%, equilibrium 100%"><span class="sb-label">BET</span><span class="sb-track"><span class="sb-bar" style="width:90.50%"></span><span class="sb-tick" style="left:100.00%"></span></span><span class="sb-nums"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/subject/0/estimated/BET" data-fmt="pct0" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/subject/0/estimated/BET">90%</span> <span class="muted">eq <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/subject/0/equilibrium/BET" data-fmt="pct0" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/subject/0/equilibrium/BET">100%</span></span></span></div></div></td>
+    <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/subject/0/distance" data-fmt="pct0" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/subject/0/distance">9%</span></td>
+  </tr>
+  <tr>
+    <th scope="row" title="You are Player 2 (you act second).
+Your card: Queen.
+Actions so far: Player 1 checked.">Queen · Player 1 checked</th>
+    <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/subject/1/reach" data-fmt="pct1" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/subject/1/reach">18.5%</span></td>
+    <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/subject/1/support" data-fmt="int" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/subject/1/support">200</span></td>
+    <td class="wide"><div class="sbars"><div class="sb-row" tabindex="0" data-tip="CHECK: subject 89%, equilibrium 100%"><span class="sb-label">CHECK</span><span class="sb-track"><span class="sb-bar" style="width:89.00%"></span><span class="sb-tick" style="left:100.00%"></span></span><span class="sb-nums"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/subject/1/estimated/CHECK" data-fmt="pct0" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/subject/1/estimated/CHECK">89%</span> <span class="muted">eq <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/subject/1/equilibrium/CHECK" data-fmt="pct0" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/subject/1/equilibrium/CHECK">100%</span></span></span></div><div class="sb-row" tabindex="0" data-tip="BET: subject 11%, equilibrium 0%"><span class="sb-label">BET</span><span class="sb-track"><span class="sb-bar" style="width:11.00%"></span><span class="sb-tick" style="left:0.00%"></span></span><span class="sb-nums"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/subject/1/estimated/BET" data-fmt="pct0" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/subject/1/estimated/BET">11%</span> <span class="muted">eq <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/subject/1/equilibrium/BET" data-fmt="pct0" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/subject/1/equilibrium/BET">0%</span></span></span></div></div></td>
+    <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/subject/1/distance" data-fmt="pct0" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/subject/1/distance">11%</span></td>
+  </tr>
+  <tr>
+    <th scope="row" title="You are Player 2 (you act second).
+Your card: Jack.
+Actions so far: Player 1 checked.">Jack · Player 1 checked</th>
+    <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/subject/2/reach" data-fmt="pct1" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/subject/2/reach">22.2%</span></td>
+    <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/subject/2/support" data-fmt="int" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/subject/2/support">200</span></td>
+    <td class="wide"><div class="sbars"><div class="sb-row" tabindex="0" data-tip="CHECK: subject 62%, equilibrium 67%"><span class="sb-label">CHECK</span><span class="sb-track"><span class="sb-bar" style="width:61.50%"></span><span class="sb-tick" style="left:66.65%"></span></span><span class="sb-nums"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/subject/2/estimated/CHECK" data-fmt="pct0" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/subject/2/estimated/CHECK">62%</span> <span class="muted">eq <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/subject/2/equilibrium/CHECK" data-fmt="pct0" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/subject/2/equilibrium/CHECK">67%</span></span></span></div><div class="sb-row" tabindex="0" data-tip="BET: subject 38%, equilibrium 33%"><span class="sb-label">BET</span><span class="sb-track"><span class="sb-bar" style="width:38.50%"></span><span class="sb-tick" style="left:33.35%"></span></span><span class="sb-nums"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/subject/2/estimated/BET" data-fmt="pct0" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/subject/2/estimated/BET">38%</span> <span class="muted">eq <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/subject/2/equilibrium/BET" data-fmt="pct0" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/subject/2/equilibrium/BET">33%</span></span></span></div></div></td>
+    <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/subject/2/distance" data-fmt="pct0" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/subject/2/distance">5%</span></td>
+  </tr>
+  <tr>
+    <th scope="row" title="You are Player 2 (you act second).
+Your card: Jack.
+Actions so far: Player 1 bet.">Jack · Player 1 bet</th>
+    <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/subject/3/reach" data-fmt="pct1" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/subject/3/reach">11.1%</span></td>
+    <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/subject/3/support" data-fmt="int" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/subject/3/support">200</span></td>
+    <td class="wide"><div class="sbars"><div class="sb-row" tabindex="0" data-tip="FOLD: subject 91%, equilibrium 100%"><span class="sb-label">FOLD</span><span class="sb-track"><span class="sb-bar" style="width:91.00%"></span><span class="sb-tick" style="left:100.00%"></span></span><span class="sb-nums"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/subject/3/estimated/FOLD" data-fmt="pct0" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/subject/3/estimated/FOLD">91%</span> <span class="muted">eq <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/subject/3/equilibrium/FOLD" data-fmt="pct0" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/subject/3/equilibrium/FOLD">100%</span></span></span></div><div class="sb-row" tabindex="0" data-tip="CALL: subject 9%, equilibrium 0%"><span class="sb-label">CALL</span><span class="sb-track"><span class="sb-bar" style="width:9.00%"></span><span class="sb-tick" style="left:0.00%"></span></span><span class="sb-nums"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/subject/3/estimated/CALL" data-fmt="pct0" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/subject/3/estimated/CALL">9%</span> <span class="muted">eq <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/subject/3/equilibrium/CALL" data-fmt="pct0" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/subject/3/equilibrium/CALL">0%</span></span></span></div></div></td>
+    <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/subject/3/distance" data-fmt="pct0" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/subject/3/distance">9%</span></td>
+  </tr>
+  <tr>
+    <th scope="row" title="You are Player 2 (you act second).
+Your card: King.
+Actions so far: Player 1 bet.">King · Player 1 bet</th>
+    <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/subject/4/reach" data-fmt="pct1" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/subject/4/reach">3.7%</span></td>
+    <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/subject/4/support" data-fmt="int" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/subject/4/support">200</span></td>
+    <td class="wide"><div class="sbars"><div class="sb-row" tabindex="0" data-tip="FOLD: subject 14%, equilibrium 0%"><span class="sb-label">FOLD</span><span class="sb-track"><span class="sb-bar" style="width:13.50%"></span><span class="sb-tick" style="left:0.00%"></span></span><span class="sb-nums"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/subject/4/estimated/FOLD" data-fmt="pct0" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/subject/4/estimated/FOLD">14%</span> <span class="muted">eq <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/subject/4/equilibrium/FOLD" data-fmt="pct0" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/subject/4/equilibrium/FOLD">0%</span></span></span></div><div class="sb-row" tabindex="0" data-tip="CALL: subject 86%, equilibrium 100%"><span class="sb-label">CALL</span><span class="sb-track"><span class="sb-bar" style="width:86.50%"></span><span class="sb-tick" style="left:100.00%"></span></span><span class="sb-nums"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/subject/4/estimated/CALL" data-fmt="pct0" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/subject/4/estimated/CALL">86%</span> <span class="muted">eq <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/subject/4/equilibrium/CALL" data-fmt="pct0" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/subject/4/equilibrium/CALL">100%</span></span></span></div></div></td>
+    <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/subject/4/distance" data-fmt="pct0" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/subject/4/distance">13%</span></td>
+  </tr>
+  <tr>
+    <th scope="row" title="You are Player 2 (you act second).
+Your card: Queen.
+Actions so far: Player 1 bet.">Queen · Player 1 bet</th>
+    <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/subject/5/reach" data-fmt="pct1" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/subject/5/reach">14.8%</span></td>
+    <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/subject/5/support" data-fmt="int" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/subject/5/support">200</span></td>
+    <td class="wide"><div class="sbars"><div class="sb-row" tabindex="0" data-tip="FOLD: subject 65%, equilibrium 67%"><span class="sb-label">FOLD</span><span class="sb-track"><span class="sb-bar" style="width:65.00%"></span><span class="sb-tick" style="left:66.64%"></span></span><span class="sb-nums"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/subject/5/estimated/FOLD" data-fmt="pct0" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/subject/5/estimated/FOLD">65%</span> <span class="muted">eq <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/subject/5/equilibrium/FOLD" data-fmt="pct0" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/subject/5/equilibrium/FOLD">67%</span></span></span></div><div class="sb-row" tabindex="0" data-tip="CALL: subject 35%, equilibrium 33%"><span class="sb-label">CALL</span><span class="sb-track"><span class="sb-bar" style="width:35.00%"></span><span class="sb-tick" style="left:33.36%"></span></span><span class="sb-nums"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/subject/5/estimated/CALL" data-fmt="pct0" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/subject/5/estimated/CALL">35%</span> <span class="muted">eq <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/subject/5/equilibrium/CALL" data-fmt="pct0" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/subject/5/equilibrium/CALL">33%</span></span></span></div></div></td>
+    <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json#/seats/1/subject/5/distance" data-fmt="pct0" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/breakdown.json /seats/1/subject/5/distance">2%</span></td>
+  </tr>
+  </tbody>
+</table>
+</div>
+
+</section>
+
+<section aria-labelledby="play">
+  <h2 id="play">Play-mode check</h2>
+  <p class="lede">The subject also played <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/play.json#/play/n_hands" data-fmt="int" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/play.json /play/n_hands">20,000</span> complete hands against the equilibrium opponent, with seats alternating and a fresh query at every decision. If the estimated strategy describes how the subject actually plays, its exact expected payoff should match the simulated average within sampling error.</p>
+  <div class="table-wrap" tabindex="0" role="region" aria-label="Play-mode cross-check">
+  <table class="data">
+    <thead><tr><th scope="col">Subject seat</th><th scope="col" class="r">Hands</th><th scope="col" class="r">Exact, from the estimate</th><th scope="col" class="r">Simulated mean</th><th scope="col" class="r">95% interval</th><th scope="col" class="r">z</th><th scope="col">Agreement</th></tr></thead>
+    <tbody>
+      <tr>
+        <th scope="row">Player 1</th>
+        <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/play.json#/play/seat_hands/0" data-fmt="int" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/play.json /play/seat_hands/0">10,000</span></td>
+        <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/play.json#/cross_check/0/exact" data-fmt="sf3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/play.json /cross_check/0/exact">−0.074</span></td>
+        <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/play.json#/play/seat_mean/0" data-fmt="sf3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/play.json /play/seat_mean/0">−0.067</span></td>
+        <td class="r">[<span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/play.json#/play/seat_ci95/0/0" data-fmt="sf3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/play.json /play/seat_ci95/0/0">−0.093</span>, <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/play.json#/play/seat_ci95/0/1" data-fmt="sf3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/play.json /play/seat_ci95/0/1">−0.041</span>]</td>
+        <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/play.json#/cross_check/0/z" data-fmt="sf3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/play.json /cross_check/0/z">+0.512</span></td>
+        <td><span class="status good">agree</span></td>
+      </tr>
+      <tr>
+        <th scope="row">Player 2</th>
+        <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/play.json#/play/seat_hands/1" data-fmt="int" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/play.json /play/seat_hands/1">10,000</span></td>
+        <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/play.json#/cross_check/1/exact" data-fmt="sf3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/play.json /cross_check/1/exact">+0.016</span></td>
+        <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/play.json#/play/seat_mean/1" data-fmt="sf3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/play.json /play/seat_mean/1">+0.006</span></td>
+        <td class="r">[<span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/play.json#/play/seat_ci95/1/0" data-fmt="sf3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/play.json /play/seat_ci95/1/0">−0.020</span>, <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/play.json#/play/seat_ci95/1/1" data-fmt="sf3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/play.json /play/seat_ci95/1/1">+0.032</span>]</td>
+        <td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/play.json#/cross_check/1/z" data-fmt="sf3" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/play.json /cross_check/1/z">−0.696</span></td>
+        <td><span class="status good">agree</span></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="note">Subject decisions: <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/play.json#/play/subject_decisions" data-fmt="int" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/play.json /play/subject_decisions">23,424</span>; decisions where every attempt failed and a uniformly random action was played instead: <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/play.json#/play/fallbacks" data-fmt="int" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/play.json /play/fallbacks">2</span>. Agreement means the difference is within 1.96 combined standard errors (simulation plus the estimate's bootstrap error).</p>
+</section>
+
+<section aria-labelledby="reliability">
+  <h2 id="reliability">Reliability (M4)</h2>
+  <div class="table-wrap" tabindex="0" role="region" aria-label="Reliability">
+  <table class="data kv">
+    <tbody>
+      <tr><th scope="row">Samples (decisions asked for)</th><td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json#/reliability/samples" data-fmt="int" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json /reliability/samples">2,400</span></td><td></td></tr>
+      <tr><th scope="row">Attempts (including retries)</th><td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json#/reliability/attempts" data-fmt="int" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json /reliability/attempts">2,515</span></td><td></td></tr>
+      <tr><th scope="row">Unparseable replies</th><td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json#/reliability/parse_failures" data-fmt="int" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json /reliability/parse_failures">115</span></td><td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json#/reliability/parse_failure_rate" data-fmt="pct1" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json /reliability/parse_failure_rate">4.6%</span> of attempts</td></tr>
+      <tr><th scope="row">Illegal actions named</th><td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json#/reliability/illegal" data-fmt="int" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json /reliability/illegal">0</span></td><td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json#/reliability/illegal_action_rate" data-fmt="pct1" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json /reliability/illegal_action_rate">0.0%</span> of attempts</td></tr>
+      <tr><th scope="row">Samples that needed a retry</th><td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json#/reliability/samples_retried" data-fmt="int" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json /reliability/samples_retried">108</span></td><td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json#/reliability/retry_rate" data-fmt="pct1" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json /reliability/retry_rate">4.5%</span> of samples</td></tr>
+      <tr><th scope="row">Samples with no valid reply</th><td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json#/reliability/samples_failed" data-fmt="int" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json /reliability/samples_failed">0</span></td><td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json#/reliability/sample_failure_rate" data-fmt="pct1" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json /reliability/sample_failure_rate">0.0%</span> of samples</td></tr>
+      <tr><th scope="row">Situations filled with a uniform strategy</th><td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json#/filled/count" data-fmt="int" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json /filled/count">0</span></td><td class="r">of <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json#/filled/of" data-fmt="int" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json /filled/of">12</span></td></tr>
+      <tr><th scope="row">Live calls / cache hits</th><td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json#/reliability/live_calls" data-fmt="int" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json /reliability/live_calls">0</span></td><td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json#/reliability/cache_hits" data-fmt="int" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json /reliability/cache_hits">2,515</span> cached</td></tr>
+      <tr><th scope="row">Tokens in / out</th><td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json#/reliability/input_tokens" data-fmt="int" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json /reliability/input_tokens">0</span></td><td class="r"><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json#/reliability/output_tokens" data-fmt="int" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/metrics.json /reliability/output_tokens">0</span> out</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section aria-labelledby="config">
+  <h2 id="config">Configuration</h2>
+  <div class="table-wrap" tabindex="0" role="region" aria-label="Configuration">
+  <table class="data kv">
+    <tbody>
+      <tr><th scope="row">Provider / model</th><td><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/manifest.json#/provider" data-fmt="text" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/manifest.json /provider">mock</span> / <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/manifest.json#/model_id" data-fmt="text" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/manifest.json /model_id">mock-cfr-noisy</span></td></tr>
+<tr><th scope="row">Parameter <code>seed</code></th><td><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/manifest.json#/params/seed" data-fmt="text" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/manifest.json /params/seed">0</span></td></tr><tr><th scope="row">Parameter <code>garbage_rate</code></th><td><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/manifest.json#/params/garbage_rate" data-fmt="text" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/manifest.json /params/garbage_rate">0.05</span></td></tr><tr><th scope="row">Parameter <code>illegal_rate</code></th><td><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/manifest.json#/params/illegal_rate" data-fmt="text" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/manifest.json /params/illegal_rate">0.0</span></td></tr><tr><th scope="row">Parameter <code>format_noise</code></th><td><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/manifest.json#/params/format_noise" data-fmt="text" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/manifest.json /params/format_noise">True</span></td></tr>      <tr><th scope="row">Prompt version</th><td><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/manifest.json#/prompt_version" data-fmt="text" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/manifest.json /prompt_version">kuhn-v1</span></td></tr>
+      <tr><th scope="row">Samples per situation / retries</th><td><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/manifest.json#/config/n_samples" data-fmt="int" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/manifest.json /config/n_samples">200</span> / <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/manifest.json#/config/max_retries" data-fmt="int" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/manifest.json /config/max_retries">2</span></td></tr>
+      <tr><th scope="row">Bootstrap replicates / seed</th><td><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/manifest.json#/config/n_boot" data-fmt="int" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/manifest.json /config/n_boot">200</span> / <span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/manifest.json#/config/seed" data-fmt="int" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/manifest.json /config/seed">0</span></td></tr>
+      <tr><th scope="row">Fill threshold (valid samples)</th><td><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/manifest.json#/config/min_samples" data-fmt="int" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/manifest.json /config/min_samples">1</span></td></tr>
+      <tr><th scope="row">OpenSpiel game</th><td><code><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/manifest.json#/openspiel_game" data-fmt="text" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/manifest.json /openspiel_game">kuhn_poker</span></code></td></tr>
+<tr><th scope="row">Version of <code>strategybench</code></th><td><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/manifest.json#/versions/strategybench" data-fmt="text" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/manifest.json /versions/strategybench">0.1.0</span></td></tr><tr><th scope="row">Version of <code>open_spiel</code></th><td><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/manifest.json#/versions/open_spiel" data-fmt="text" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/manifest.json /versions/open_spiel">2.0.2</span></td></tr><tr><th scope="row">Version of <code>numpy</code></th><td><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/manifest.json#/versions/numpy" data-fmt="text" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/manifest.json /versions/numpy">2.5.3</span></td></tr>      <tr><th scope="row">Created</th><td><span class="num" data-src="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/manifest.json#/created" data-fmt="text" title="runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data/manifest.json /created">2026-10-08T09:42:44.678709+00:00</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <details>
+    <summary>System prompt (rules given to the subject)</summary>
+    <pre class="prompt">You are playing Kuhn poker, a two-player card game.
+Your goal is to maximise your expected winnings.
+
+Rules:
+- The deck has three cards: Jack, Queen, King (King is highest).
+- Each player antes 1 chip and is dealt one private card. The third card is not used.
+- Player 1 acts first and may CHECK or BET (1 chip).
+- If Player 1 checks, Player 2 may CHECK (go to showdown) or BET (1 chip).
+- A player facing a bet may FOLD (forfeit the pot) or CALL (match the bet and go to showdown).
+- There is at most one bet per hand. At showdown the higher card wins the pot.
+
+You will be told your seat, your card and the actions so far, then asked for your action.</pre>
+  </details>
+</section>
+
+<section aria-labelledby="files">
+  <h2 id="files">Result files</h2>
+  <p class="note">Published with this page. Raw call logs (<code>calls.jsonl</code>, <code>play_calls.jsonl</code>, <code>hands.jsonl</code>) stay in the run directory.</p>
+  <ul class="files">
+<li><a href="data/manifest.json">manifest.json</a> <code class="hash">f2e5fd277ba50f8c965986f6ac3e1ef9332204863cd3c9f7d60a0d2e774e700f</code></li><li><a href="data/metrics.json">metrics.json</a> <code class="hash">d0fc7c61b76420badb582223d9ff8d95fa509694be4e9c7e03cfba4bb1e2b38a</code></li><li><a href="data/strategy.json">strategy.json</a> <code class="hash">ab257a18e5d72ebd2421a21c4dbb0a9df6d177778f3e7769978895382b0e6979</code></li><li><a href="data/breakdown.json">breakdown.json</a> <code class="hash">49fef31eb79ba322e24178b740d651f327e6bc8f261d8c7bb336d29fc88f7ce9</code></li><li><a href="data/replay.json">replay.json</a> <code class="hash">56846629f75698b48976b2fe0668be9388019f74b63ae5135cc2a6d8dda9594a</code></li><li><a href="data/play.json">play.json</a> <code class="hash">f6d5561beaf63c9f2814c7547fadeb68a0bb73fd10e512fdcdcda792e9483d13</code></li>  </ul>
+</section>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <p>Built 2026-10-17 13:32 UTC by strategybench 0.1.0 at commit <code>e490511</code>. Game solving and best responses use <a href="https://github.com/google-deepmind/open_spiel">OpenSpiel</a>.</p>
+    <p>Every number in the results tables and charts is read from a published result file; hover a number to see which file and field. <code>build.json</code> lists each file's SHA-256.</p>
+  </div>
+</footer>
+<div class="tooltip" role="tooltip" hidden></div>
+<script src="../../assets/site.js"></script>
+</body>
+</html>

@@ -1,0 +1,354 @@
+{
+ "generator": "strategybench",
+ "version": "0.1.0",
+ "generated": "2026-10-17 13:32 UTC",
+ "commit": "e490511",
+ "settings": {
+  "min_samples": 30,
+  "exclude": [],
+  "replay_hands": 100
+ },
+ "runs": [
+  {
+   "id": "20261008T094237Z_kuhn_mock-cfr_distribution",
+   "source": "runs/20261008T094237Z_kuhn_mock-cfr_distribution",
+   "published": "runs/20261008T094237Z_kuhn_mock-cfr_distribution/data",
+   "files": {
+    "manifest.json": "b24ae26489cc5579dc71b69445d5a35952647be51097b2c0f738361a04aeef33",
+    "metrics.json": "13588c3885a8a07f23de390696f71f07e0f3b8a55cb180f22c79b7a6115ce863",
+    "strategy.json": "4fec943785ba5b8c385b47f5ea428b3c5e1926f035ad49cf0274c3b8edce79e0",
+    "breakdown.json": "559103ba3b2321a6c1978b544637058920a31bf657a51e0000cc212abc80397c",
+    "replay.json": "4cabcecd8b38746a4716ee49fa828cef38631d588ab9936d333060d217539396"
+   }
+  },
+  {
+   "id": "20261008T094238Z_kuhn_mock-cfr_text",
+   "source": "runs/20261008T094238Z_kuhn_mock-cfr_text",
+   "published": "runs/20261008T094238Z_kuhn_mock-cfr_text/data",
+   "files": {
+    "manifest.json": "a419207e5f748948e22ae70dcc8845f02cb542520191e0fd11f023047e8fa243",
+    "metrics.json": "18f7979156cae35717055e200807ca8220493921170df99a984d323a3e7d690f",
+    "strategy.json": "17ccf00234db0c537c26b64fa9acd817b45dd99f9f68fc796ed268b1dd6b8ae1",
+    "breakdown.json": "1028df0d5fe10a0b4bd242d3b3d50c57d7413926c6a887ca5ef91219d24c440a",
+    "replay.json": "650e9c4499fbc8b584acac5665415e02d443f937fb0646b4a87c56a161d3e284"
+   }
+  },
+  {
+   "id": "20261008T094239Z_kuhn_mock-uniform_distribution",
+   "source": "runs/20261008T094239Z_kuhn_mock-uniform_distribution",
+   "published": "runs/20261008T094239Z_kuhn_mock-uniform_distribution/data",
+   "files": {
+    "manifest.json": "cef084ce2f123f3eaebd4c99fa40d7ecf92572746597671d4d06793601d4609f",
+    "metrics.json": "4546513f7330cbc71befd4a767940c5e5970221fb2c52d47b66371f8c75b66ef",
+    "strategy.json": "1c5ff39975f27904811a751c708befd3ba561058dba81dd4e5fdb44237d1bf87",
+    "breakdown.json": "2edfa4c0957d25fe8b9e23d22a14020512a131a4dd6123b406fc7b49d5523669",
+    "replay.json": "2e4447763dfb15cc820bbdf57c97d8e9488a0378f602d8aa0cbc221fab2a6106"
+   }
+  },
+  {
+   "id": "20261008T094240Z_kuhn_mock-uniform_text",
+   "source": "runs/20261008T094240Z_kuhn_mock-uniform_text",
+   "published": "runs/20261008T094240Z_kuhn_mock-uniform_text/data",
+   "files": {
+    "manifest.json": "2193a36906672a4b1ff02f0c1c5e5713f11e66428726eb50ede4868cd229a888",
+    "metrics.json": "7b010d506b96ecb11f4d6c9f858b0dfa1d2f20e70f8f4ebab1320898bef8d225",
+    "strategy.json": "97d950a93f326344c3f42f4ae39c9d400b95d962ca395acd4795576567736e36",
+    "breakdown.json": "82a4ac985641d34b1576fbae731061f8ef0aadec9449fc89685bd4f01f812ae0",
+    "replay.json": "d9ddfa33ea37d620a1e20d8353d19520ad593f2c462380fd93b94a170c209cad"
+   }
+  },
+  {
+   "id": "20261008T094241Z_kuhn_mock-first-action_text",
+   "source": "runs/20261008T094241Z_kuhn_mock-first-action_text",
+   "published": "runs/20261008T094241Z_kuhn_mock-first-action_text/data",
+   "files": {
+    "manifest.json": "a3aa776d00bbefb35a655daf8fe203f1116fa765d392f9f84eb3b7d0c962f312",
+    "metrics.json": "f170020727aa569a03739c5794e96d17975d9c2610406725af1cbe5a90fb3e77",
+    "strategy.json": "6ec6ea5821bcdc2e6ba872875e2342288ed72d3fbc5d9372bc0355c0a8e95ae9",
+    "breakdown.json": "3b2a369a425e6bce041044868f84fecb71edeb6ec60691ec88a533fabf4a98e5",
+    "replay.json": "3876cb3d0fe404135dba8a94070926efa09c7f4332d7b2f6477ca268c5d59038"
+   }
+  },
+  {
+   "id": "20261008T094243Z_kuhn_mock-last-action_text",
+   "source": "runs/20261008T094243Z_kuhn_mock-last-action_text",
+   "published": "runs/20261008T094243Z_kuhn_mock-last-action_text/data",
+   "files": {
+    "manifest.json": "14c828edd49048f916c78007c56270ca73a92349a5d38b9a7ba24a23e0fe9080",
+    "metrics.json": "080e2803aaaa110161abdb11953c792199df9f39dbe5695626fe67a6d6b39e03",
+    "strategy.json": "9b724125c7c94f35e9d82904b8ec18a2a3510690ac872830e4b7157ce3f0f380",
+    "breakdown.json": "0c22121e4d718ddbdaed699cfc5caf7233bc1b13c4fc7a254257dbcbfa66ae5e",
+    "replay.json": "e2f544da589b11aeafe948cb970546accf0728864c0fae31db4afa7f0b9a0cef"
+   }
+  },
+  {
+   "id": "20261008T094244Z_kuhn_mock-cfr-noisy_text",
+   "source": "runs/20261008T094244Z_kuhn_mock-cfr-noisy_text",
+   "published": "runs/20261008T094244Z_kuhn_mock-cfr-noisy_text/data",
+   "files": {
+    "manifest.json": "f2e5fd277ba50f8c965986f6ac3e1ef9332204863cd3c9f7d60a0d2e774e700f",
+    "metrics.json": "d0fc7c61b76420badb582223d9ff8d95fa509694be4e9c7e03cfba4bb1e2b38a",
+    "strategy.json": "ab257a18e5d72ebd2421a21c4dbb0a9df6d177778f3e7769978895382b0e6979",
+    "breakdown.json": "49fef31eb79ba322e24178b740d651f327e6bc8f261d8c7bb336d29fc88f7ce9",
+    "replay.json": "56846629f75698b48976b2fe0668be9388019f74b63ae5135cc2a6d8dda9594a",
+    "play.json": "f6d5561beaf63c9f2814c7547fadeb68a0bb73fd10e512fdcdcda792e9483d13"
+   }
+  },
+  {
+   "id": "20261008T094248Z_leduc_mock-cfr_distribution",
+   "source": "runs/20261008T094248Z_leduc_mock-cfr_distribution",
+   "published": "runs/20261008T094248Z_leduc_mock-cfr_distribution/data",
+   "files": {
+    "manifest.json": "04afd7cbfbf3801ab55215b7a9cdcd47cddf1509afac7ba483d067e39c3eb8c8",
+    "metrics.json": "cbf62f7911bfccdb68b3593f1dc5b54749402be880fe25592b6435eca780fb90",
+    "strategy.json": "b8b4a12a397ce664cc449f5c2c0a2638a7077a98c91504d88783bd764d94cac7",
+    "breakdown.json": "f49c0e18ea86cd54ca138b5d9d6c3e74e601060757a6b900f4550db39c0feefb",
+    "replay.json": "2e38c8876607b1662f26e502ea4d5e1a910bcd20f9e4194f695a7ab57f4c2fbf"
+   }
+  },
+  {
+   "id": "20261008T094248Z_leduc_mock-cfr_text",
+   "source": "runs/20261008T094248Z_leduc_mock-cfr_text",
+   "published": "runs/20261008T094248Z_leduc_mock-cfr_text/data",
+   "files": {
+    "manifest.json": "a9e55b390e1a2528f43f96b7b56d33143a8f60e52721b8a32b574ad2d4e444ad",
+    "metrics.json": "8f997cca5e30e294968783cd591d9d114fbc1b80f5ae38ed3176a5af2a1f6748",
+    "strategy.json": "c693881ddcd83ec76c8b62020aa6e600cc0adc182a86e2c7e21c9efa37decdb7",
+    "breakdown.json": "157f5f0ab8105f805a929e7e35f22d94ce09fb0f0c65daefd57354f946103afe",
+    "replay.json": "8b4e717a5b16fdd72107ae24526c4307dece00f796599e7593b49aa0eda1ecc2"
+   }
+  },
+  {
+   "id": "20261008T094304Z_leduc_mock-uniform_distribution",
+   "source": "runs/20261008T094304Z_leduc_mock-uniform_distribution",
+   "published": "runs/20261008T094304Z_leduc_mock-uniform_distribution/data",
+   "files": {
+    "manifest.json": "07a93ec5cb0263e2095ade9f4f94aad8779280bcbc9b6f906fa975aba70d12d6",
+    "metrics.json": "930fd05bb4fbb80f282059ce6348efa0483b63871dc96f7b9375632948bd61f7",
+    "strategy.json": "5d1064278e3786b269981d65eb8e426a5494bafba742a167a2b35bed5ef0f5ee",
+    "breakdown.json": "18630e4f4d762f66f8c09b26646fbc87e095ed34a1de47f37d04e1b237ae8fde",
+    "replay.json": "448fe2ee52e7d64b7044a5365d90748b023de50bf496ebde1269db18bf2f4f55"
+   }
+  },
+  {
+   "id": "20261008T094305Z_leduc_mock-uniform_text",
+   "source": "runs/20261008T094305Z_leduc_mock-uniform_text",
+   "published": "runs/20261008T094305Z_leduc_mock-uniform_text/data",
+   "files": {
+    "manifest.json": "4a9d7b36d1dfa52eed070ebb20417c9891c9ccf9b77d6926d01aa37195eb0a33",
+    "metrics.json": "8d263d1d31f58b00807d10ae27e2a9b8279c0d0d5cc884ea0c4f6dcd31b8b17b",
+    "strategy.json": "a177b887a1faf343051ac3b7832a4570b46220a3099f06fb3fd34891e3cb6a03",
+    "breakdown.json": "542279b1ba6fc74016cbb9233c15605dde7f3214cd347ebb9a6c5f97a2e83665",
+    "replay.json": "ca58a0d42873c96658d4f1d6ca2fbfd4a1ef2da8d1a3de85c0c8b7d5cee16cd9"
+   }
+  },
+  {
+   "id": "20261008T094321Z_leduc_mock-first-action_text",
+   "source": "runs/20261008T094321Z_leduc_mock-first-action_text",
+   "published": "runs/20261008T094321Z_leduc_mock-first-action_text/data",
+   "files": {
+    "manifest.json": "a4a777e32dfe7cd5117bafc45d5c5dc56523cda3c38c94b28c8b3a02f5d6503b",
+    "metrics.json": "7c47cb4c9bd0499b328385398bfa4a29f4bad950671ee6b3034304ff8dd46c89",
+    "strategy.json": "25e261e8214bcc5d2172c70ced2cf8fb4fe3cba469317ae0590039d3ec580b10",
+    "breakdown.json": "34370f37f851641f31f34253b559de41d24733a551c698653965afb30ed32342",
+    "replay.json": "6054fd16d88e5b6b6a94e8527a8a674fd0957d4733014fbbbb14f5dd738a8325"
+   }
+  },
+  {
+   "id": "20261008T094333Z_leduc_mock-last-action_text",
+   "source": "runs/20261008T094333Z_leduc_mock-last-action_text",
+   "published": "runs/20261008T094333Z_leduc_mock-last-action_text/data",
+   "files": {
+    "manifest.json": "ea35c45b0f83a0c7d57ee8d387425c619625841533c3567ab2e315763c261acd",
+    "metrics.json": "28dc014ae8079970b8f5bffbb907dab5ef9caacb7463071c370aebd2a8b3c613",
+    "strategy.json": "1e874049547ea96050f01029831996f4761f062669f80c08d70c0ee81f6ecf7a",
+    "breakdown.json": "38424207c18c70e6ac16b1d157e1e539677d91b1d2ecb5f5ac099130f679d5fa",
+    "replay.json": "a50a8c0b9bad8886c75396696b0e0f09efb57047727234bb1f48bd3c8b32bf03"
+   }
+  },
+  {
+   "id": "20261008T094346Z_leduc_mock-cfr-noisy_text",
+   "source": "runs/20261008T094346Z_leduc_mock-cfr-noisy_text",
+   "published": "runs/20261008T094346Z_leduc_mock-cfr-noisy_text/data",
+   "files": {
+    "manifest.json": "10e48e22a3558f8992164e1467722f6a2c1fdf1535acf6b485390f0a5feb30f8",
+    "metrics.json": "9c7ec64efef654c9a8ed4d515d9f582f1a45fb7523839e5206c9b0a2e86ff09c",
+    "strategy.json": "8e3e278a7b3b78fe2ee7e6adfa82329f62e46e3d06e0c51fca62cb9ce44d355e",
+    "breakdown.json": "12d7d05be9ed60d2977036e756a3009e5cf8397db0d283df28d6ac832db4674f",
+    "replay.json": "a03ad9cabd80bb5c737ecf3839355e743fcedcde1863b0400a31f348c87c51b0",
+    "play.json": "716141ea57ed13c1f3a5030f869082d46c98c42182635ac35b2b824e4bd4f25f"
+   }
+  },
+  {
+   "id": "20261014T220529Z_liars_dice_mock-cfr_distribution",
+   "source": "runs/20261014T220529Z_liars_dice_mock-cfr_distribution",
+   "published": "runs/20261014T220529Z_liars_dice_mock-cfr_distribution/data",
+   "files": {
+    "manifest.json": "f2d8f18815b147703dbbbd02180f959ff5e4e79a6c8902a510c3dccaa4b9e43c",
+    "metrics.json": "d642cfcf49a384acf856c89ef6a9ea93a3276632917029878f244e57c0e34836",
+    "strategy.json": "8647518588d6352d6ad95014eaa2b2aa0242d2a5488a63d5669d498922934e6e",
+    "breakdown.json": "fe1b394ccdb2e38d7914467ed01e46d26e03f490085fbd21b8094ec17e53ca22",
+    "replay.json": "460c875ae653e3df9cf9b22b6ee5dc393d47b83a18cabe050816298e0d73b82d"
+   }
+  },
+  {
+   "id": "20261014T220529Z_liars_dice_mock-cfr_text",
+   "source": "runs/20261014T220529Z_liars_dice_mock-cfr_text",
+   "published": "runs/20261014T220529Z_liars_dice_mock-cfr_text/data",
+   "files": {
+    "manifest.json": "e9b5cf99f0c2857c8c16e6c491f641a4e9180923a48094cfbf73bc78d2f7e8bc",
+    "metrics.json": "490b3fde55b1edc5ba7258d442b03e21132ceec4f7113ce13ce8110da52a2587",
+    "strategy.json": "b585debc383655c34faf8cf4665a8120bc4a5dc7c16f490ee2305a991ad7a3da",
+    "breakdown.json": "c7abf9c4c262da0203f17fd9340af113edd052f69198118d8feb15017b27b06a",
+    "replay.json": "f76cbf3ba2643ee35ffde6c76a86aa2b81a160d6cedcfe4b2f4eebc032b89083"
+   }
+  },
+  {
+   "id": "20261014T220536Z_liars_dice_mock-uniform_distribution",
+   "source": "runs/20261014T220536Z_liars_dice_mock-uniform_distribution",
+   "published": "runs/20261014T220536Z_liars_dice_mock-uniform_distribution/data",
+   "files": {
+    "manifest.json": "a8f4092ffbb8934bd65b67526c7dc84e1654163f9ab7c81a460509e7254c21d3",
+    "metrics.json": "94e5829d324bc0d1ec1586d6da9a64c5a134ca6916211769160b8d491a0422fa",
+    "strategy.json": "d6ae636d6d13e9cc189b2cbe2a3cb5a08e36d4067674a0bb3df445b1d52dad6f",
+    "breakdown.json": "3f703ad14ea860fcee6c6ea816d9cc927914efc7df4da38b08befb3021141b52",
+    "replay.json": "9230e6c9498812c20f7cb21145744863fc2d760a61b37db0ec18b85e983cf674"
+   }
+  },
+  {
+   "id": "20261014T220537Z_liars_dice_mock-uniform_text",
+   "source": "runs/20261014T220537Z_liars_dice_mock-uniform_text",
+   "published": "runs/20261014T220537Z_liars_dice_mock-uniform_text/data",
+   "files": {
+    "manifest.json": "076e4dd9d3dea406f2342ad8020a6c63a6518c884f4088698798c5c6a77f05d5",
+    "metrics.json": "417b3d12b82a6008f3984c1bfe9b5abc93bdbbc3fcab766df208b4ddcada996c",
+    "strategy.json": "91b0f413c2177361f9497d2ae625c8e11007a06622545f06183bdafbf3ca396f",
+    "breakdown.json": "68e8fbdd308e77cafb0178e57cd4cf43b3d10e3433d7c69c75ad6caadb46d361",
+    "replay.json": "c014f6c3997d2bfc9a7d7dca7400aecaf5fa32fb6d094f02dfe93a548a61d402"
+   }
+  },
+  {
+   "id": "20261014T220544Z_liars_dice_mock-first-action_text",
+   "source": "runs/20261014T220544Z_liars_dice_mock-first-action_text",
+   "published": "runs/20261014T220544Z_liars_dice_mock-first-action_text/data",
+   "files": {
+    "manifest.json": "bd4f0d1f99008729f4348161720c033172e8bb8c300fdf996b78f18d35c7648a",
+    "metrics.json": "765f957c0be351dbacf6643c1fe07223ac25d1945b5f591a4b2a165c8d8dd3da",
+    "strategy.json": "3042a4c8e46a3453195d86a475208c4d7bd953b698e10d78aa53bbfc96d665ff",
+    "breakdown.json": "f2acfa7e47552d7b15ed427831c3f38b07ed2b9354d9eb8688a85604b7894cbb",
+    "replay.json": "ed6a4c0c423b99a507f35ade427f5a40cb4b9099168eda2997875cdddebe641a"
+   }
+  },
+  {
+   "id": "20261014T220550Z_liars_dice_mock-last-action_text",
+   "source": "runs/20261014T220550Z_liars_dice_mock-last-action_text",
+   "published": "runs/20261014T220550Z_liars_dice_mock-last-action_text/data",
+   "files": {
+    "manifest.json": "5b6948d7c1b60fa147d2ac8bb6cb6831a8abd559a686d6fbd7ffb3f559817b6e",
+    "metrics.json": "8925743faea564928b61a9294a75297689ad78ac7a17bb1397f8addf739e5739",
+    "strategy.json": "5f69cf7ae6aaa630971cebdfb70dead97dcd77282c489a36680323da3045ee5c",
+    "breakdown.json": "54e1fb5290c8ecc67fee357b3b9cccfb18a28a48277659989a4309040d91178e",
+    "replay.json": "e8023dd196497869dfe306549a11f3eb3857b42a5a3a6bd681bf7b197fe33e26"
+   }
+  },
+  {
+   "id": "20261014T220555Z_liars_dice_mock-cfr-noisy_text",
+   "source": "runs/20261014T220555Z_liars_dice_mock-cfr-noisy_text",
+   "published": "runs/20261014T220555Z_liars_dice_mock-cfr-noisy_text/data",
+   "files": {
+    "manifest.json": "95d05bdcdf72568a75bfa81f4e62171a7fe12b5bee359f341af5330267fd2600",
+    "metrics.json": "deee93e9a27c796f46f7bd7a0933e5cd781150487e504013599f8c8e177d555c",
+    "strategy.json": "e676536755c38740a1749b72d8913d3f14bf03452a906bd65a5d0988eabbc7da",
+    "breakdown.json": "1fee2b478b25b498f991d2ce8a8411f57e2e36e57255718f4a36107cad87af79",
+    "replay.json": "f5e83cbf3fd20de550749e839da79d5e56c347343350993fa59d31b2712209be",
+    "play.json": "92376572077092b7443d8da4506682df8d8fbc057f2eb1feffad1db794f32f0f"
+   }
+  },
+  {
+   "id": "20261016T140539Z_kuhn_claude-haiku-4-5_text",
+   "source": "runs/20261016T140539Z_kuhn_claude-haiku-4-5_text",
+   "published": "runs/20261016T140539Z_kuhn_claude-haiku-4-5_text/data",
+   "files": {
+    "manifest.json": "946c867c508aa95ee6da426745956cc7ac4e7cff6b75ce56449c434906e38483",
+    "metrics.json": "3934701020f760b9e358b5d1693fa7d6d6cc1003dab84254d97870505d19e16c",
+    "strategy.json": "7e1e220c78e134be5f51b757e22dedc5796144b8f8bc5cd41281a730ab750728",
+    "breakdown.json": "75d84c6a32aa54e8ebafc09fbb330d4a33a7760d498441abd8715e2698d6a294",
+    "replay.json": "9d1b887645c1995376dbeb7f1e7f56546ddee2d5d13539d3fa19fb01ecaf97a2"
+   }
+  },
+  {
+   "id": "20261017T123652Z_kuhn_jev-1.13.0_distribution",
+   "source": "runs/20261017T123652Z_kuhn_jev-1.13.0_distribution",
+   "published": "runs/20261017T123652Z_kuhn_jev-1.13.0_distribution/data",
+   "files": {
+    "manifest.json": "4987ca1d232dee7ce792ac10b03eb77e72a6b364d54fada68e4635b219094e9f",
+    "metrics.json": "17468e8c5f8c999f257efc8efcab38454f0171c9f8db5f4f1f23ce0b47e814fb",
+    "strategy.json": "cbf74619ac0231eb77c9b8e1b9733cdf031f76f297878fe89b7cc9ae76a146ca",
+    "breakdown.json": "28b9768c27125e5fd4c5dd0d69b1cfc321ab3390e77ca77abffaa7205738435e",
+    "replay.json": "08bd3088c67d79f801ea3eb1ec511cbe3d6e9b358d139046e13675caa53e93f0"
+   }
+  },
+  {
+   "id": "20261017T130007Z_leduc_jev-1.13.0_distribution",
+   "source": "runs/20261017T130007Z_leduc_jev-1.13.0_distribution",
+   "published": "runs/20261017T130007Z_leduc_jev-1.13.0_distribution/data",
+   "files": {
+    "manifest.json": "a6626fdfd6b2bd6497bb98b41653b0ab087c04b0629e27cf22ceea6557adf3cf",
+    "metrics.json": "addccd67909dff0b6f0d05422514577764ccae5c7b22efa2ca99f56fdc974047",
+    "strategy.json": "cfb37c4a8e33b0b0172f4d18fd51ba7d76f2ab55d4f03bc4548305e2a1cece02",
+    "breakdown.json": "47dfc5dcd36f9d8cecae0c654035b4b1e855dbac6e3bbbaf9f0206adcb54a198",
+    "replay.json": "10dc07579f8aaac0d9a4c3e1e8ef15b4369ffa97557255148bd1083c0523f682"
+   }
+  }
+ ],
+ "skipped": [
+  {
+   "id": "20261007T222508Z_kuhn_gemini-3.5-flash-lite_text",
+   "reason": "smoke test: N=2 < 30 samples per infostate"
+  },
+  {
+   "id": "20261007T222728Z_kuhn_deepseek-flash_text",
+   "reason": "smoke test: N=2 < 30 samples per infostate"
+  },
+  {
+   "id": "20261007T222735Z_kuhn_claude-haiku-4-5_text",
+   "reason": "smoke test: N=2 < 30 samples per infostate"
+  },
+  {
+   "id": "20261008T101630Z_liars_dice_mock-cfr_distribution",
+   "reason": "superseded by 20261014T220529Z_liars_dice_mock-cfr_distribution"
+  },
+  {
+   "id": "20261008T101631Z_liars_dice_mock-cfr_text",
+   "reason": "superseded by 20261014T220529Z_liars_dice_mock-cfr_text"
+  },
+  {
+   "id": "20261008T101704Z_liars_dice_mock-uniform_distribution",
+   "reason": "superseded by 20261014T220536Z_liars_dice_mock-uniform_distribution"
+  },
+  {
+   "id": "20261008T101705Z_liars_dice_mock-uniform_text",
+   "reason": "superseded by 20261014T220537Z_liars_dice_mock-uniform_text"
+  },
+  {
+   "id": "20261008T101729Z_liars_dice_mock-first-action_text",
+   "reason": "superseded by 20261014T220544Z_liars_dice_mock-first-action_text"
+  },
+  {
+   "id": "20261008T101752Z_liars_dice_mock-last-action_text",
+   "reason": "superseded by 20261014T220550Z_liars_dice_mock-last-action_text"
+  },
+  {
+   "id": "20261008T101815Z_liars_dice_mock-cfr-noisy_text",
+   "reason": "superseded by 20261014T220555Z_liars_dice_mock-cfr-noisy_text"
+  },
+  {
+   "id": "20261017T121819Z_kuhn_jev-1.13.0_distribution",
+   "reason": "superseded by 20261017T123652Z_kuhn_jev-1.13.0_distribution"
+  },
+  {
+   "id": "20261017T124403Z_leduc_jev-1.13.0_distribution",
+   "reason": "superseded by 20261017T130007Z_leduc_jev-1.13.0_distribution"
+  }
+ ]
+}

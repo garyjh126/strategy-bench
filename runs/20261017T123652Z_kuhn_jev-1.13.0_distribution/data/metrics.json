@@ -1,0 +1,142 @@
+{
+  "game": "kuhn",
+  "provider": "typesafe",
+  "model_id": "jev-1.13.0",
+  "params": {},
+  "prompt_version": "kuhn-v1",
+  "mode": "direct",
+  "subject_kind": "distribution",
+  "n_samples": 20,
+  "payoff_unit": "ante",
+  "metrics": {
+    "exploitability": 0.13660645833333332,
+    "br_value": [
+      0.138,
+      0.13521291666666663
+    ],
+    "br_gain": [
+      0.07965727192449484,
+      0.1935556447421718
+    ],
+    "h2h_value": [
+      -0.10089777794195975,
+      -0.01249484023708819
+    ],
+    "h2h_loss": [
+      0.04534213319978797,
+      0.06805048497925997
+    ],
+    "unit_size": 1.0,
+    "exploitability_norm": 0.13660645833333332,
+    "br_gain_norm": [
+      0.07965727192449484,
+      0.1935556447421718
+    ],
+    "h2h_loss_norm": [
+      0.04534213319978797,
+      0.06805048497925997
+    ]
+  },
+  "ci_method": "basic",
+  "ci95": {
+    "exploitability": [
+      0.13439469687499994,
+      0.13875481354166666
+    ],
+    "br_gain_0": [
+      0.07690777400782824,
+      0.082017939632828
+    ],
+    "br_gain_1": [
+      0.18980356140883858,
+      0.19755772807550512
+    ],
+    "h2h_loss_0": [
+      0.04447217516521944,
+      0.04626377352874548
+    ],
+    "h2h_loss_1": [
+      0.06732361201152436,
+      0.0686264079176263
+    ]
+  },
+  "ci95_percentile": {
+    "exploitability": [
+      0.13445810312499998,
+      0.1388182197916667
+    ],
+    "br_gain_0": [
+      0.07729660421616169,
+      0.08240676984116145
+    ],
+    "br_gain_1": [
+      0.18955356140883847,
+      0.197307728075505
+    ],
+    "h2h_loss_0": [
+      0.04442049287083046,
+      0.0462120912343565
+    ],
+    "h2h_loss_1": [
+      0.06747456204089365,
+      0.06877735794699559
+    ]
+  },
+  "bias_corrected": {
+    "exploitability": 0.1365505853125,
+    "br_gain_0": 0.07953802588282814,
+    "br_gain_1": 0.19356314474217182,
+    "h2h_loss_0": 0.04536174196970863,
+    "h2h_loss_1": 0.06803717355274735
+  },
+  "bias": {
+    "exploitability_bootstrap_bias": 5.587302083331913e-05,
+    "exploitability_bias_corrected": 0.1365505853125,
+    "bootstrap_bias": {
+      "exploitability": 5.587302083331913e-05,
+      "br_gain_0": 0.00011924604166670127,
+      "br_gain_1": -7.5000000000213785e-06,
+      "h2h_loss_0": -1.9608769920659297e-05,
+      "h2h_loss_1": 1.3311426512618851e-05
+    }
+  },
+  "equilibrium": {
+    "values": [
+      -0.055555644742171784,
+      0.055555644742171784
+    ],
+    "exploitability": 4.3648619373171105e-05
+  },
+  "reliability": {
+    "samples": 240,
+    "attempts": 240,
+    "parse_failures": 0,
+    "illegal": 0,
+    "samples_retried": 0,
+    "samples_failed": 0,
+    "live_calls": 228,
+    "cache_hits": 12,
+    "input_tokens": 123120,
+    "output_tokens": 7600,
+    "cost_usd": 0.005171039999999993,
+    "parse_failure_rate": 0.0,
+    "illegal_action_rate": 0.0,
+    "retry_rate": 0.0,
+    "sample_failure_rate": 0.0
+  },
+  "cost_usd_estimated": 0.005171039999999993,
+  "cost_usd_live": 0.004912487999999994,
+  "coverage": {
+    "k=1": 1.0
+  },
+  "filled": {
+    "count": 0,
+    "of": 12,
+    "keys": []
+  },
+  "forced": {
+    "count": 0,
+    "keys": []
+  },
+  "run_date": "2026-10-17"
+}

@@ -1,0 +1,34 @@
+{
+  "config": {
+    "n_samples": 200,
+    "max_retries": 2,
+    "n_boot": 200,
+    "seed": 0,
+    "min_samples": 1,
+    "coverage_k": 5,
+    "max_calls": null,
+    "max_cost": null,
+    "concurrency": 1,
+    "eq_iterations": 2000,
+    "eq_cache_dir": "runs/equilibria",
+    "extra": {}
+  },
+  "game": "leduc",
+  "openspiel_game": "leduc_poker(suit_isomorphism=True)",
+  "prompt_version": "leduc-v1",
+  "system_prompt": "You are playing Leduc poker, a two-player card game.\nYour goal is to maximise your expected winnings.\n\nRules:\n- The deck has six cards: two Jacks, two Queens and two Kings. Suits do not matter.\n- Each player antes 1 chip and is dealt one private card.\n- There are two betting rounds. After the first round, one public card is dealt face up.\n- Player 1 acts first in each round.\n- If nobody has bet in the current round, you may CHECK or BET.\n- Facing a bet you may FOLD, CALL or RAISE (raise means calling the bet and adding the bet size).\n- The bet size is 2 chips in round 1 and 4 chips in round 2.\n- Each round allows at most one bet and one raise. After that, the only options are FOLD or CALL.\n- A round ends when both players check, or when a bet or raise is called. Folding forfeits the pot.\n- At showdown, a player whose private card matches the public card (a pair) wins.\n  Otherwise the higher card wins (King > Queen > Jack). Equal cards split the pot.\n\nYou will be told your seat, your card, the public card once dealt, the betting so far and the pot,\nthen asked for your action.",
+  "provider": "mock",
+  "model_id": "mock-cfr-noisy",
+  "params": {
+    "seed": 0,
+    "garbage_rate": 0.05,
+    "illegal_rate": 0.0,
+    "format_noise": true
+  },
+  "versions": {
+    "strategybench": "0.1.0",
+    "open_spiel": "2.0.2",
+    "numpy": "2.5.3"
+  },
+  "created": "2026-10-08T09:44:02.276195+00:00"
+}

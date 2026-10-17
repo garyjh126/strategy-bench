@@ -1,0 +1,580 @@
+{
+ "version": 4,
+ "derived_from": {
+  "strategy.json": "17ccf00234db0c537c26b64fa9acd817b45dd99f9f68fc796ed268b1dd6b8ae1",
+  "metrics.json": "18f7979156cae35717055e200807ca8220493921170df99a984d323a3e7d690f"
+ },
+ "game": "kuhn",
+ "payoff_unit": "ante",
+ "unit_size": 1.0,
+ "seats": [
+  {
+   "subject_seat": 0,
+   "responder_seat": 1,
+   "gain": 0.00444435525782827,
+   "passive": 1.258255463987279e-06,
+   "active": 0.004443097002364282,
+   "br_value": 0.06000000000000005,
+   "eq_value": 0.05555690299763577,
+   "game_value": 0.055555644742171784,
+   "responder": [
+    {
+     "infostate": "1b",
+     "player": 1,
+     "short": "Queen \u00b7 Player 1 bet",
+     "situation": "You are Player 2 (you act second).\nYour card: Queen.\nActions so far: Player 1 bet.",
+     "reach": 0.14666666666666667,
+     "best_response": "CALL",
+     "equilibrium": {
+      "FOLD": 0.6664240081257605,
+      "CALL": 0.33357599187423953
+     },
+     "values": {
+      "FOLD": -1.0,
+      "CALL": -0.9545454545454546
+     },
+     "eq_mix_value": -0.9848374549148073,
+     "edge": 0.030292000369352756,
+     "contribution": 0.004442826720838404,
+     "share": 0.9996560722756865,
+     "example_history": [
+      0,
+      1,
+      1
+     ]
+    },
+    {
+     "infostate": "1p",
+     "player": 1,
+     "short": "Queen \u00b7 Player 1 checked",
+     "situation": "You are Player 2 (you act second).\nYour card: Queen.\nActions so far: Player 1 checked.",
+     "reach": 0.18666666666666665,
+     "best_response": "CHECK",
+     "equilibrium": {
+      "CHECK": 0.9999975012493754,
+      "BET": 2.4987506246876562e-06
+     },
+     "values": {
+      "CHECK": 0.37500000000000006,
+      "BET": 0.06250000000000004
+     },
+     "eq_mix_value": 0.3749992191404299,
+     "edge": 7.808595701708221e-07,
+     "contribution": 1.4576045309855345e-07,
+     "share": 3.279676007938644e-05,
+     "example_history": [
+      2,
+      1,
+      0
+     ]
+    },
+    {
+     "infostate": "2p",
+     "player": 1,
+     "short": "King \u00b7 Player 1 checked",
+     "situation": "You are Player 2 (you act second).\nYour card: King.\nActions so far: Player 1 checked.",
+     "reach": 0.295,
+     "best_response": "BET",
+     "equilibrium": {
+      "CHECK": 7.496251874062968e-07,
+      "BET": 0.9999992503748126
+     },
+     "values": {
+      "CHECK": 1.0,
+      "BET": 1.310734463276836
+     },
+     "eq_mix_value": 1.3107342303424558,
+     "edge": 2.3293438022875534e-07,
+     "contribution": 6.871564216748282e-08,
+     "share": 1.5461329750012076e-05,
+     "example_history": [
+      1,
+      2,
+      0
+     ]
+    },
+    {
+     "infostate": "2b",
+     "player": 1,
+     "short": "King \u00b7 Player 1 bet",
+     "situation": "You are Player 2 (you act second).\nYour card: King.\nActions so far: Player 1 bet.",
+     "reach": 0.03833333333333333,
+     "best_response": "CALL",
+     "equilibrium": {
+      "FOLD": 2.498750624687656e-07,
+      "CALL": 0.9999997501249376
+     },
+     "values": {
+      "FOLD": -1.0,
+      "CALL": 2.0
+     },
+     "eq_mix_value": 1.9999992503748127,
+     "edge": 7.496251872574078e-07,
+     "contribution": 2.873563217820063e-08,
+     "share": 6.465646986159758e-06,
+     "example_history": [
+      0,
+      2,
+      1
+     ]
+    },
+    {
+     "infostate": "0b",
+     "player": 1,
+     "short": "Jack \u00b7 Player 1 bet",
+     "situation": "You are Player 2 (you act second).\nYour card: Jack.\nActions so far: Player 1 bet.",
+     "reach": 0.10833333333333334,
+     "best_response": "FOLD",
+     "equilibrium": {
+      "FOLD": 0.9999997501249376,
+      "CALL": 2.498750624687656e-07
+     },
+     "values": {
+      "FOLD": -1.0,
+      "CALL": -2.0
+     },
+     "eq_mix_value": -1.0000002498750624,
+     "edge": 2.4987506241913593e-07,
+     "contribution": 2.7069798428739727e-08,
+     "share": 6.090826871020064e-06,
+     "example_history": [
+      2,
+      0,
+      1
+     ]
+    },
+    {
+     "infostate": "0p",
+     "player": 1,
+     "short": "Jack \u00b7 Player 1 checked",
+     "situation": "You are Player 2 (you act second).\nYour card: Jack.\nActions so far: Player 1 checked.",
+     "reach": 0.22499999999999998,
+     "best_response": "CHECK",
+     "equilibrium": {
+      "CHECK": 0.6665073136784122,
+      "BET": 0.33349268632158774
+     },
+     "values": {
+      "CHECK": -1.0,
+      "BET": -1.0000000000000002
+     },
+     "eq_mix_value": -1.0,
+     "edge": 0.0,
+     "contribution": 0.0,
+     "share": 0.0,
+     "example_history": [
+      2,
+      0,
+      0
+     ]
+    }
+   ],
+   "subject": [
+    {
+     "infostate": "2",
+     "player": 0,
+     "short": "King \u00b7 first to act",
+     "situation": "You are Player 1 (you act first).\nYour card: King.\nActions so far: none.",
+     "reach": 0.3333333333333333,
+     "estimated": {
+      "CHECK": 0.35,
+      "BET": 0.65
+     },
+     "equilibrium": {
+      "CHECK": 0.33188780758547143,
+      "BET": 0.6681121924145286
+     },
+     "distance": 0.01811219241452855,
+     "weighted_distance": 0.006037397471509516,
+     "support": 200,
+     "filled": false,
+     "forced": false
+    },
+    {
+     "infostate": "0",
+     "player": 0,
+     "short": "Jack \u00b7 first to act",
+     "situation": "You are Player 1 (you act first).\nYour card: Jack.\nActions so far: none.",
+     "reach": 0.3333333333333333,
+     "estimated": {
+      "CHECK": 0.77,
+      "BET": 0.23
+     },
+     "equilibrium": {
+      "CHECK": 0.7772668085709556,
+      "BET": 0.22273319142904435
+     },
+     "distance": 0.0072668085709556435,
+     "weighted_distance": 0.002422269523651881,
+     "support": 200,
+     "filled": false,
+     "forced": false
+    },
+    {
+     "infostate": "1pb",
+     "player": 0,
+     "short": "Queen \u00b7 Player 1 checked, Player 2 bet",
+     "situation": "You are Player 1 (you act first).\nYour card: Queen.\nActions so far: Player 1 checked, Player 2 bet.",
+     "reach": 0.2222486561160667,
+     "estimated": {
+      "FOLD": 0.45,
+      "CALL": 0.55
+     },
+     "equilibrium": {
+      "FOLD": 0.4439027039280385,
+      "CALL": 0.5560972960719616
+     },
+     "distance": 0.006097296071961522,
+     "weighted_distance": 0.0013551158579352205,
+     "support": 200,
+     "filled": false,
+     "forced": false
+    },
+    {
+     "infostate": "1",
+     "player": 0,
+     "short": "Queen \u00b7 first to act",
+     "situation": "You are Player 1 (you act first).\nYour card: Queen.\nActions so far: none.",
+     "reach": 0.3333333333333333,
+     "estimated": {
+      "CHECK": 1.0,
+      "BET": 0.0
+     },
+     "equilibrium": {
+      "CHECK": 0.9999943810133937,
+      "BET": 5.618986606298832e-06
+     },
+     "distance": 5.618986606318013e-06,
+     "weighted_distance": 1.8729955354393377e-06,
+     "support": 200,
+     "filled": false,
+     "forced": false
+    },
+    {
+     "infostate": "0pb",
+     "player": 0,
+     "short": "Jack \u00b7 Player 1 checked, Player 2 bet",
+     "situation": "You are Player 1 (you act first).\nYour card: Jack.\nActions so far: Player 1 checked, Player 2 bet.",
+     "reach": 0.1283335578044311,
+     "estimated": {
+      "FOLD": 1.0,
+      "CALL": 0.0
+     },
+     "equilibrium": {
+      "FOLD": 0.9999998392604318,
+      "CALL": 1.6073956826239253e-07
+     },
+     "distance": 1.607395682368346e-07,
+     "weighted_distance": 2.062828067178111e-08,
+     "support": 200,
+     "filled": false,
+     "forced": false
+    },
+    {
+     "infostate": "2pb",
+     "player": 0,
+     "short": "King \u00b7 Player 1 checked, Player 2 bet",
+     "situation": "You are Player 1 (you act first).\nYour card: King.\nActions so far: Player 1 checked, Player 2 bet.",
+     "reach": 0.019453885795879058,
+     "estimated": {
+      "FOLD": 0.0,
+      "CALL": 1.0
+     },
+     "equilibrium": {
+      "FOLD": 3.7644507685690654e-07,
+      "CALL": 0.9999996235549231
+     },
+     "distance": 3.7644507687264706e-07,
+     "weighted_distance": 7.323319533901388e-09,
+     "support": 200,
+     "filled": false,
+     "forced": false
+    }
+   ]
+  },
+  {
+   "subject_seat": 1,
+   "responder_seat": 0,
+   "gain": 0.007222311408838444,
+   "passive": -9.046346562957552e-07,
+   "active": 0.00722321604349474,
+   "br_value": -0.04833333333333334,
+   "eq_value": -0.05555654937682808,
+   "game_value": -0.055555644742171784,
+   "responder": [
+    {
+     "infostate": "0",
+     "player": 0,
+     "short": "Jack \u00b7 first to act",
+     "situation": "You are Player 1 (you act first).\nYour card: Jack.\nActions so far: none.",
+     "reach": 0.3333333333333333,
+     "best_response": "CHECK",
+     "equilibrium": {
+      "CHECK": 0.7772668085709556,
+      "BET": 0.22273319142904435
+     },
+     "values": {
+      "CHECK": -1.0,
+      "BET": -1.04
+     },
+     "eq_mix_value": -1.008909327657162,
+     "edge": 0.008909327657161903,
+     "contribution": 0.002969775885720634,
+     "share": 0.4111946602145004,
+     "example_history": [
+      0,
+      2
+     ]
+    },
+    {
+     "infostate": "1pb",
+     "player": 0,
+     "short": "Queen \u00b7 Player 1 checked, Player 2 bet",
+     "situation": "You are Player 1 (you act first).\nYour card: Queen.\nActions so far: Player 1 checked, Player 2 bet.",
+     "reach": 0.2208320924737911,
+     "best_response": "FOLD",
+     "equilibrium": {
+      "FOLD": 0.4439027039280385,
+      "CALL": 0.5560972960719616
+     },
+     "values": {
+      "FOLD": -1.0,
+      "CALL": -1.0188679245283019
+     },
+     "eq_mix_value": -1.0104924018126786,
+     "edge": 0.010492401812678631,
+     "contribution": 0.0023170590473696206,
+     "share": 0.3208195986307201,
+     "example_history": [
+      1,
+      2,
+      0,
+      1
+     ]
+    },
+    {
+     "infostate": "2",
+     "player": 0,
+     "short": "King \u00b7 first to act",
+     "situation": "You are Player 1 (you act first).\nYour card: King.\nActions so far: none.",
+     "reach": 0.3333333333333333,
+     "best_response": "BET",
+     "equilibrium": {
+      "CHECK": 0.33188780758547143,
+      "BET": 0.6681121924145286
+     },
+     "values": {
+      "CHECK": 1.1625,
+      "BET": 1.18
+     },
+     "eq_mix_value": 1.1741919633672544,
+     "edge": 0.005808036632745539,
+     "contribution": 0.0019360122109151796,
+     "share": 0.2680599189541934,
+     "example_history": [
+      2,
+      1
+     ]
+    },
+    {
+     "infostate": "1",
+     "player": 0,
+     "short": "Queen \u00b7 first to act",
+     "situation": "You are Player 1 (you act first).\nYour card: Queen.\nActions so far: none.",
+     "reach": 0.3333333333333333,
+     "best_response": "CHECK",
+     "equilibrium": {
+      "CHECK": 0.9999943810133937,
+      "BET": 5.618986606298832e-06
+     },
+     "values": {
+      "CHECK": -0.325,
+      "BET": -0.5
+     },
+     "eq_mix_value": -0.32500098332265615,
+     "edge": 9.833226561339892e-07,
+     "contribution": 3.277742187113297e-07,
+     "share": 4.5383562152998504e-05,
+     "example_history": [
+      1,
+      2
+     ]
+    },
+    {
+     "infostate": "0pb",
+     "player": 0,
+     "short": "Jack \u00b7 Player 1 checked, Player 2 bet",
+     "situation": "You are Player 1 (you act first).\nYour card: Jack.\nActions so far: Player 1 checked, Player 2 bet.",
+     "reach": 0.12954446809515927,
+     "best_response": "FOLD",
+     "equilibrium": {
+      "FOLD": 0.9999998392604318,
+      "CALL": 1.6073956826239253e-07
+     },
+     "values": {
+      "FOLD": -1.0,
+      "CALL": -2.0
+     },
+     "eq_mix_value": -1.0000001607395683,
+     "edge": 1.6073956832229896e-07,
+     "contribution": 2.082292188015773e-08,
+     "share": 2.883138195159416e-06,
+     "example_history": [
+      0,
+      2,
+      0,
+      1
+     ]
+    },
+    {
+     "infostate": "2pb",
+     "player": 0,
+     "short": "King \u00b7 Player 1 checked, Player 2 bet",
+     "situation": "You are Player 1 (you act first).\nYour card: King.\nActions so far: Player 1 checked, Player 2 bet.",
+     "reach": 0.017977256244213036,
+     "best_response": "CALL",
+     "equilibrium": {
+      "FOLD": 3.7644507685690654e-07,
+      "CALL": 0.9999996235549231
+     },
+     "values": {
+      "FOLD": -1.0,
+      "CALL": 2.0
+     },
+     "eq_mix_value": 1.9999988706647693,
+     "edge": 1.1293352306651627e-06,
+     "contribution": 2.0302348827285066e-08,
+     "share": 2.8110597394678483e-06,
+     "example_history": [
+      2,
+      0,
+      0,
+      1
+     ]
+    }
+   ],
+   "subject": [
+    {
+     "infostate": "1b",
+     "player": 1,
+     "short": "Queen \u00b7 Player 1 bet",
+     "situation": "You are Player 2 (you act second).\nYour card: Queen.\nActions so far: Player 1 bet.",
+     "reach": 0.14847423064059548,
+     "estimated": {
+      "FOLD": 0.64,
+      "CALL": 0.36
+     },
+     "equilibrium": {
+      "FOLD": 0.6664240081257605,
+      "CALL": 0.33357599187423953
+     },
+     "distance": 0.026424008125760484,
+     "weighted_distance": 0.003923284276913131,
+     "support": 200,
+     "filled": false,
+     "forced": false
+    },
+    {
+     "infostate": "0p",
+     "player": 1,
+     "short": "Jack \u00b7 Player 1 checked",
+     "situation": "You are Player 2 (you act second).\nYour card: Jack.\nActions so far: Player 1 checked.",
+     "reach": 0.2219803647664775,
+     "estimated": {
+      "CHECK": 0.675,
+      "BET": 0.325
+     },
+     "equilibrium": {
+      "CHECK": 0.6665073136784122,
+      "BET": 0.33349268632158774
+     },
+     "distance": 0.008492686321587783,
+     "weighted_distance": 0.0018852096075133303,
+     "support": 200,
+     "filled": false,
+     "forced": false
+    },
+    {
+     "infostate": "1p",
+     "player": 1,
+     "short": "Queen \u00b7 Player 1 checked",
+     "situation": "You are Player 2 (you act second).\nYour card: Queen.\nActions so far: Player 1 checked.",
+     "reach": 0.18485910269273784,
+     "estimated": {
+      "CHECK": 1.0,
+      "BET": 0.0
+     },
+     "equilibrium": {
+      "CHECK": 0.9999975012493754,
+      "BET": 2.4987506246876562e-06
+     },
+     "distance": 2.4987506246615524e-06,
+     "weighted_distance": 4.619167983278527e-07,
+     "support": 200,
+     "filled": false,
+     "forced": false
+    },
+    {
+     "infostate": "2p",
+     "player": 1,
+     "short": "King \u00b7 Player 1 checked",
+     "situation": "You are Player 2 (you act second).\nYour card: King.\nActions so far: Player 1 checked.",
+     "reach": 0.2962101982640582,
+     "estimated": {
+      "CHECK": 0.0,
+      "BET": 1.0
+     },
+     "equilibrium": {
+      "CHECK": 7.496251874062968e-07,
+      "BET": 0.9999992503748126
+     },
+     "distance": 7.496251873873634e-07,
+     "weighted_distance": 2.220466253797427e-07,
+     "support": 200,
+     "filled": false,
+     "forced": false
+    },
+    {
+     "infostate": "0b",
+     "player": 1,
+     "short": "Jack \u00b7 Player 1 bet",
+     "situation": "You are Player 2 (you act second).\nYour card: Jack.\nActions so far: Player 1 bet.",
+     "reach": 0.11135296856685581,
+     "estimated": {
+      "FOLD": 1.0,
+      "CALL": 0.0
+     },
+     "equilibrium": {
+      "FOLD": 0.9999997501249376,
+      "CALL": 2.498750624687656e-07
+     },
+     "distance": 2.4987506244395077e-07,
+     "weighted_distance": 2.7824329973962383e-08,
+     "support": 200,
+     "filled": false,
+     "forced": false
+    },
+    {
+     "infostate": "2b",
+     "player": 1,
+     "short": "King \u00b7 Player 1 bet",
+     "situation": "You are Player 2 (you act second).\nYour card: King.\nActions so far: Player 1 bet.",
+     "reach": 0.03712313506927511,
+     "estimated": {
+      "FOLD": 0.0,
+      "CALL": 1.0
+     },
+     "equilibrium": {
+      "FOLD": 2.498750624687656e-07,
+      "CALL": 0.9999997501249376
+     },
+     "distance": 2.4987506244395077e-07,
+     "weighted_distance": 9.276145693550335e-09,
+     "support": 200,
+     "filled": false,
+     "forced": false
+    }
+   ]
+  }
+ ]
+}

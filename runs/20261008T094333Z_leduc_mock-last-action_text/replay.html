@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Replay: Always the most aggressive action on Leduc poker · StrategyBench</title>
+<meta name="description" content="StrategyBench measures how exploitable AI agents are in small card and dice games, with exact best responses and bootstrap confidence intervals.">
+<link rel="stylesheet" href="../../assets/style.css">
+<script>try{var t=localStorage.getItem("sb-theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
+</head>
+<body class="page-replay">
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap header-row">
+    <a class="brand" href="../../index.html">StrategyBench</a>
+    <nav aria-label="Site">
+      <a href="../../index.html">Leaderboard</a>
+      <a href="../../methodology.html">Methodology</a>
+    </nav>
+    <button class="theme-toggle" type="button" aria-label="Switch colour theme" title="Switch colour theme">
+      <svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><circle cx="10" cy="10" r="7.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M10 2.5a7.5 7.5 0 0 1 0 15z" fill="currentColor"/></svg>
+    </button>
+  </div>
+</header>
+<main id="main" class="wrap">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="../../index.html">Leaderboard</a> <span aria-hidden="true">/</span> <a href="../../index.html#leduc">Leduc poker</a> <span aria-hidden="true">/</span> <a href="index.html">Always the most aggressive action</a></nav>
+
+<header class="run-head">
+  <h1>Replay: Always the most aggressive action <span class="chip">reference</span></h1>
+  <p class="sub">scripted reference · sampled · Leduc poker</p>
+  <p class="lede">
+    Step through a hand. At each of the subject's decisions you see the situation exactly as the subject was told it, how often it chose each action (bar) against the equilibrium (tick), and the action taken in this hand. At the opponent's decisions you see the equilibrium mix it played from, the best response against this subject, and what that best response gains.
+  </p>
+  <p class="note">
+    No play-mode match was recorded for this run, so the numbered hands are <strong>simulated</strong> from the estimated strategy against the equilibrium. Each query to the subject is independent and context-free, so simulated hands follow the same distribution as live play, but they were not played live.
+    “Biggest gain” hands are constructed: the chance outcomes and actions leading to the situation where switching to the best response gains most, then the best response and the subject's most likely actions.
+  </p>
+</header>
+
+<div class="replay-controls">
+  <label for="hand-select">Hand</label>
+  <select id="hand-select"></select>
+  <button type="button" id="hand-prev" aria-label="Previous hand">Previous</button>
+  <button type="button" id="hand-next" aria-label="Next hand">Next</button>
+</div>
+<div class="legend"><span><i class="key-bar"></i>Subject (estimated)</span><span><i class="key-tick"></i>Equilibrium</span><span><i class="key-bar ref"></i>Opponent's equilibrium mix</span><span><i class="key-badge"></i>Best response</span></div>
+<div id="hand-summary" class="hand-summary" aria-live="polite"></div>
+<ol id="steps" class="steps"></ol>
+<noscript><p class="notice">The replay view needs JavaScript. The same data is in <a href="data/replay.json">replay.json</a>.</p></noscript>
+<p class="note">Data: <a href="data/replay.json">replay.json</a>, derived from this run's strategy.json and breakdown.json.</p>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <p>Built 2026-10-17 13:32 UTC by strategybench 0.1.0 at commit <code>e490511</code>. Game solving and best responses use <a href="https://github.com/google-deepmind/open_spiel">OpenSpiel</a>.</p>
+    <p>Every number in the results tables and charts is read from a published result file; hover a number to see which file and field. <code>build.json</code> lists each file's SHA-256.</p>
+  </div>
+</footer>
+<div class="tooltip" role="tooltip" hidden></div>
+<script src="../../assets/site.js"></script>
+<script src="replay-data.js"></script>
+<script src="../../assets/replay.js"></script>
+</body>
+</html>
