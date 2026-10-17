@@ -1,0 +1,145 @@
+{
+  "game": "kuhn",
+  "provider": "anthropic",
+  "model_id": "claude-haiku-4-5",
+  "params": {
+    "max_tokens": 256,
+    "temperature": 1.0
+  },
+  "prompt_version": "kuhn-v1",
+  "mode": "direct",
+  "subject_kind": "sampled",
+  "n_samples": 200,
+  "payoff_unit": "ante",
+  "metrics": {
+    "exploitability": 0.36249999999999993,
+    "br_value": [
+      0.28333333333333327,
+      0.4416666666666666
+    ],
+    "br_gain": [
+      0.3861110219244948,
+      0.33888897807550505
+    ],
+    "h2h_value": [
+      -0.2485707002964891,
+      -0.06636863093636514
+    ],
+    "h2h_loss": [
+      0.1930150555543173,
+      0.12192427567853692
+    ],
+    "unit_size": 1.0,
+    "exploitability_norm": 0.36249999999999993,
+    "br_gain_norm": [
+      0.3861110219244948,
+      0.33888897807550505
+    ],
+    "h2h_loss_norm": [
+      0.1930150555543173,
+      0.12192427567853692
+    ]
+  },
+  "ci_method": "basic",
+  "ci95": {
+    "exploitability": [
+      0.3516562499999999,
+      0.3721145833333332
+    ],
+    "br_gain_0": [
+      0.36940268859116143,
+      0.4061110219244947
+    ],
+    "br_gain_1": [
+      0.32638897807550504,
+      0.3514098114088383
+    ],
+    "h2h_loss_0": [
+      0.18466087427516528,
+      0.20301507304557176
+    ],
+    "h2h_loss_1": [
+      0.11469084981659114,
+      0.12945256733866095
+    ]
+  },
+  "ci95_percentile": {
+    "exploitability": [
+      0.3528854166666667,
+      0.37334375
+    ],
+    "br_gain_0": [
+      0.3661110219244949,
+      0.4028193552578282
+    ],
+    "br_gain_1": [
+      0.3263681447421718,
+      0.35138897807550507
+    ],
+    "h2h_loss_0": [
+      0.18301503806306285,
+      0.20136923683346933
+    ],
+    "h2h_loss_1": [
+      0.11439598401841289,
+      0.1291577015404827
+    ]
+  },
+  "bias_corrected": {
+    "exploitability": 0.36167916666666655,
+    "br_gain_0": 0.3842860219244948,
+    "br_gain_1": 0.33907231140883837,
+    "h2h_loss_0": 0.19210255395824044,
+    "h2h_loss_1": 0.12207692830953638
+  },
+  "bias": {
+    "exploitability_bootstrap_bias": 0.0008208333333333817,
+    "exploitability_bias_corrected": 0.36167916666666655,
+    "bootstrap_bias": {
+      "exploitability": 0.0008208333333333817,
+      "br_gain_0": 0.001825000000000021,
+      "br_gain_1": -0.00018333333333331314,
+      "h2h_loss_0": 0.0009125015960768645,
+      "h2h_loss_1": -0.00015265263099946413
+    }
+  },
+  "equilibrium": {
+    "values": [
+      -0.055555644742171784,
+      0.055555644742171784
+    ],
+    "exploitability": 4.3648619373171105e-05
+  },
+  "reliability": {
+    "samples": 2400,
+    "attempts": 2400,
+    "parse_failures": 0,
+    "illegal": 0,
+    "samples_retried": 0,
+    "samples_failed": 0,
+    "live_calls": 2376,
+    "cache_hits": 24,
+    "input_tokens": 615600,
+    "output_tokens": 11550,
+    "cost_usd": 0.6733499999999936,
+    "parse_failure_rate": 0.0,
+    "illegal_action_rate": 0.0,
+    "retry_rate": 0.0,
+    "sample_failure_rate": 0.0
+  },
+  "cost_usd_estimated": 0.6733499999999936,
+  "cost_usd_live": 0.6666139999999937,
+  "coverage": {
+    "k=5": 1.0
+  },
+  "filled": {
+    "count": 0,
+    "of": 12,
+    "keys": []
+  },
+  "forced": {
+    "count": 0,
+    "keys": []
+  },
+  "run_date": "2026-10-16"
+}
