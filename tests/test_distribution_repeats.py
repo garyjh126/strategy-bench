@@ -113,3 +113,31 @@ def test_only_single_call_distribution_runs_count_as_exact(kind, n_samples, exac
         run_id="r", path=None, manifest={}, metrics={"subject_kind": kind, "n_samples": n_samples}
     )
     assert record.is_exact is exact
+
+
+class FixedReplyClient:
+    """Always returns the given probabilities for the first two labels and the rest on the third."""
+
+    provider = "mock"
+
+    def __init__(self, first: float, second: float) -> None:
+        self.model_id, self.params, self.first, self.second = "mock-fixed", {}, first, second
+
+    def distribution(self, prompt: Prompt) -> DistributionReply:
+        a, b = prompt.labels
+        return DistributionReply(probs={a: self.first, b: self.second})
+
+
+def test_rounding_off_by_a_little_is_rescaled_and_counted(eq):
+    result = run_direct(SPEC, TEMPLATE, FixedReplyClient(0.5, 0.49), RunConfig(n_boot=0), None, None, eq)
+    rel = result["reliability"]
+    assert rel["rescaled"] == 12 and rel["parse_failures"] == 0
+    uniform = compute_metrics(GAME, uniform_policy(GAME), eq).exploitability
+    assert result["metrics"]["exploitability"] == pytest.approx(uniform, abs=0.02)
+
+
+def test_replies_far_from_summing_to_one_fail(eq):
+    result = run_direct(SPEC, TEMPLATE, FixedReplyClient(0.5, 0.45), RunConfig(n_boot=0), None, None, eq)
+    rel = result["reliability"]
+    assert rel["parse_failures"] == 12 and rel["rescaled"] == 0
+    assert result["filled"]["count"] == 12

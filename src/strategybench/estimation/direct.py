@@ -33,6 +33,10 @@ from strategybench.estimation.strategy import mean_probabilities
 from strategybench.games.base import GameSpec
 from strategybench.prompts.base import PromptTemplate
 
+#: A distribution reply may sum to 1 only up to rounding: Jev gives two decimals, so three options
+#: can sum to 0.99 or 1.01 (up to 0.015 for three). Such replies are rescaled and counted; others fail.
+SUM_TOLERANCE = 0.015
+
 
 class BudgetExceeded(RuntimeError):
     pass
@@ -106,6 +110,9 @@ class Reliability:
     illegal: int = 0
     samples_retried: int = 0
     samples_failed: int = 0
+    #: Distribution replies whose probabilities summed to within ``SUM_TOLERANCE`` of 1 (rounding)
+    #: and were rescaled to sum to 1.
+    rescaled: int = 0
     live_calls: int = 0
     cache_hits: int = 0
     input_tokens: int = 0
@@ -354,11 +361,13 @@ class DistributionQuerier:
                     self.cache.put(key, record)
 
         dist = record["dist"]
+        total = sum(dist.values())
         valid = (
             set(dist) == set(labels.values())
             and all(p >= 0 for p in dist.values())
-            and abs(sum(dist.values()) - 1.0) < 1e-6
+            and abs(total - 1.0) <= SUM_TOLERANCE
         )
+        rescaled = valid and abs(total - 1.0) > 1e-9
         log_record = {
             "provider": client.provider,
             "model_id": client.model_id,
@@ -371,6 +380,7 @@ class DistributionQuerier:
             "sample_index": sample_index,
             "distribution": dist,
             "status": "ok" if valid else "invalid_distribution",
+            "rescaled": rescaled,
             "input_tokens": record.get("input_tokens"),
             "output_tokens": record.get("output_tokens"),
             "extra": record.get("extra", {}),
@@ -378,7 +388,7 @@ class DistributionQuerier:
             "timestamp": record["timestamp"],
             "from_cache": from_cache,
         }
-        probs = {a: float(dist[lab]) for a, lab in labels.items()} if valid else None
+        probs = {a: float(dist[lab]) / total for a, lab in labels.items()} if valid else None
         return log_record, probs
 
 
@@ -399,6 +409,8 @@ def tally_distribution(
     if not valid:
         rel.parse_failures += 1
         rel.samples_failed += 1
+    elif record.get("rescaled"):
+        rel.rescaled += 1
 
 
 def collect_distribution(

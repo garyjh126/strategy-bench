@@ -29,6 +29,8 @@ class ModelSpec:
     price_output: float = 0.0
     price_source: str = ""
     est_output_tokens: int = 5
+    #: Input tokens the provider adds to every call, beyond the prompt text (dry-run estimate only).
+    est_input_overhead_tokens: int = 0
     concurrency: int = 1
     rpm: float | None = None
     base_url: str | None = None
@@ -57,6 +59,7 @@ def load_models(path: str | Path = "models.yaml") -> dict[str, ModelSpec]:
             price_output=float(price.get("output", 0.0)),
             price_source=cfg.get("price_source", ""),
             est_output_tokens=int(cfg.get("est_output_tokens", 5)),
+            est_input_overhead_tokens=int(cfg.get("est_input_overhead_tokens", 0)),
             concurrency=int(cfg.get("concurrency", 1)),
             rpm=cfg.get("rpm"),
             base_url=cfg.get("base_url"),

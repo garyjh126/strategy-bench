@@ -49,4 +49,6 @@ models:
     price_per_mtok: {input: 0.042, output: 0.0}
     price_source: "TypeSafe models page (input only, output free), checked 2026-10-17"
     est_output_tokens: 0
+    # Billed input exceeds the prompt estimate by ~310 tokens per call (Kuhn 513 vs 209, Leduc 693 vs 372).
+    est_input_overhead_tokens: 310
     concurrency: 4

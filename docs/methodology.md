@@ -73,9 +73,15 @@ independently, with a fresh context each time.
 * **Text subjects** are sampled N times per infostate. The estimated strategy σ̂ at an
   infostate is the empirical frequency of the valid sampled actions.
 * **Distribution subjects** (models that return a probability per offered option in one call)
-  are queried once per infostate and the returned probabilities are used directly as σ̂. These
-  have no sampling error. Their probabilities may be intended as confidences rather than as a
-  mixed strategy, so results report which reading was used.
+  are queried K times per infostate and σ̂ there is the average of the returned
+  probabilities. A subject whose answer never changes (the scripted references) is queried once
+  and has no sampling error. Jev's answers vary between calls (by up to about 0.09), so it is
+  queried K = 20 times and bootstrapped over its replies, like a text subject over its samples.
+  A reply is valid when it names exactly the legal options with non-negative probabilities
+  summing to 1 within 0.015; Jev rounds to two decimals, so three options can sum to 0.99, and
+  such replies are rescaled to sum to 1 and counted (`rescaled` in the reliability block).
+  Their probabilities may be intended as confidences rather than as a mixed strategy, so
+  results report which reading was used.
 
 **Forced decisions are not queried.** An infostate with a single legal action has nothing to
 estimate, so the subject is not asked: the action is played with certainty, the infostate is
@@ -194,7 +200,7 @@ interval (the 2.5% and 97.5% quantiles of the replicates) sits above the truth.
 
 The site shows these, with the plug-in value beside them. `metrics.json` also keeps the
 percentile intervals (`ci95_percentile`) and the bootstrap bias. Exact subjects (distribution
-clients) have no sampling error and are shown exactly.
+clients queried once) have no sampling error and are shown exactly.
 
 **Coverage, measured by simulation.** For scripted strategies with a known exploitability,
 `scripts/ci_coverage.py` draws independent datasets of N = 200 samples per infostate, builds

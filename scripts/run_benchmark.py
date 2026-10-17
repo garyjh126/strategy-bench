@@ -117,7 +117,7 @@ def main() -> int:
         if model_spec is None:
             print("estimated cost: $0.00 (mock subject)")
         else:
-            tokens_in = mean_prompt_tokens(spec, template)
+            tokens_in = mean_prompt_tokens(spec, template) + model_spec.est_input_overhead_tokens
             per_call = model_spec.cost(round(tokens_in), model_spec.est_output_tokens)
             print(
                 f"model {model_spec.name} ({model_spec.provider}/{model_spec.model}), "
@@ -242,6 +242,7 @@ def print_direct(spec, client, result) -> None:
     print(
         f"  M4 parse-fail {rel['parse_failure_rate']:.3f} | illegal {rel['illegal_action_rate']:.3f} | "
         f"retry {rel['retry_rate']:.3f} | failed samples {rel['sample_failure_rate']:.3f}"
+        + (f" | rescaled {rel['rescaled']}" if rel.get("rescaled") else "")
     )
     print(
         f"     coverage {result['coverage']} | filled {result['filled']['count']}/{result['filled']['of']} | "
