@@ -62,7 +62,9 @@ uv run python scripts/game_size.py "liars_dice(numdice=1,dice_sides=3)" "liars_d
 
 ## Run a real model
 
-Copy `.env.example` to `.env` and add your API keys. Models are defined in `models.yaml`.
+API keys come from environment variables: copy `.env.example` to `.env` and add yours, or, if
+they live in Bitwarden (one item per key, named after the variable), prefix the command with
+`scripts/with-keys.sh`. Models are defined in `models.yaml`.
 Always look at the dry run first; paid models refuse to run without `--max-cost`.
 
 ```bash
