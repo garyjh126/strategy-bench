@@ -49,12 +49,19 @@ class TextClient(Protocol):
     def complete(self, prompt: Prompt, sample_index: int | str, attempt: int) -> Completion: ...
 
 
+@dataclass
+class DistributionReply:
+    #: Probability for each label in ``prompt.labels``.
+    probs: dict[str, float]
+    input_tokens: int | None = None
+    output_tokens: int | None = None
+    extra: dict[str, Any] = field(default_factory=dict)
+
+
 @runtime_checkable
 class DistributionClient(Protocol):
     provider: str
     model_id: str
     params: dict[str, Any]
 
-    def distribution(self, prompt: Prompt) -> dict[str, float]:
-        """Probability for each label in ``prompt.labels``."""
-        ...
+    def distribution(self, prompt: Prompt) -> DistributionReply: ...

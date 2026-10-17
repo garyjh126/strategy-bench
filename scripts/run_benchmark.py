@@ -87,12 +87,16 @@ def main() -> int:
     eq = solve_equilibrium(spec.load_string, 2000, args.eq_cache)
 
     if args.dry_run:
-        n_info, n_forced, lo, hi = dry_run_calls(spec, args.samples, args.retries)
+        # A distribution subject is asked once per infostate and its answer is never parsed or retried.
+        one_call = model_spec.is_distribution if model_spec else args.client == "distribution"
+        samples, retries = (1, 0) if one_call else (args.samples, args.retries)
+        n_info, n_forced, lo, hi = dry_run_calls(spec, samples, retries)
         if args.mode == "play":
             lo = hi = 0
         else:
             skipped = f" ({n_forced} forced infostates are not queried)" if n_forced else ""
-            print(f"{spec.name}: {n_info} infostates x {args.samples} samples{skipped}")
+            per = "1 call (a probability per action)" if one_call else f"{samples} samples"
+            print(f"{spec.name}: {n_info} infostates x {per}{skipped}")
         if args.mode != "direct":
             game = spec.load()
             per_hand = expected_subject_decisions(
@@ -103,8 +107,8 @@ def main() -> int:
                 f"play: {args.hands} {spec.episode}s x ~{per_hand:.2f} subject decisions per {spec.episode} "
                 "(under uniform play)"
             )
-            lo, hi = lo + play_calls, hi + play_calls * (args.retries + 1)
-        print(f"calls: {lo} (no retries) to {hi} (every sample retried {args.retries}x)")
+            lo, hi = lo + play_calls, hi + play_calls * (retries + 1)
+        print(f"calls: {lo} (no retries) to {hi} (every sample retried {retries}x)")
         if model_spec is None:
             print("estimated cost: $0.00 (mock subject)")
         else:
@@ -129,7 +133,7 @@ def main() -> int:
         client = build_client(model_spec)
         cost_fn = model_spec.cost
         concurrency = args.concurrency or model_spec.concurrency
-        client_kind = "text"
+        client_kind = "distribution" if model_spec.is_distribution else "text"
     else:
         game = spec.load()
         policies = {

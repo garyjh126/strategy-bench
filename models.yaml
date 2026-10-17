@@ -37,3 +37,15 @@ models:
     price_source: "DeepSeek pricing page, peak rates (off-peak is half), checked 2026-10-08"
     est_output_tokens: 2
     concurrency: 4
+
+  jev-1.13:
+    provider: typesafe
+    # Pinned version: the jev-latest alias moves when a new release ships (docs.typesafe.ai/models).
+    model: jev-1.13.0
+    # Typed "choice" model: one call per infostate returns a probability for each legal action.
+    # The API takes no sampling parameters.
+    params: {}
+    price_per_mtok: {input: 0.042, output: 0.0}
+    price_source: "TypeSafe models page (input only, output free), checked 2026-10-17"
+    est_output_tokens: 0
+    concurrency: 1

@@ -1,4 +1,4 @@
-"""Real provider clients (text subjects).
+"""Real provider clients: text subjects, plus TypeSafe's typed-choice model (a distribution subject).
 
 Each client sends the system prompt and user message, returns the reply text and token
 usage, and handles transport problems itself:
@@ -27,7 +27,7 @@ from typing import Any
 import anthropic
 import httpx
 
-from strategybench.adapters.base import Completion, Prompt
+from strategybench.adapters.base import Completion, DistributionReply, Prompt
 
 
 class QuotaExhausted(RuntimeError):
@@ -65,9 +65,9 @@ class RateLimiter:
         time.sleep(max(0.0, start - now))
 
 
-def with_backoff(
-    call: Callable[[], Completion], max_tries: int = 6, base: float = 2.0, cap: float = 60.0
-) -> Completion:
+def with_backoff[Reply: (Completion, DistributionReply)](
+    call: Callable[[], Reply], max_tries: int = 6, base: float = 2.0, cap: float = 60.0
+) -> Reply:
     for attempt in range(max_tries):
         try:
             completion = call()
@@ -267,5 +267,71 @@ def parse_openai_response(d: dict[str, Any]) -> Completion:
             "finish_reason": choice.get("finish_reason"),
             "reasoning_tokens": details.get("reasoning_tokens"),
             "usage": json.loads(json.dumps(usage)),
+        },
+    )
+
+
+class TypeSafeClient:
+    """TypeSafe's Jev via ``POST /v1/systemone``: one "choice" question whose options are the legal
+    action labels. The reply gives a probability per label, so no sampling is needed.
+
+    The state is the same system and user text a chat model gets, so prompt versions and hashes
+    match across subjects. The API takes no sampling parameters; ``params`` stays empty.
+    """
+
+    provider = "typesafe"
+    _URL = "https://api.typesafe.ai/v1/systemone"
+    _INSTRUCTIONS = "Which of the legal actions should you take?"
+
+    def __init__(self, model: str, params: dict[str, Any], rpm: float | None = None) -> None:
+        self.model_id = model
+        self.params = dict(params)
+        self._limiter = RateLimiter(rpm)
+        self._key = _require_env("TYPESAFE_API_KEY")
+        self._http = httpx.Client(timeout=120)
+
+    def request_body(self, prompt: Prompt) -> dict[str, Any]:
+        return {
+            "state": f"{prompt.system}\n\n{prompt.user}",
+            "model": self.model_id,
+            "questions": {
+                "action": {
+                    "type": "choice",
+                    "instructions": self._INSTRUCTIONS,
+                    "criteria": {label: None for label in prompt.labels},
+                }
+            },
+            **self.params,
+        }
+
+    def distribution(self, prompt: Prompt) -> DistributionReply:
+        def once() -> DistributionReply:
+            self._limiter.wait()
+            try:
+                r = self._http.post(
+                    self._URL,
+                    headers={"Authorization": f"Bearer {self._key}"},
+                    json=self.request_body(prompt),
+                )
+            except httpx.TransportError as e:
+                raise RetryableError(f"typesafe: {type(e).__name__}") from e
+            _raise_for_http("typesafe", r)
+            return parse_typesafe_response(r.json())
+
+        return with_backoff(once)
+
+
+def parse_typesafe_response(d: dict[str, Any]) -> DistributionReply:
+    answer = (d.get("answers") or {}).get("action") or {}
+    usage = d.get("usage") or {}
+    return DistributionReply(
+        probs={k: float(v) for k, v in (answer.get("probabilities") or {}).items()},
+        input_tokens=usage.get("input_tokens"),
+        output_tokens=usage.get("output_tokens"),
+        # "model" is the version that answered, which may differ from an alias we asked for.
+        extra={
+            "model": d.get("model"),
+            "choice": answer.get("choice"),
+            "confidence": answer.get("confidence"),
         },
     )

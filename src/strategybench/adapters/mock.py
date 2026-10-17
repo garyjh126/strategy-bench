@@ -13,7 +13,7 @@ import hashlib
 import numpy as np
 from open_spiel.python import policy as policy_lib
 
-from strategybench.adapters.base import Completion, Prompt
+from strategybench.adapters.base import Completion, DistributionReply, Prompt
 from strategybench.estimation.infostates import enumerate_infostates
 from strategybench.games.base import GameSpec
 from strategybench.prompts.base import PromptTemplate
@@ -100,6 +100,6 @@ class MockDistributionClient:
         self.params: dict[str, object] = {}
         self.calls = 0
 
-    def distribution(self, prompt: Prompt) -> LabelDist:
+    def distribution(self, prompt: Prompt) -> DistributionReply:
         self.calls += 1
-        return dict(self.lookup[prompt.hash])
+        return DistributionReply(probs=dict(self.lookup[prompt.hash]))

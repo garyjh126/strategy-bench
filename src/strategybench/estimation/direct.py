@@ -333,8 +333,16 @@ def collect_distribution(
         if record is None:
             budget.charge()
             start = time.perf_counter()
-            dist = client.distribution(prompt)
-            record = {"dist": dist, "latency_s": time.perf_counter() - start, "timestamp": _now()}
+            reply = client.distribution(prompt)
+            record = {
+                "dist": reply.probs,
+                "input_tokens": reply.input_tokens,
+                "output_tokens": reply.output_tokens,
+                "extra": reply.extra,
+                "latency_s": time.perf_counter() - start,
+                "timestamp": _now(),
+            }
+            budget.record(reply.input_tokens, reply.output_tokens)
             if cache:
                 cache.put(key, record)
             rel.live_calls += 1
@@ -342,6 +350,11 @@ def collect_distribution(
             rel.cache_hits += 1
         rel.samples += 1
         rel.attempts += 1
+        tokens_in, tokens_out = record.get("input_tokens") or 0, record.get("output_tokens") or 0
+        rel.input_tokens += tokens_in
+        rel.output_tokens += tokens_out
+        if budget.cost_fn is not None:
+            rel.cost_usd += budget.cost_fn(tokens_in, tokens_out)
 
         dist = record["dist"]
         labels = spec.action_labels(info.state)
@@ -367,6 +380,9 @@ def collect_distribution(
                 "user_prompt": prompt.user,
                 "distribution": dist,
                 "status": "ok" if valid else "invalid_distribution",
+                "input_tokens": record.get("input_tokens"),
+                "output_tokens": record.get("output_tokens"),
+                "extra": record.get("extra", {}),
                 "latency_s": record["latency_s"],
                 "timestamp": record["timestamp"],
                 "from_cache": from_cache,

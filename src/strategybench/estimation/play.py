@@ -76,7 +76,16 @@ class _DistributionQuerier:
             record = self._memo.get(key) or (self.cache.get(key) if self.cache else None)
             if record is None:
                 self.budget.charge()
-                record = {"dist": c.distribution(prompt), "latency_s": 0.0, "timestamp": ""}
+                reply = c.distribution(prompt)
+                self.budget.record(reply.input_tokens, reply.output_tokens)
+                record = {
+                    "dist": reply.probs,
+                    "input_tokens": reply.input_tokens,
+                    "output_tokens": reply.output_tokens,
+                    "extra": reply.extra,
+                    "latency_s": 0.0,
+                    "timestamp": "",
+                }
                 if self.cache:
                     self.cache.put(key, record)
             self._memo[key] = record

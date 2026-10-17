@@ -8,7 +8,15 @@ from typing import Any
 
 import yaml
 
-from strategybench.adapters.providers import AnthropicClient, GeminiClient, OpenAICompatibleClient
+from strategybench.adapters.providers import (
+    AnthropicClient,
+    GeminiClient,
+    OpenAICompatibleClient,
+    TypeSafeClient,
+)
+
+#: Providers whose clients return a probability per action in one call (DistributionClient).
+DISTRIBUTION_PROVIDERS = {"typesafe"}
 
 
 @dataclass
@@ -26,6 +34,10 @@ class ModelSpec:
     base_url: str | None = None
     key_env: str | None = None
     provider_name: str | None = None
+
+    @property
+    def is_distribution(self) -> bool:
+        return self.provider in DISTRIBUTION_PROVIDERS
 
     def cost(self, input_tokens: int, output_tokens: int) -> float:
         return (input_tokens * self.price_input + output_tokens * self.price_output) / 1e6
@@ -59,6 +71,8 @@ def build_client(spec: ModelSpec):
         return AnthropicClient(spec.model, spec.params, spec.rpm)
     if spec.provider == "gemini":
         return GeminiClient(spec.model, spec.params, spec.rpm)
+    if spec.provider == "typesafe":
+        return TypeSafeClient(spec.model, spec.params, spec.rpm)
     if spec.provider == "openai_compatible":
         if not spec.base_url:
             raise ValueError(f"{spec.name}: openai_compatible needs base_url")
